@@ -15,3 +15,4 @@ github_username:  AndreasFagschlunger
 
 # Build settings
 markdown: kramdown
+theme: jekyll-theme-leap-day
