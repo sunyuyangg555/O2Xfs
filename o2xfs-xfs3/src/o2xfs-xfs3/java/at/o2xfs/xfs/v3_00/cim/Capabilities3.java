@@ -220,11 +220,24 @@ public class Capabilities3 extends Struct {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("serviceClass", getServiceClass()).append("type", getType()).append("maxCashInItems", getMaxCashInItems())
-				.append("compound", isCompound()).append("shutter", isShutter()).append("shutterControl", isShutterControl()).append("safeDoor", isSafeDoor())
-				.append("cashBox", isCashBox()).append("refill", isRefill()).append("intermediateStacker", getIntermediateStacker())
-				.append("itemsTakenSensor", isItemsTakenSensor()).append("itemsInsertedSensor", isItemsInsertedSensor()).append("positions", getPositions())
-				.append("exchangeType", getExchangeType()).append("retractAreas", getRetractAreas()).append("retractTransportActions", getRetractTransportActions())
-				.append("retractStackerActions", getRetractStackerActions()).append("extra", getExtra()).toString();
+		return new ToStringBuilder(this)
+				.append("serviceClass", getServiceClass())
+				.append("type", getType())
+				.append("maxCashInItems", getMaxCashInItems())
+				.append("compound", isCompound())
+				.append("shutter", isShutter())
+				.append("shutterControl", isShutterControl())
+				.append("safeDoor", isSafeDoor())
+				.append("cashBox", isCashBox())
+				.append("refill", isRefill())
+				.append("intermediateStacker", getIntermediateStacker())
+				.append("itemsTakenSensor", isItemsTakenSensor())
+				.append("itemsInsertedSensor", isItemsInsertedSensor())
+				.append("positions", getPositions())
+				.append("exchangeType", getExchangeType())
+				.append("retractAreas", getRetractAreas())
+				.append("retractTransportActions", getRetractTransportActions())
+				.append("retractStackerActions", getRetractStackerActions())
+				.append("extra", getExtra()).toString();
 	}
 }

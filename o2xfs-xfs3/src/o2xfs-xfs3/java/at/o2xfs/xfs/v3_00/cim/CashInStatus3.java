@@ -42,70 +42,73 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class CashInStatus3 extends Struct {
 
-	protected final XfsWord<CashInStatus> status = new XfsWord<>(CashInStatus.class);
-	protected final USHORT numOfRefused = new USHORT();
-	protected final Pointer noteNumberList = new Pointer();
-	protected final XfsExtra extra = new XfsExtra();
+    protected final XfsWord<CashInStatus> status = new XfsWord<>(CashInStatus.class);
+    protected final USHORT numOfRefused = new USHORT();
+    protected final Pointer noteNumberList = new Pointer();
+    protected final XfsExtra extra = new XfsExtra();
 
-	protected CashInStatus3() {
-		add(status);
-		add(numOfRefused);
-		add(noteNumberList);
-		add(extra);
-	}
+    protected CashInStatus3() {
+        add(status);
+        add(numOfRefused);
+        add(noteNumberList);
+        add(extra);
+    }
 
-	public CashInStatus3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+    public CashInStatus3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	public CashInStatus3(CashInStatus3 copy) {
-		this();
-		allocate();
-		set(copy);
-	}
+    public CashInStatus3(CashInStatus3 copy) {
+        this();
+        allocate();
+        set(copy);
+    }
 
-	protected void set(CashInStatus3 copy) {
-		status.set(copy.getStatus());
-		numOfRefused.set(copy.getNumOfRefused());
-		noteNumberList.pointTo(new NoteNumberList3(copy.getNoteNumberList()));
-		extra.set(copy.getExtra());
-	}
+    protected void set(CashInStatus3 copy) {
+        status.set(copy.getStatus());
+        numOfRefused.set(copy.getNumOfRefused());
+        noteNumberList.pointTo(new NoteNumberList3(copy.getNoteNumberList()));
+        extra.set(copy.getExtra());
+    }
 
-	public CashInStatus getStatus() {
-		return status.get();
-	}
+    public CashInStatus getStatus() {
+        return status.get();
+    }
 
-	public int getNumOfRefused() {
-		return numOfRefused.get();
-	}
+    public int getNumOfRefused() {
+        return numOfRefused.get();
+    }
 
-	public NoteNumberList3 getNoteNumberList() {
-		return new NoteNumberList3(noteNumberList);
-	}
+    public NoteNumberList3 getNoteNumberList() {
+        return new NoteNumberList3(noteNumberList);
+    }
 
-	public Map<String, String> getExtra() {
-		return extra.get();
-	}
+    public Map<String, String> getExtra() {
+        return extra.get();
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getStatus()).append(getNumOfRefused()).append(getNoteNumberList()).append(getExtra()).toHashCode();
-	}
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getStatus()).append(getNumOfRefused()).append(getNoteNumberList()).append(getExtra()).toHashCode();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof CashInStatus3) {
-			CashInStatus3 cashInStatus3 = (CashInStatus3) obj;
-			return new EqualsBuilder().append(getStatus(), cashInStatus3.getStatus()).append(getNumOfRefused(), cashInStatus3.getNumOfRefused())
-					.append(getNoteNumberList(), cashInStatus3.getNoteNumberList()).append(getExtra(), cashInStatus3.getExtra()).isEquals();
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CashInStatus3) {
+            CashInStatus3 cashInStatus3 = (CashInStatus3) obj;
+            return new EqualsBuilder().append(getStatus(), cashInStatus3.getStatus()).append(getNumOfRefused(), cashInStatus3.getNumOfRefused())
+                    .append(getNoteNumberList(), cashInStatus3.getNoteNumberList()).append(getExtra(), cashInStatus3.getExtra()).isEquals();
+        }
+        return false;
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("status", getStatus()).append("numOfRefused", getNumOfRefused()).append("noteNumberList", getNoteNumberList())
-				.append("extra", getExtra()).toString();
-	}
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("status", getStatus())
+                .append("numOfRefused", getNumOfRefused())
+                .append("noteNumberList", getNoteNumberList())
+                .append("extra", getExtra()).toString();
+    }
 }

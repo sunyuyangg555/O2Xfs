@@ -5,7 +5,7 @@ import at.o2xfs.xfs.v3_00.idc.CardData3;
 
 import java.util.List;
 
-public class ReadRawDataCompleteEvent implements CompleteEvent {
+public class ReadRawDataCompleteEvent implements CompleteEvent<List<CardData3>> {
 
     private List<CardData3> cardData3s;
 
@@ -13,7 +13,8 @@ public class ReadRawDataCompleteEvent implements CompleteEvent {
         this.cardData3s = cardData3s;
     }
 
-    public List<CardData3> getData() {
+    @Override
+    public List<CardData3> get() {
         return cardData3s;
     }
 }

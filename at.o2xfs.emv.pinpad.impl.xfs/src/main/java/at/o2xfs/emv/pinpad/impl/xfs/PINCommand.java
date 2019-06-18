@@ -149,7 +149,7 @@ final class PINCommand implements GetPINListener {
 	@Override
 	public void onComplete(GetPINCompleteEvent event) {
 		synchronized (this) {
-			result = event.getPINEntry();
+			result = event.get();
 			notifyAll();
 		}
 	}

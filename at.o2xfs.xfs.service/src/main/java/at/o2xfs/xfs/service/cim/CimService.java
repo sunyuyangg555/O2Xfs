@@ -27,8 +27,6 @@
 
 package at.o2xfs.xfs.service.cim;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import at.o2xfs.log.Logger;
@@ -49,7 +47,7 @@ import at.o2xfs.xfs.v3_10.cim.PositionInfo310;
 import at.o2xfs.xfs.v3_10.cim.PowerSaveChange310;
 import at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330;
 import at.o2xfs.xfs.service.XfsService;
-import at.o2xfs.xfs.service.cim.cmd.info.CimCapabilitiesCommand;
+import at.o2xfs.xfs.service.cim.info.CimCapabilitiesCommand;
 
 public class CimService extends XfsService<CimServiceListener, CimUserListener> {
 
@@ -66,14 +64,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
     public void removeAll() {
         serviceListeners.clear();
         userListeners.clear();
-    }
-
-    public void add(CimUserListener listener) {
-        userListeners.add(listener);
-    }
-
-    public void remove(CimUserListener listener) {
-        userListeners.remove(listener);
     }
 
     public Capabilities3 getCapabilities() throws XfsException {
@@ -147,7 +137,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireSafeDoorClosed() {
         if (LOG.isInfoEnabled()) {
@@ -158,13 +147,11 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireCashUnitInfoChanged(CashIn3 cashUnit) {
-
+        serviceListeners.stream().forEach(cimServiceListener -> cimServiceListener.onCashUnitInfoChanged(cashUnit));
     }
 
-    ;
 
     private void fireTellerInfoChanged(int tellerId) {
         if (LOG.isInfoEnabled()) {
@@ -175,7 +162,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireItemsTaken(Pointer p) {
         Optional<PositionInfo310> positionInfo = Optional.empty();
@@ -190,7 +176,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireCountsChanged(CountsChanged3 countsChanged) {
         if (LOG.isInfoEnabled()) {
@@ -201,7 +186,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireItemsPresented(Pointer p) {
         Optional<PositionInfo310> positionInfo = Optional.empty();
@@ -216,7 +200,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireItemsInserted(Pointer p) {
         Optional<PositionInfo310> positionInfo = Optional.empty();
@@ -231,7 +214,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireMediaDetected(Pointer p) {
         Optional<ItemPosition3> itemPosition = Optional.empty();
@@ -246,7 +228,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireDevicePosition(DevicePosition310 devicePosition) {
         if (LOG.isInfoEnabled()) {
@@ -268,7 +249,6 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
         }
     }
 
-    ;
 
     private void fireShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
         if (LOG.isInfoEnabled()) {

@@ -30,7 +30,7 @@ package at.o2xfs.xfs.service.cdm.xfs3;
 import at.o2xfs.xfs.v3_00.cdm.Denomination3;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 
-public final class DenominationEvent implements CompleteEvent {
+public final class DenominationEvent implements CompleteEvent<Denomination3> {
 
 	private final Denomination3 denomination;
 
@@ -38,11 +38,13 @@ public final class DenominationEvent implements CompleteEvent {
 		this.denomination = denomination;
 	}
 
-	public Denomination3 getDenomination() {
-		return denomination;
-	}
 
 	public static DenominationEvent build(Denomination3 denomination) {
 		return new DenominationEvent(denomination);
+	}
+
+	@Override
+	public Denomination3 get() {
+		return denomination;
 	}
 }

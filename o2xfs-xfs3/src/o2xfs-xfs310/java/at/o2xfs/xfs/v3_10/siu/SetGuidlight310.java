@@ -32,6 +32,7 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.xfs.siu.SIUCommand;
 import at.o2xfs.xfs.siu.SIUGuidLight;
 import at.o2xfs.xfs.win32.XfsDWord;
+import at.o2xfs.xfs.win32.XfsWord;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -54,8 +55,8 @@ public class SetGuidlight310 extends Struct {
         }
     }
 
-    protected final XfsDWord<SIUGuidLight> guidLight = new XfsDWord<>(SIUGuidLight.class);
-    protected final XfsDWord<SIUCommand> command = new XfsDWord<>(SIUCommand.class);
+    protected final XfsWord<SIUGuidLight> guidLight = new XfsWord<>(SIUGuidLight.class);
+    protected final XfsWord<SIUCommand> command = new XfsWord<>(SIUCommand.class);
 
     protected SetGuidlight310() {
         add(guidLight);

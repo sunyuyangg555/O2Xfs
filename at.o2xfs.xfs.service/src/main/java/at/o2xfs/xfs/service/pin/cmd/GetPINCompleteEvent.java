@@ -30,7 +30,7 @@ package at.o2xfs.xfs.service.pin.cmd;
 import at.o2xfs.xfs.pin.WfsPINEntry;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 
-public class GetPINCompleteEvent implements CompleteEvent {
+public class GetPINCompleteEvent implements CompleteEvent<WfsPINEntry> {
 
 	private final WfsPINEntry pinEntry;
 
@@ -38,11 +38,12 @@ public class GetPINCompleteEvent implements CompleteEvent {
 		this.pinEntry = pinEntry;
 	}
 
-	public WfsPINEntry getPINEntry() {
-		return new WfsPINEntry(pinEntry);
-	}
-
 	public static final GetPINCompleteEvent create(WfsPINEntry pinEntry) {
 		return new GetPINCompleteEvent(pinEntry);
+	}
+
+	@Override
+	public WfsPINEntry get() {
+		return new WfsPINEntry(pinEntry);
 	}
 }

@@ -6,9 +6,10 @@ public enum ResetIn implements XfsConstant {
 
     RETAIN(3L),
 
-    EJECTED(2L),
+    EJECT(2L),
 
     NOACTION(1L);
+
 
 
     private final long value;

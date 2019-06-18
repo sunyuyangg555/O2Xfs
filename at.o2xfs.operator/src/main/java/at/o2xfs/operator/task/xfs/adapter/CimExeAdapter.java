@@ -3,7 +3,7 @@ package at.o2xfs.operator.task.xfs.adapter;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cim.CimError;
 import at.o2xfs.xfs.cim.Reason;
-import at.o2xfs.xfs.service.cim.cmd.listener.*;
+import at.o2xfs.xfs.service.cim.event.*;
 import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
 import at.o2xfs.xfs.v3_00.cim.NoteNumberList3;
 import at.o2xfs.xfs.v3_00.cim.P6Info3;

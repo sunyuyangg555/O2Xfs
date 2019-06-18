@@ -15,19 +15,21 @@ import at.o2xfs.xfs.win32.XfsWord;
 public class ResetCommand extends AbstractAsyncXfsCommand<CommandListener<SuccessEvent>, SuccessEvent> {
 
     private final IDCService idcService;
-    private final XfsWord<ResetIn> resetIn;
+    private XfsWord<ResetIn> xfsWord;
 
-    public ResetCommand(IDCService idcService, XfsWord<ResetIn> resetIn) {
+    public ResetCommand(IDCService idcService, ResetIn resetIn) {
         if (idcService == null) {
             ExceptionUtil.nullArgument("idcService");
         }
         this.idcService = idcService;
-        this.resetIn = resetIn;
+        xfsWord = new XfsWord<>(ResetIn.class);
+        xfsWord.allocate();
+        xfsWord.set(resetIn);
     }
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.RESET, resetIn);
+        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.RESET, new Pointer(xfsWord));
     }
 
     @Override

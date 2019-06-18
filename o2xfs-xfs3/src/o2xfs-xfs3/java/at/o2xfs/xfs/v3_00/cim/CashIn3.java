@@ -49,6 +49,7 @@ import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsDWord;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 import at.o2xfs.xfs.win32.XfsWord;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class CashIn3 extends Struct {
 

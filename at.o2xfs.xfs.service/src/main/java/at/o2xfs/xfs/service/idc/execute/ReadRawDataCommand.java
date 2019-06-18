@@ -15,29 +15,30 @@ import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.IdcFactory;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 import at.o2xfs.xfs.v3_00.idc.CardData3;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ReadRawDataCommand extends AbstractAsyncXfsCommand<ReadRawDataListener, ReadRawDataCompleteEvent> {
 
     private static final Logger LOG = LoggerFactory.getLogger(ReadRawDataCommand.class);
     private final IDCService idcService;
-    private final XfsWord<DataSource> dataSource;
+    private final XfsWordBitmask<DataSource> xfsWordBitmask;
 
-    public ReadRawDataCommand(IDCService idcService, XfsWord<DataSource> dataSource) {
+    public ReadRawDataCommand(IDCService idcService, Set<DataSource> dataSources) {
         if (idcService == null) {
             ExceptionUtil.nullArgument("idcService");
         }
 
         this.idcService = idcService;
-        this.dataSource = dataSource;
+        xfsWordBitmask =  new XfsWordBitmask<>(DataSource.class, dataSources);
     }
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.READ_RAW_DATA, dataSource);
+        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.READ_RAW_DATA, xfsWordBitmask);
     }
 
     @Override

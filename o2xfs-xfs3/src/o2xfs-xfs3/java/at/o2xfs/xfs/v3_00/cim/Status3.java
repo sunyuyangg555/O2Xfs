@@ -148,8 +148,15 @@ public class Status3 extends Struct {
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("device", getDevice()).append("safeDoor", getSafeDoor()).append("acceptor", getAcceptor())
-				.append("intermediateStacker", getIntermediateStacker()).append("stackerItems", getStackerItems()).append("banknoteReader", getBanknoteReader())
-				.append("dropBox", isDropBox()).append("positions", getPositions()).append("extra", getExtra()).toString();
+		return new ToStringBuilder(this)
+				.append("device", getDevice())
+				.append("safeDoor", getSafeDoor())
+				.append("acceptor", getAcceptor())
+				.append("intermediateStacker", getIntermediateStacker())
+				.append("stackerItems", getStackerItems())
+				.append("banknoteReader", getBanknoteReader())
+				.append("dropBox", isDropBox())
+				.append("positions", getPositions())
+				.append("extra", getExtra()).toString();
 	}
 }

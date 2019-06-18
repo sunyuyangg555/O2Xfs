@@ -27,7 +27,9 @@
 
 package at.o2xfs.xfs.service.cmd.event;
 
-public final class SuccessEvent implements CompleteEvent {
+import at.o2xfs.xfs.service.EmptyCompleteEvent;
+
+public final class SuccessEvent extends EmptyCompleteEvent {
 
 	private SuccessEvent() {
 		super();

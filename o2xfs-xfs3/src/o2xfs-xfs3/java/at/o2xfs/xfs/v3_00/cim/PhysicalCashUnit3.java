@@ -43,6 +43,7 @@ import at.o2xfs.xfs.XfsExtra;
 import at.o2xfs.xfs.cim.CashUnitStatus;
 import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsWord;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class PhysicalCashUnit3 extends Struct {
 

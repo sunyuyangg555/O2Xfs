@@ -13,25 +13,26 @@ import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 import at.o2xfs.xfs.v3_00.idc.CardData3;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WriteRawDataCommand extends AbstractAsyncXfsCommand<WriteRawDataListener, SuccessEvent> {
 
     private final IDCService idcService;
-    private final List<CardData3> data;
+    private final ZList zList;
 
-
-    public WriteRawDataCommand(IDCService idcService, List<CardData3> data) {
+    public WriteRawDataCommand(IDCService idcService, List<CardData3> cardData3s) {
         if (idcService == null) {
             ExceptionUtil.nullArgument("idcService");
         }
         this.idcService = idcService;
-        this.data = data;
+        zList = new ZList(cardData3s);
     }
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.WRITE_RAW_DATA, new ZList(data));
+        return new XfsExecuteCommand<>(idcService, IdcExecuteCommand.WRITE_RAW_DATA, new Pointer(zList));
     }
 
     @Override

@@ -32,7 +32,7 @@ import java.util.List;
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 import at.o2xfs.xfs.v3_00.ptr.Image3;
 
-public class ReadImageCompleteEvent implements CompleteEvent {
+public class ReadImageCompleteEvent implements CompleteEvent<List<Image3>> {
 
 	private final List<Image3> images;
 
@@ -40,7 +40,8 @@ public class ReadImageCompleteEvent implements CompleteEvent {
 		this.images = images;
 	}
 
-	public List<Image3> getImages() {
+	@Override
+	public List<Image3> get() {
 		return images;
 	}
 }

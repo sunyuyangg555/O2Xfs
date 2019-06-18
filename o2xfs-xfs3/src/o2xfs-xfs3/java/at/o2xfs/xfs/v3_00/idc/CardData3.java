@@ -27,16 +27,14 @@
 
 package at.o2xfs.xfs.v3_00.idc;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import at.o2xfs.win32.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import at.o2xfs.win32.ByteArray;
-import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.ULONG;
 import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.DataStatus;
 import at.o2xfs.xfs.idc.WriteMethod;
@@ -171,7 +169,7 @@ public class CardData3 extends Struct {
 		return new ToStringBuilder(this)
 				.append("dataSource", getDataSource())
 				.append("status", getStatus())
-				.append("data", getData())
+				.append("data", new String(getData(), StandardCharsets.US_ASCII))
 				.append("writeMethod", getWriteMethod())
 				.toString();
 	}
