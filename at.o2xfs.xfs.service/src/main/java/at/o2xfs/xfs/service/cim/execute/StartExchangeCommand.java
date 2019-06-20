@@ -60,12 +60,6 @@ public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExc
 
     @Override
     protected StartExchangeCompleteEvent createCompleteEvent(Pointer results) {
-        Optional<CashInfo3> cashInfo = Optional.empty();
-        if (!Pointer.NULL.equals(results)) {
-            cashInfo = Optional
-                    .of(CimFactory.create(cimService.getSrvcVersion().getVersion(), results, CashInfo3.class));
-        }
-
-        return StartExchangeCompleteEvent.build(cashInfo);
+        return StartExchangeCompleteEvent.build(CimFactory.create(cimService.getSrvcVersion().getVersion(), results, CashInfo3.class));
     }
 }
