@@ -42,30 +42,30 @@ import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
 public final class CimStatusCommand implements Callable<Status3> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CimStatusCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CimStatusCommand.class);
 
-	private final CimService cimService;
+    private final CimService cimService;
 
-	public CimStatusCommand(CimService cimService) {
-		this.cimService = cimService;
-	}
+    public CimStatusCommand(CimService cimService) {
+        this.cimService = cimService;
+    }
 
-	@Override
-	public Status3 call() throws XfsException {
-		Status3 result;
-		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.STATUS);
-		WFSResult wfsResult = null;
-		try {
-			wfsResult = command.call();
-			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Status3.class);
-			if (LOG.isInfoEnabled()) {
-				LOG.info("call()", result);
-			}
-		} finally {
-			if (wfsResult != null) {
-				XfsServiceManager.getInstance().free(wfsResult);
-			}
-		}
-		return result;
-	}
+    @Override
+    public Status3 call() throws XfsException {
+        Status3 result;
+        XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.STATUS);
+        WFSResult wfsResult = null;
+        try {
+            wfsResult = command.call();
+            result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), Status3.class);
+            if (LOG.isInfoEnabled()) {
+                LOG.info("call()", result);
+            }
+            return result;
+        } finally {
+            if (wfsResult != null) {
+                XfsServiceManager.getInstance().free(wfsResult);
+            }
+        }
+    }
 }

@@ -17,9 +17,7 @@ import at.o2xfs.xfs.v3_00.cim.StartEx3;
 
 import java.util.Optional;
 
-/**
- *
- */
+
 public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExchangeListener, StartExchangeCompleteEvent> {
 
     private final CimService cimService;
@@ -32,7 +30,7 @@ public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExc
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.START_EXCHANGE, new Pointer(startEx));
+        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.START_EXCHANGE, new Pointer(startEx));
     }
 
     @Override

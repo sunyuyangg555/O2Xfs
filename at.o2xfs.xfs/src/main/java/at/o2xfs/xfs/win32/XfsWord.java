@@ -27,6 +27,8 @@
 
 package at.o2xfs.xfs.win32;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Bits;
 import at.o2xfs.win32.NumberType;
 import at.o2xfs.win32.Pointer;
@@ -36,47 +38,55 @@ import at.o2xfs.xfs.util.XfsConstants;
 
 public class XfsWord<T extends Enum<T> & XfsConstant> extends NumberType<T> {
 
-	private final Class<T> type;
+    private static final Logger LOG = LoggerFactory.getLogger(XfsWord.class);
 
-	public XfsWord(Class<T> type) {
-		super(2);
-		this.type = type;
-	}
+    private final Class<T> type;
 
-	public XfsWord(Class<T> type, Pointer p) {
-		this(type);
-		assignBuffer(p);
-	}
+    public XfsWord(Class<T> type) {
+        super(2);
+        this.type = type;
+    }
 
-	public void set(XfsWord<T> value) {
-		set(value.get());
-	}
+    public XfsWord(Class<T> type, Pointer p) {
+        this(type);
+        assignBuffer(p);
+    }
 
-	@Override
-	public void set(T value) {
-		put(Bits.toByteArray((short) value.getValue()));
-	}
+    public void set(XfsWord<T> value) {
+        set(value.get());
+    }
 
-	@Override
-	public T get() {
-		return XfsConstants.valueOf(this, type);
-	}
+    @Override
+    public void set(T value) {
+        if (value == null) {
+            if (LOG.isDebugEnabled()) {
+                LOG.warn("set()", "value is null");
+            }
+            return;
+        }
+        put(Bits.toByteArray((short) value.getValue()));
+    }
 
-	@Override
-	public int intValue() {
-		return (int) longValue();
-	}
+    @Override
+    public T get() {
+        return XfsConstants.valueOf(this, type);
+    }
 
-	@Override
-	public long longValue() {
-		return Bits.getShort(getBytes()) & USHORT.MAX_VALUE;
-	}
+    @Override
+    public int intValue() {
+        return (int) longValue();
+    }
 
-	public static final <T extends Enum<T> & XfsConstant> XfsWord<T> valueOf(T value) {
-		@SuppressWarnings("unchecked")
-		XfsWord<T> result = new XfsWord<>((Class<T>) value.getClass());
-		result.allocate();
-		result.set(value);
-		return result;
-	}
+    @Override
+    public long longValue() {
+        return Bits.getShort(getBytes()) & USHORT.MAX_VALUE;
+    }
+
+    public static final <T extends Enum<T> & XfsConstant> XfsWord<T> valueOf(T value) {
+        @SuppressWarnings("unchecked")
+        XfsWord<T> result = new XfsWord<>((Class<T>) value.getClass());
+        result.allocate();
+        result.set(value);
+        return result;
+    }
 }

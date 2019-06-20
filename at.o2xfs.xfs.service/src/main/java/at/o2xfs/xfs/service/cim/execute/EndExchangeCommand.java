@@ -1,6 +1,7 @@
 package at.o2xfs.xfs.service.cim.execute;
 
 import at.o2xfs.win32.Pointer;
+import at.o2xfs.win32.ZList;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cim.CimExecuteCommand;
 import at.o2xfs.xfs.cim.CimMessage;
@@ -14,20 +15,26 @@ import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 import at.o2xfs.xfs.v3_00.cim.CashInfo3;
 import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
 
+import java.util.List;
+import java.util.Optional;
+
 public class EndExchangeCommand extends AbstractAsyncXfsCommand<EndExchangeListener, SuccessEvent> {
 
     private final CimService cimService;
-    private final CashInfo3 cashInfo3;
+    private final Optional<CashInfo3> optionalCashInfo3;
 
-    public EndExchangeCommand(CimService cimService, CashInfo3 cashInfo3) {
+    public EndExchangeCommand(CimService cimService, Optional<CashInfo3> optionalCashInfo3) {
         this.cimService = cimService;
-        this.cashInfo3 = cashInfo3;
+        this.optionalCashInfo3 = optionalCashInfo3;
     }
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.END_EXCHANGE, cashInfo3);
-
+        if (optionalCashInfo3.isPresent()) {
+            return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.END_EXCHANGE, new Pointer(optionalCashInfo3.get()));
+        } else {
+            return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.END_EXCHANGE);
+        }
     }
 
     @Override

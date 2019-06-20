@@ -44,16 +44,16 @@ public class StartEx3 extends Struct {
         private final ExchangeType exchangeType;
         private final int tellerID;
         private final int count;
-        private final NumberCashUnitArray numList;
-        private final Output3Array output3Array;
+        private final int[] numList;
+        private final Output3 output3;
 
 
-        public Builder(ExchangeType exchangeType, int tellerID, NumberCashUnitArray numList, Output3Array output3Array) {
+        public Builder(ExchangeType exchangeType, int tellerID, int[] numList, Output3 output3) {
             this.exchangeType = exchangeType;
             this.tellerID = tellerID;
-            this.count = numList.getSize();
+            this.count = numList.length;
             this.numList = numList;
-            this.output3Array = output3Array;
+            this.output3 = output3;
         }
 
         public StartEx3 build() {
@@ -92,8 +92,8 @@ public class StartEx3 extends Struct {
         exchangeType.set(builder.exchangeType);
         tellerID.set(builder.tellerID);
         count.set(builder.count);
-        cUNumList.pointTo(builder.numList);
-        output.pointTo(builder.output3Array);
+        cUNumList.pointTo(new UShortArray(builder.numList));
+        output.pointTo(new Output3(builder.output3));
     }
 
     protected void set(StartEx3 copy) {
