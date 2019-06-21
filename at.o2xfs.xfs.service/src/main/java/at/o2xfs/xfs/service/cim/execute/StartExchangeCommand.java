@@ -1,6 +1,5 @@
 package at.o2xfs.xfs.service.cim.execute;
 
-
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cim.CimExecuteCommand;
@@ -15,8 +14,6 @@ import at.o2xfs.xfs.v3_00.cim.CashInfo3;
 import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
 import at.o2xfs.xfs.v3_00.cim.StartEx3;
 
-import java.util.Optional;
-
 
 public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExchangeListener, StartExchangeCompleteEvent> {
 
@@ -30,7 +27,7 @@ public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExc
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.START_EXCHANGE, new Pointer(startEx));
+        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.START_EXCHANGE, startEx);
     }
 
     @Override

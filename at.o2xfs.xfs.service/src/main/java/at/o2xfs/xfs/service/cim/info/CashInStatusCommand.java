@@ -53,8 +53,7 @@ public final class CashInStatusCommand implements Callable<CashInStatus3> {
 	@Override
 	public CashInStatus3 call() throws XfsException {
 		CashInStatus3 result;
-		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
-				CimInfoCommand.BANKNOTE_TYPES);
+		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.BANKNOTE_TYPES);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
@@ -62,11 +61,12 @@ public final class CashInStatusCommand implements Callable<CashInStatus3> {
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}
+			return result;
 		} finally {
 			if (wfsResult != null) {
 				XfsServiceManager.getInstance().free(wfsResult);
 			}
 		}
-		return result;
+
 	}
 }

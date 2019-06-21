@@ -38,7 +38,7 @@ public class RetractCommand extends AbstractAsyncXfsCommand<RetractListener, Ret
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.RETRACT, new Pointer(retract3));
+        return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.RETRACT, retract3);
     }
 
     @Override

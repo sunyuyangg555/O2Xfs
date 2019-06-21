@@ -307,6 +307,9 @@ public final class XfsAPI {
 		RequestId requestId = new RequestId();
 		requestId.allocate();
 		final int errorCode = wfsAsyncGetInfo0(hService, dwCategory, queryDetails, dwTimeOut, hWnd, requestId);
+		if(LOG.isDebugEnabled()) {
+			LOG.debug(method, "errorCode = " + errorCode);
+		}
 		XfsException.throwFor(errorCode);
 		return requestId;
 	}

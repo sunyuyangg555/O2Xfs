@@ -119,4 +119,5 @@ public class Pointer extends BaseType {
 	public String toString() {
 		return "Address: " + Hex.encode(getBuffer().getAddress()) + ", Value: " + Hex.encode(getBytes());
 	}
+
 }

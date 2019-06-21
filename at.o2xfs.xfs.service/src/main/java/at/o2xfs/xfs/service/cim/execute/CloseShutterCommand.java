@@ -24,7 +24,7 @@ public class CloseShutterCommand extends AbstractAsyncXfsCommand<CommandListener
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.CLOSE_SHUTTER, new Pointer(positionXfsWord));
+        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.CLOSE_SHUTTER, positionXfsWord);
     }
 
     @Override

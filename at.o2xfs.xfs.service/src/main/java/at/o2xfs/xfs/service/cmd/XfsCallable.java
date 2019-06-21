@@ -65,7 +65,9 @@ public class XfsCallable implements Callable<WFSResult>, XfsEventNotification {
 					wait();
 				}
 			}
+			LOG.info(method, "error code : " + wfsResult.getResult());
 			XfsException.throwFor(wfsResult.getResult());
+			return wfsResult;
 		} catch (final XfsException e) {
 			XfsServiceManager.getInstance().free(wfsResult);
 			throw e;
@@ -73,7 +75,7 @@ public class XfsCallable implements Callable<WFSResult>, XfsEventNotification {
 			LOG.error(method, "Interrupted while waiting", e);
 			throw new RuntimeException(e);
 		}
-		return wfsResult;
+
 	}
 
 	@Override

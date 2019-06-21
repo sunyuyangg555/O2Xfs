@@ -49,7 +49,7 @@ public final class CashInStartCommand extends AbstractAsyncXfsCommand<CashInStar
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.CASH_IN_START, new Pointer(cashInStart));
+		return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.CASH_IN_START, cashInStart);
 	}
 
 	@Override

@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.o2xfs.common.Assert;
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.xfs.bcr.BcrExceptionFactory;
 import at.o2xfs.xfs.cam.CamExceptionFactory;
 import at.o2xfs.xfs.cdm.CdmExceptionFactory;
@@ -44,6 +46,8 @@ import at.o2xfs.xfs.siu.SIUServiceExceptionFactory;
  * @see AbstractXfsExceptionFactory
  */
 public abstract class XfsException extends Exception {
+
+    private final static Logger LOG = LoggerFactory.getLogger(XfsException.class);
 
     private static List<AbstractXfsExceptionFactory> exceptionFactories = null;
 
@@ -80,10 +84,12 @@ public abstract class XfsException extends Exception {
     }
 
     public static void throwFor(final long errorCode) throws XfsException {
+        String method = "throwFor(errorCode)";
         if (XfsError.SUCCESS.getValue() == errorCode) {
             return;
         }
         final int serviceOffset = Math.abs((int) errorCode / 100);
+        LOG.info(method, "serviceOffset : " + serviceOffset);
         for (AbstractXfsExceptionFactory factory : exceptionFactories) {
             if (factory.getServiceOffset() == serviceOffset) {
                 factory.throwException(errorCode);
