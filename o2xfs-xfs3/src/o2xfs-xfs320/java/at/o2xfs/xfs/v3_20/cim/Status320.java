@@ -37,6 +37,8 @@ import at.o2xfs.xfs.cim.MixedMode;
 import at.o2xfs.xfs.v3_10.cim.Status310;
 import at.o2xfs.xfs.win32.XfsWord;
 
+import java.util.Arrays;
+
 public class Status320 extends Status310 {
 
 	protected final XfsWord<MixedMode> mixedMode = new XfsWord<>(MixedMode.class);

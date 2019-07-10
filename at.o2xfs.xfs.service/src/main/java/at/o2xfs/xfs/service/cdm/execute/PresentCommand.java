@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -33,7 +33,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.cdm.Position;
 import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
@@ -42,20 +42,23 @@ import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
+import at.o2xfs.xfs.win32.XfsWord;
 
-public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, SuccessEvent> {
+public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, SuccessEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(RejectCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PresentCommand.class);
 
 	private final CdmService service;
+	private final Position position;
 
-	public RejectCommand(CdmService service) {
+	public PresentCommand(CdmService service, Position position) {
 		this.service = service;
+		this.position = position;
 	}
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<>(service, CdmExecuteCommand.REJECT);
+		return new XfsExecuteCommand<CdmExecuteCommand>(service, CdmExecuteCommand.PRESENT, XfsWord.valueOf(position));
 	}
 
 	@Override
@@ -67,9 +70,6 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_CASHUNITERROR:
-					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
-					break;
 				case EXEE_INPUT_P6:
 					fireInputP6();
 					break;
@@ -84,22 +84,12 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 		}
 	}
 
-	private void fireCashUnitError(CashUnitError3 cashUnitError) {
-		String method = "fireCashUnitError(CashUnitError3)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, cashUnitError);
-		}
-		for (RejectListener each : listeners) {
-			each.onCashUnitError(cashUnitError);
-		}
-	}
-
 	private void fireInputP6() {
 		String method = "fireInputP6()";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, "");
 		}
-		for (RejectListener each : listeners) {
+		for (PresentListener each : listeners) {
 			each.onInputP6();
 		}
 	}
@@ -109,7 +99,7 @@ public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, Succe
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, itemInfoSummary);
 		}
-		for (RejectListener each : listeners) {
+		for (PresentListener each : listeners) {
 			each.onInfoAvailable(itemInfoSummary);
 		}
 	}

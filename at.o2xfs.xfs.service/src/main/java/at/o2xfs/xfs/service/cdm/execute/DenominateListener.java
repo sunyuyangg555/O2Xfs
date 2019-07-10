@@ -25,17 +25,10 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.TellerDetails3;
-import at.o2xfs.xfs.v3_00.cdm.TellerInfo3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
-import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.service.cdm.event.CashUnitErrorListener;
+import at.o2xfs.xfs.service.cmd.event.CommandListener;
 
-public class TellerInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, TellerDetails3> {
-
-	public TellerInfoCommand(CdmService service, TellerInfo3 tellerInfo) {
-		super(service, CdmInfoCommand.TELLER_INFO, tellerInfo, TellerDetails3.class);
-	}
+public interface DenominateListener extends CashUnitErrorListener, CommandListener<DenominationEvent> {
 }

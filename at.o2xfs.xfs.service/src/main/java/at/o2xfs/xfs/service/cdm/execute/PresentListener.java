@@ -25,10 +25,13 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-public interface InputP6Listener {
+import at.o2xfs.xfs.service.cdm.event.InfoAvailableListener;
+import at.o2xfs.xfs.service.cdm.event.InputP6Listener;
+import at.o2xfs.xfs.service.cmd.event.CommandListener;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
-	void onInputP6();
+public interface PresentListener extends CommandListener<SuccessEvent>, InputP6Listener, InfoAvailableListener {
 
 }

@@ -27,8 +27,6 @@
 
 package at.o2xfs.xfs.v3_00.cim;
 
-import at.o2xfs.xfs.v3_00.cdm.OutputPosition3;
-import at.o2xfs.xfs.v3_00.cdm.OutputPositions3;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;

@@ -35,6 +35,7 @@ import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.lookup.XfsServiceLookup.ServiceEntry;
 import at.o2xfs.xfs.service.pin.PINService;
 import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.service.siu.SIUService;
 
 public abstract class XfsServiceLookup implements Iterable<ServiceEntry> {
 
@@ -72,6 +73,8 @@ public abstract class XfsServiceLookup implements Iterable<ServiceEntry> {
 				return CdmService.class;
 			case CIM:
 				return CimService.class;
+			case SIU:
+				return SIUService.class;
 			default:
 				throw new IllegalArgumentException(
 						"Unsupported XfsServiceClass: " + serviceClass);

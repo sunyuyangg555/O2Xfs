@@ -60,7 +60,7 @@ public final class CashInEndCommand extends AbstractAsyncXfsCommand<CashInEndLis
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.CASH_IN_END);
+		return new XfsExecuteCommand<>(cimService, CimExecuteCommand.CASH_IN_END);
 	}
 
 	@Override

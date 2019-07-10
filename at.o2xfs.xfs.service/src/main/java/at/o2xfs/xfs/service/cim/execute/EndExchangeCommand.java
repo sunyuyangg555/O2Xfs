@@ -31,9 +31,9 @@ public class EndExchangeCommand extends AbstractAsyncXfsCommand<EndExchangeListe
     @Override
     protected XfsCommand createCommand() {
         if (optionalCashInfo3.isPresent()) {
-            return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.END_EXCHANGE, optionalCashInfo3.get());
+            return new XfsExecuteCommand<>(cimService, CimExecuteCommand.END_EXCHANGE, optionalCashInfo3.get());
         } else {
-            return new XfsExecuteCommand<CimExecuteCommand>(cimService, CimExecuteCommand.END_EXCHANGE);
+            return new XfsExecuteCommand<>(cimService, CimExecuteCommand.END_EXCHANGE);
         }
     }
 

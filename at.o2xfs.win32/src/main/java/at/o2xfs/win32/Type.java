@@ -29,6 +29,8 @@ package at.o2xfs.win32;
 
 import java.util.Arrays;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**

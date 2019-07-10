@@ -79,7 +79,9 @@ public class NoteNumberList3 extends Struct {
 
 	protected void set(NoteNumberList3 copy) {
 		numOfNoteNumbers.set(copy.getNumOfNoteNumbers());
-		noteNumber.pointTo(new NoteNumber3Array(copy.getNoteNumber()));
+		if(numOfNoteNumbers.get() > 0) {
+			noteNumber.pointTo(new NoteNumber3Array(copy.getNoteNumber()));
+		}
 	}
 
 	public int getNumOfNoteNumbers() {
@@ -87,6 +89,9 @@ public class NoteNumberList3 extends Struct {
 	}
 
 	public NoteNumber3[] getNoteNumber() {
+		if(getNumOfNoteNumbers() == 0) {
+			return null;
+		}
 		return new NoteNumber3Array(noteNumber, getNumOfNoteNumbers()).get();
 	}
 

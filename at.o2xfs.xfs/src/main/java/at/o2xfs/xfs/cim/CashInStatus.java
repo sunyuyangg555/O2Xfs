@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.cim;
 
 import at.o2xfs.xfs.XfsConstant;
+import org.omg.CORBA.UNKNOWN;
 
 public enum CashInStatus implements XfsConstant {
 
@@ -60,6 +61,7 @@ public enum CashInStatus implements XfsConstant {
 	 * @since v3.10
 	 */
 	RESET(5L);
+
 
 	private final long value;
 

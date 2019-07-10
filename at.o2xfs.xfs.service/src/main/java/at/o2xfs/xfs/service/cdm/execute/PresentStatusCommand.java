@@ -25,13 +25,18 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
+import at.o2xfs.xfs.cdm.CdmInfoCommand;
+import at.o2xfs.xfs.cdm.Position;
+import at.o2xfs.xfs.v3_00.cdm.PresentStatus3;
+import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.win32.XfsWord;
 
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+public class PresentStatusCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, PresentStatus3> {
 
-public interface CashUnitErrorListener {
-
-	void onCashUnitError(CashUnitError3 cashUnitError);
-
+	public PresentStatusCommand(CdmService service, Position position) {
+		super(service, CdmInfoCommand.PRESENT_STATUS, XfsWord.valueOf(position), PresentStatus3.class);
+	}
 }

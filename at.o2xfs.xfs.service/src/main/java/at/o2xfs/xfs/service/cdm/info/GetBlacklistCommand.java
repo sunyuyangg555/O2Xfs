@@ -25,16 +25,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.info;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
+import at.o2xfs.xfs.v3_30.cdm.Blacklist330;
 import at.o2xfs.xfs.service.ReflectiveInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
 
-public class CdmStatusCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CdmStatus3> {
+public class GetBlacklistCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, Blacklist330> {
 
-	public CdmStatusCommand(CdmService service) {
-		super(service, CdmInfoCommand.STATUS, CdmStatus3.class);
+	public GetBlacklistCommand(CdmService service) {
+		super(service, CdmInfoCommand.GET_BLACKLIST, Blacklist330.class);
 	}
 }

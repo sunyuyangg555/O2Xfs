@@ -39,6 +39,23 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class ItemPosition3 extends Struct {
 
+	public static class Builder{
+		private int number;
+		private Retract3 retract3;
+		private Position position;
+
+
+		public Builder(int number, Retract3 retract3, Position position) {
+			this.number = number;
+			this.retract3 = retract3;
+			this.position = position;
+		}
+
+		public ItemPosition3 build() {
+			return new ItemPosition3(this);
+		}
+	}
+
 	protected final USHORT number = new USHORT();
 	protected final Pointer retractArea = new Pointer();
 	protected final XfsWord<Position> outputPosition = new XfsWord<>(Position.class);
@@ -58,6 +75,14 @@ public class ItemPosition3 extends Struct {
 		this();
 		allocate();
 		set(copy);
+	}
+
+	public ItemPosition3(Builder builder) {
+		this();
+		allocate();
+		number.set(builder.number);
+		retractArea.pointTo(new Retract3(builder.retract3));
+		outputPosition.set(builder.position);
 	}
 
 	protected void set(ItemPosition3 copy) {

@@ -333,7 +333,7 @@ public class XfsServiceManager implements IXfsCallback {
         final XFSVersionDWORD versionsRequired = new XFSVersionDWORD();
         versionsRequired.allocate();
         versionsRequired.setLowVersion(XfsVersion.V2_00);
-        versionsRequired.setHighVersion(XfsVersion.V3_20);
+        versionsRequired.setHighVersion(XfsVersion.V3_00);
         try {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(method, "versionsRequired=" + versionsRequired);

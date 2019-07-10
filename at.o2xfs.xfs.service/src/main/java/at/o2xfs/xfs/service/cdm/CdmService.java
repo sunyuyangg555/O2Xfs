@@ -27,23 +27,18 @@
 
 package at.o2xfs.xfs.service.cdm;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.cdm.CdmMessage;
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.service.cim.CimServiceListener;
-import at.o2xfs.xfs.service.cim.CimUserListener;
 import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
 import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
 import at.o2xfs.xfs.v3_00.cdm.CountsChanged3;
@@ -52,10 +47,9 @@ import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
 import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
 import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
 import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
-import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsService;
-import at.o2xfs.xfs.service.cdm.xfs3.CdmCapabilitiesCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.CurrencyExpCommand;
+import at.o2xfs.xfs.service.cdm.info.CdmCapabilitiesCommand;
+import at.o2xfs.xfs.service.cdm.info.CurrencyExpCommand;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public final class CdmService extends XfsService<CdmServiceListener, CdmUserListener> {

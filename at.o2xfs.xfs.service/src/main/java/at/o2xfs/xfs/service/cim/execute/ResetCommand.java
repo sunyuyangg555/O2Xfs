@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cim.execute;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -33,32 +33,46 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
-import at.o2xfs.xfs.v3_00.cdm.Denominate3;
-import at.o2xfs.xfs.v3_00.cdm.Denomination3;
+import at.o2xfs.xfs.cim.CimExecuteCommand;
+import at.o2xfs.xfs.cim.CimMessage;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cdm.CdmService;
+
+import at.o2xfs.xfs.service.cim.CimFactory;
+import at.o2xfs.xfs.service.cim.CimService;
+
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
+import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cim.ItemPosition3;
+import at.o2xfs.xfs.v3_00.cim.P6Info3;
+import at.o2xfs.xfs.v3_10.cim.ItemInfoSummary310;
 
-public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListener, DenominationEvent> {
+import java.util.List;
+import java.util.Optional;
 
-	private static final Logger LOG = LoggerFactory.getLogger(DenominateCommand.class);
+public class ResetCommand extends AbstractAsyncXfsCommand<ResetListener, SuccessEvent> {
 
-	private final CdmService service;
+	private static final Logger LOG = LoggerFactory.getLogger(ResetCommand.class);
 
-	private final Denominate3 denominate;
+	private final CimService service;
 
-	public DenominateCommand(CdmService service, Denominate3 denominate) {
+	private final Optional<ItemPosition3> itemPosition;
+
+	public ResetCommand(CimService service) {
+		this(service, null);
+	}
+
+	public ResetCommand(CimService service, ItemPosition3 itemPosition) {
 		this.service = service;
-		this.denominate = new Denominate3(denominate);
+		this.itemPosition = Optional.ofNullable(itemPosition);
 	}
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<CdmExecuteCommand>(service, CdmExecuteCommand.DENOMINATE, denominate);
+		return new XfsExecuteCommand<CimExecuteCommand>(service, CimExecuteCommand.RESET, itemPosition.orElse(null));
 	}
 
 	@Override
@@ -68,13 +82,21 @@ public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListene
 			LOG.debug(method, "wfsResult=" + wfsResult);
 		}
 		try {
-			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
+			CimMessage message = wfsResult.getEventID(CimMessage.class);
 			switch (message) {
 				case EXEE_CASHUNITERROR:
 					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
 					break;
+				case EXEE_INPUT_P6:
+					fireInputP6(CimFactory.fromNullTerminatedArray(service.getXfsVersion(), wfsResult.getResults(),
+							P6Info3.class));
+					break;
+				case EXEE_INFO_AVAILABLE:
+					fireInfoAvailable(CimFactory.fromNullTerminatedArray(service.getXfsVersion(), wfsResult.getResults(),
+							ItemInfoSummary310.class));
+					break;
 				default:
-					throw new IllegalArgumentException("CdmMessage: " + message);
+					throw new IllegalArgumentException("CimMessage: " + message);
 			}
 		} finally {
 			XfsServiceManager.getInstance().free(wfsResult);
@@ -86,13 +108,34 @@ public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListene
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, cashUnitError);
 		}
-		for (DenominateListener each : listeners) {
+		for ( ResetListener each : listeners) {
 			each.onCashUnitError(cashUnitError);
 		}
 	}
 
+	private void fireInputP6(List<P6Info3> p6Infos) {
+		String method = "fireInputP6()";
+		if (LOG.isInfoEnabled()) {
+			LOG.info(method, "");
+		}
+		for (ResetListener each : listeners) {
+			each.onInputP6(p6Infos);
+		}
+	}
+
+	private void fireInfoAvailable(List<ItemInfoSummary310> itemInfoSummaries) {
+		String method = "fireInfoAvailable(ItemInfoSummary330)";
+		if (LOG.isInfoEnabled()) {
+			LOG.info(method, itemInfoSummaries);
+		}
+		for (ResetListener each : listeners) {
+			each.onInfoAvailable(itemInfoSummaries);
+		}
+	}
+
+
 	@Override
-	protected DenominationEvent createCompleteEvent(Pointer results) {
-		return DenominationEvent.build(ReflectiveFactory.create(service.getXfsVersion(), results, Denomination3.class));
+	protected SuccessEvent createCompleteEvent(Pointer results) {
+		return SuccessEvent.build();
 	}
 }

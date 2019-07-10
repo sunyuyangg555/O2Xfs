@@ -27,11 +27,11 @@
 
 package at.o2xfs.xfs.v3_00.cim;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.xfs.v3_10.cim.CashIn310;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -52,6 +52,8 @@ import at.o2xfs.xfs.win32.XfsWord;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class CashIn3 extends Struct {
+
+	private final static Logger LOG = LoggerFactory.getLogger(CashIn3.class);
 
 	public static class Builder {
 		private final int number;
@@ -169,6 +171,7 @@ public class CashIn3 extends Struct {
 
 	public CashIn3(Pointer p) {
 		this();
+		// LOG.info("CashIn3(Pointer)", Arrays.toString(p.buffer(getSize()).get()));
 		assignBuffer(p);
 	}
 

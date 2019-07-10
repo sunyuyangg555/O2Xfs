@@ -25,18 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.v3_00.cdm.PresentStatus3;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
-import at.o2xfs.xfs.service.cdm.CdmService;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
+import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
 
-public class PresentStatusCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, PresentStatus3> {
+public final class DenominationEvent implements CompleteEvent<Denomination3> {
 
-	public PresentStatusCommand(CdmService service, Position position) {
-		super(service, CdmInfoCommand.PRESENT_STATUS, XfsWord.valueOf(position), PresentStatus3.class);
+	private final Denomination3 denomination;
+
+	private DenominationEvent(Denomination3 denomination) {
+		this.denomination = denomination;
+	}
+
+
+	public static DenominationEvent build(Denomination3 denomination) {
+		return new DenominationEvent(denomination);
+	}
+
+	@Override
+	public Denomination3 get() {
+		return denomination;
 	}
 }

@@ -27,6 +27,9 @@
 
 package at.o2xfs.xfs.v3_00.cim;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.win32.Type;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -36,7 +39,11 @@ import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.util.Arrays;
+
 public class CashInfo3 extends Struct {
+
+	private static final Logger LOG = LoggerFactory.getLogger(CashInfo3.class);
 
 	public static class Builder {
 
@@ -78,6 +85,10 @@ public class CashInfo3 extends Struct {
 	}
 
 	protected void set(CashInfo3 copy) {
+		String method = "set(CashInfo3)";
+		/*if(LOG.isDebugEnabled()) {
+			LOG.info(method, Arrays.toString(copy.getBuffer().get()));
+		}*/
 		count.set(copy.getCount());
 		cashIn.pointTo(new CashIn3Array(copy.getCashIn()));
 	}

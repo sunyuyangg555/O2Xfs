@@ -25,25 +25,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-import at.o2xfs.xfs.cdm.NoteErrorReason;
-import at.o2xfs.xfs.v3_00.cdm.Denomination3;
-import at.o2xfs.xfs.service.cmd.event.CommandListener;
-import at.o2xfs.xfs.type.RequestId;
+import at.o2xfs.xfs.cdm.CdmInfoCommand;
+import at.o2xfs.xfs.v3_00.cdm.MixType3;
+import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.CdmService;
 
-public interface DispenseListener extends CommandListener<DenominationEvent>, CashUnitErrorListener, InputP6Listener, InfoAvailableListener {
+public class MixTypesCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, MixType3> {
 
-	void onDelayedDispense(long delay);
-
-	void onStartDispense(RequestId requestId);
-
-	void onPartialDispense(int dispNum);
-
-	void onSubDispenseOk(Denomination3 denomination);
-
-	void onIncompleteDispense(Denomination3 denomination);
-
-	void onNoteError(NoteErrorReason reason);
-
+	public MixTypesCommand(CdmService service) {
+		super(service, CdmInfoCommand.MIX_TYPES, MixType3.class);
+	}
 }

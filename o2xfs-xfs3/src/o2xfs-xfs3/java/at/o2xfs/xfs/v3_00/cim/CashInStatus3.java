@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_00.cim;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;

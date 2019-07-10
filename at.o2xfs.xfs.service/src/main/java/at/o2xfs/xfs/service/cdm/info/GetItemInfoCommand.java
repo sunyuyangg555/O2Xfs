@@ -25,12 +25,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.info;
 
-import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
+import at.o2xfs.xfs.cdm.CdmInfoCommand;
+import at.o2xfs.xfs.v3_30.cdm.GetItemInfo330;
+import at.o2xfs.xfs.v3_30.cdm.ItemInfo330;
+import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.CdmService;
 
-public interface InfoAvailableListener {
+public class GetItemInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, ItemInfo330> {
 
-	void onInfoAvailable(ItemInfoSummary330 itemInfoSummary);
-
+	public GetItemInfoCommand(CdmService service, GetItemInfo330 getItemInfo) {
+		super(service, CdmInfoCommand.GET_ITEM_INFO, getItemInfo, ItemInfo330.class);
+	}
 }

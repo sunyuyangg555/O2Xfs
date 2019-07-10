@@ -120,8 +120,7 @@ public class CimService extends XfsService<CimServiceListener, CimUserListener> 
                 firePowerSaveChange(CimFactory.create(getXfsVersion(), wfsResult.getResults(), PowerSaveChange310.class));
                 break;
             case SRVE_SHUTTERSTATUSCHANGED:
-                fireShutterStatusChanged(
-                        CimFactory.create(getXfsVersion(), wfsResult.getResults(), ShutterStatusChanged330.class));
+                fireShutterStatusChanged(CimFactory.create(getXfsVersion(), wfsResult.getResults(), ShutterStatusChanged330.class));
                 break;
             default:
                 throw new IllegalArgumentException(cimMessage.toString());

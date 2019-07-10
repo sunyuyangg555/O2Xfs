@@ -74,7 +74,6 @@ import at.o2xfs.xfs.v3_30.cim.DepleteResult330;
 import at.o2xfs.xfs.v3_30.cim.IncompleteDeplete330;
 import at.o2xfs.xfs.v3_30.cim.ItemInfo330;
 import at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330;
-import org.pmw.tinylog.Logger;
 
 public enum CimFactory {
 

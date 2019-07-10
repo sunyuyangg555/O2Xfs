@@ -25,16 +25,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.info;
 
 import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3;
+import at.o2xfs.xfs.v3_30.cdm.AllItemsInfo330;
+import at.o2xfs.xfs.v3_30.cdm.GetAllItemsInfo330;
 import at.o2xfs.xfs.service.ReflectiveInfoCommand;
 import at.o2xfs.xfs.service.cdm.CdmService;
 
-public class CashUnitInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CashUnitInfo3> {
+public class GetAllItemsInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, AllItemsInfo330> {
 
-	public CashUnitInfoCommand(CdmService service) {
-		super(service, CdmInfoCommand.CASH_UNIT_INFO, CashUnitInfo3.class);
+	public GetAllItemsInfoCommand(CdmService service, GetAllItemsInfo330 getAllItemsInfo) {
+		super(service, CdmInfoCommand.GET_ALL_ITEMS_INFO, getAllItemsInfo, AllItemsInfo330.class);
 	}
 }

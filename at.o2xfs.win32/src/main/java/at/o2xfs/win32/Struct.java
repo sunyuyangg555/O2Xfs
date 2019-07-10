@@ -30,8 +30,11 @@ package at.o2xfs.win32;
 import at.o2xfs.common.Assert;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -39,8 +42,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  * @author Andreas Fagschlunger
  */
-public class Struct
-		extends Type {
+public class Struct extends Type {
+
+	private final static Logger LOG = LoggerFactory.getLogger(Struct.class);
 
 	public class Appender {
 
@@ -73,7 +77,9 @@ public class Struct
 		super.assignBuffer(buffer);
 		int index = 0;
 		for (Type type : types) {
+			// LOG.info("assignBuffer(Buffer)", type.getClass().getSimpleName() + "  size : " + type.getSize());
 			type.assignBuffer(buffer.subBuffer(index, type.getSize()));
+			// LOG.info("assignBuffer(Buffer)", " value : " + Arrays.toString(type.getBytes()));
 			index += type.getSize();
 		}
 	}

@@ -38,7 +38,7 @@ public final class CashInEndCompleteEvent implements CompleteEvent<CashInfo3> {
 
     private CashInEndCompleteEvent(CashInfo3 cashInfo) {
         Objects.requireNonNull(cashInfo);
-        this.cashInfo = cashInfo;
+        this.cashInfo = new CashInfo3(cashInfo);
     }
 
     public static final CashInEndCompleteEvent build(CashInfo3 cashInfo) {

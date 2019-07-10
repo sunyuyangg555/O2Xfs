@@ -25,77 +25,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm;
+package at.o2xfs.xfs.service.cdm.info;
 
-import java.util.Optional;
+import at.o2xfs.xfs.cdm.CdmInfoCommand;
+import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
+import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.CdmService;
 
-import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
-import at.o2xfs.xfs.v3_00.cdm.CountsChanged3;
-import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
-import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
-import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
-import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
+public class CdmCapabilitiesCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, CdmCaps3> {
 
-public class CdmServiceAdapter implements CdmServiceListener {
-
-	@Override
-	public void onSafeDoorOpen() {
-
-	}
-
-	@Override
-	public void onSafeDoorClosed() {
-
-	}
-
-	@Override
-	public void onCashUnitThreshold(CashUnit3 cashUnit) {
-
-	}
-
-	@Override
-	public void onCashUnitInfoChanged(CashUnit3 cashUnit) {
-
-	}
-
-	@Override
-	public void onTellerInfoChanged(int tellerId) {
-
-	}
-
-	@Override
-	public void onItemsTaken(Position position) {
-
-	}
-
-	@Override
-	public void onCountsChanged(CountsChanged3 countsChanged) {
-
-	}
-
-	@Override
-	public void onItemsPresented() {
-
-	}
-
-	@Override
-	public void onMediaDetected(Optional<ItemPosition3> itemPosition) {
-
-	}
-
-	@Override
-	public void onDevicePosition(DevicePosition310 devicePosition) {
-
-	}
-
-	@Override
-	public void onPowerSaveChange(PowerSaveChange310 powerSaveChange) {
-
-	}
-
-	@Override
-	public void onShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
-
+	public CdmCapabilitiesCommand(CdmService service) {
+		super(service, CdmInfoCommand.CAPABILITIES, CdmCaps3.class);
 	}
 }

@@ -27,13 +27,19 @@
 
 package at.o2xfs.xfs.v3_00.cim;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Buffer;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Type;
 import at.o2xfs.win32.USHORT;
 import at.o2xfs.win32.ValueType;
 
+import java.util.Arrays;
+
 public class NoteIDs extends Type implements ValueType<int[]> {
+
+	private final static Logger LOG = LoggerFactory.getLogger(NoteIDs.class);
 
 	private final USHORT[] noteIDs;
 
@@ -44,7 +50,9 @@ public class NoteIDs extends Type implements ValueType<int[]> {
 	}
 
 	public NoteIDs(Pointer aPointer) {
+		String method = "NoteIDs(Pointer)";
 		if (Pointer.NULL.equals(aPointer)) {
+			LOG.info(method,"aPointer is null");
 			noteIDs = new USHORT[0];
 		} else {
 			Buffer buffer = null;
@@ -83,10 +91,12 @@ public class NoteIDs extends Type implements ValueType<int[]> {
 
 	@Override
 	public int[] get() {
+		String method = "get()";
 		int result[] = new int[noteIDs.length];
 		for (int i = 0; i < noteIDs.length; i++) {
 			result[i] = noteIDs[i].intValue();
 		}
+		LOG.info(method, Arrays.toString(result));
 		return result;
 	}
 }

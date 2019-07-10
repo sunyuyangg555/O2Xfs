@@ -25,17 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-import at.o2xfs.xfs.cdm.CdmInfoCommand;
-import at.o2xfs.xfs.v3_30.cdm.GetItemInfo330;
-import at.o2xfs.xfs.v3_30.cdm.ItemInfo330;
-import at.o2xfs.xfs.service.ReflectiveInfoCommand;
-import at.o2xfs.xfs.service.cdm.CdmService;
+import at.o2xfs.xfs.service.cdm.event.CashUnitErrorListener;
+import at.o2xfs.xfs.service.cdm.event.IncompleteRetractListener;
+import at.o2xfs.xfs.service.cdm.event.InfoAvailableListener;
+import at.o2xfs.xfs.service.cdm.event.InputP6Listener;
+import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
+import at.o2xfs.xfs.service.cmd.event.CommandListener;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
-public class GetItemInfoCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, ItemInfo330> {
+public interface ResetListener extends CommandListener<SuccessEvent>,
+        IncompleteRetractListener,
+        CashUnitErrorListener,
+        InputP6Listener,
+        InfoAvailableListener {
 
-	public GetItemInfoCommand(CdmService service, GetItemInfo330 getItemInfo) {
-		super(service, CdmInfoCommand.GET_ITEM_INFO, getItemInfo, ItemInfo330.class);
-	}
+
 }

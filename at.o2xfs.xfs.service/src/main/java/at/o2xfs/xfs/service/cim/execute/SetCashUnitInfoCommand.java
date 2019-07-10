@@ -31,7 +31,7 @@ public class SetCashUnitInfoCommand extends AbstractAsyncXfsCommand<SetCashUnitI
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.RETRACT, cashInfo3);
+        return new XfsExecuteCommand<>(cimService, CimExecuteCommand.SET_CASH_UNIT_INFO, cashInfo3);
 
     }
 

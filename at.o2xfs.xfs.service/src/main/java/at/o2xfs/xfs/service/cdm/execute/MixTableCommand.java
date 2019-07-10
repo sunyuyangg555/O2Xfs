@@ -25,11 +25,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
-import at.o2xfs.xfs.service.cmd.event.CommandListener;
-import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
+import at.o2xfs.win32.USHORT;
+import at.o2xfs.xfs.cdm.CdmInfoCommand;
+import at.o2xfs.xfs.v3_00.cdm.MixTable3;
+import at.o2xfs.xfs.service.ReflectiveInfoCommand;
+import at.o2xfs.xfs.service.cdm.CdmService;
 
-public interface RejectListener extends CommandListener<SuccessEvent>, CashUnitErrorListener, InputP6Listener, InfoAvailableListener {
+public class MixTableCommand extends ReflectiveInfoCommand<CdmService, CdmInfoCommand, MixTable3> {
 
+	public MixTableCommand(CdmService service, int mixNumber) {
+		super(service, CdmInfoCommand.MIX_TABLE, new USHORT(mixNumber), MixTable3.class);
+	}
 }

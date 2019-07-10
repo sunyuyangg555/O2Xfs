@@ -25,20 +25,15 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.ULONG;
-import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.cdm.NoteErrorReason;
 import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
-import at.o2xfs.xfs.v3_00.cdm.Denomination3;
-import at.o2xfs.xfs.v3_00.cdm.Dispense3;
 import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
@@ -46,24 +41,21 @@ import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
-import at.o2xfs.xfs.type.RequestId;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 
-public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, DenominationEvent> {
+public class RejectCommand extends AbstractAsyncXfsCommand<RejectListener, SuccessEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(DispenseCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RejectCommand.class);
 
 	private final CdmService service;
-	private final Dispense3 dispense;
 
-	public DispenseCommand(CdmService service, Dispense3 dispense) {
+	public RejectCommand(CdmService service) {
 		this.service = service;
-		this.dispense = dispense;
 	}
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<CdmExecuteCommand>(service, CdmExecuteCommand.DISPENSE, dispense);
+		return new XfsExecuteCommand<>(service, CdmExecuteCommand.REJECT);
 	}
 
 	@Override
@@ -75,26 +67,8 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_DELAYEDDISPENSE:
-					fireDelayedDispense(new ULONG(wfsResult.getResults()).longValue());
-					break;
-				case EXEE_STARTDISPENSE:
-					fireStartDispense(new RequestId(wfsResult.getResults()));
-					break;
 				case EXEE_CASHUNITERROR:
 					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
-					break;
-				case EXEE_PARTIALDISPENSE:
-					firePartialDispense(new USHORT(wfsResult.getResults()).intValue());
-					break;
-				case EXEE_SUBDISPENSEOK:
-					fireSubDispenseOk(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
-					break;
-				case EXEE_INCOMPLETEDISPENSE:
-					fireIncompleteDispense(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), Denomination3.class));
-					break;
-				case EXEE_NOTEERROR:
-					fireNoteError(new XfsWord<>(NoteErrorReason.class, wfsResult.getResults()).get());
 					break;
 				case EXEE_INPUT_P6:
 					fireInputP6();
@@ -110,73 +84,13 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 		}
 	}
 
-	private void fireDelayedDispense(long delay) {
-		String method = "fireDelayedDispense(long)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, delay);
-		}
-		for (DispenseListener each : listeners) {
-			each.onDelayedDispense(delay);
-		}
-	}
-
-	private void fireStartDispense(RequestId requestId) {
-		String method = "fireStartDispense(RequestId)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, requestId);
-		}
-		for (DispenseListener each : listeners) {
-			each.onStartDispense(requestId);
-		}
-	}
-
 	private void fireCashUnitError(CashUnitError3 cashUnitError) {
 		String method = "fireCashUnitError(CashUnitError3)";
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, cashUnitError);
 		}
-		for (DispenseListener each : listeners) {
+		for (RejectListener each : listeners) {
 			each.onCashUnitError(cashUnitError);
-		}
-	}
-
-	private void firePartialDispense(int dispNum) {
-		String method = "firePartialDispense(int)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, dispNum);
-		}
-		for (DispenseListener each : listeners) {
-			each.onPartialDispense(dispNum);
-		}
-	}
-
-	private void fireSubDispenseOk(Denomination3 denomination) {
-		String method = "fireSubDispenseOk(Denomination3)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, denomination);
-		}
-		for (DispenseListener each : listeners) {
-			each.onSubDispenseOk(denomination);
-		}
-	}
-
-	private void fireIncompleteDispense(Denomination3 denomination) {
-		String method = "fireIncompleteDispense(Denomination3)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, denomination);
-		}
-		for (DispenseListener each : listeners) {
-			each.onIncompleteDispense(denomination);
-		}
-	}
-
-	private void fireNoteError(NoteErrorReason reason) {
-		String method = "fireNoteError(NoteErrorReason)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, reason);
-		}
-		for (DispenseListener each : listeners) {
-			each.onNoteError(reason);
 		}
 	}
 
@@ -185,7 +99,7 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, "");
 		}
-		for (DispenseListener each : listeners) {
+		for (RejectListener each : listeners) {
 			each.onInputP6();
 		}
 	}
@@ -195,13 +109,13 @@ public class DispenseCommand extends AbstractAsyncXfsCommand<DispenseListener, D
 		if (LOG.isInfoEnabled()) {
 			LOG.info(method, itemInfoSummary);
 		}
-		for (DispenseListener each : listeners) {
+		for (RejectListener each : listeners) {
 			each.onInfoAvailable(itemInfoSummary);
 		}
 	}
 
 	@Override
-	protected DenominationEvent createCompleteEvent(Pointer results) {
-		return DenominationEvent.build(ReflectiveFactory.create(service.getXfsVersion(), results, Denomination3.class));
+	protected SuccessEvent createCompleteEvent(Pointer results) {
+		return SuccessEvent.build();
 	}
 }

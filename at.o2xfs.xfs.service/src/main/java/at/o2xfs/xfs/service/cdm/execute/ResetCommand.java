@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
 import java.util.Optional;
 
@@ -35,6 +35,9 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
+import at.o2xfs.xfs.service.cdm.event.CashUnitErrorListener;
+import at.o2xfs.xfs.service.cdm.event.InfoAvailableListener;
+import at.o2xfs.xfs.service.cdm.event.InputP6Listener;
 import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
 import at.o2xfs.xfs.v3_00.cdm.ItemPosition3;
 import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;

@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.cdm.xfs3;
+package at.o2xfs.xfs.service.cdm.execute;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
@@ -33,32 +33,32 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.cdm.CdmExecuteCommand;
 import at.o2xfs.xfs.cdm.CdmMessage;
-import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.Denominate3;
+import at.o2xfs.xfs.v3_00.cdm.Denomination3;
 import at.o2xfs.xfs.service.ReflectiveFactory;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
-import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
-import at.o2xfs.xfs.win32.XfsWord;
 
-public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, SuccessEvent> {
+public class DenominateCommand extends AbstractAsyncXfsCommand<DenominateListener, DenominationEvent> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PresentCommand.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DenominateCommand.class);
 
 	private final CdmService service;
-	private final Position position;
 
-	public PresentCommand(CdmService service, Position position) {
+	private final Denominate3 denominate;
+
+	public DenominateCommand(CdmService service, Denominate3 denominate) {
 		this.service = service;
-		this.position = position;
+		this.denominate = new Denominate3(denominate);
 	}
 
 	@Override
 	protected XfsCommand createCommand() {
-		return new XfsExecuteCommand<CdmExecuteCommand>(service, CdmExecuteCommand.PRESENT, XfsWord.valueOf(position));
+		return new XfsExecuteCommand<CdmExecuteCommand>(service, CdmExecuteCommand.DENOMINATE, denominate);
 	}
 
 	@Override
@@ -70,11 +70,8 @@ public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, Suc
 		try {
 			CdmMessage message = wfsResult.getEventID(CdmMessage.class);
 			switch (message) {
-				case EXEE_INPUT_P6:
-					fireInputP6();
-					break;
-				case EXEE_INFO_AVAILABLE:
-					fireInfoAvailable(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), ItemInfoSummary330.class));
+				case EXEE_CASHUNITERROR:
+					fireCashUnitError(ReflectiveFactory.create(service.getXfsVersion(), wfsResult.getResults(), CashUnitError3.class));
 					break;
 				default:
 					throw new IllegalArgumentException("CdmMessage: " + message);
@@ -84,28 +81,18 @@ public class PresentCommand extends AbstractAsyncXfsCommand<PresentListener, Suc
 		}
 	}
 
-	private void fireInputP6() {
-		String method = "fireInputP6()";
+	private void fireCashUnitError(CashUnitError3 cashUnitError) {
+		String method = "fireCashUnitError(CashUnitError3)";
 		if (LOG.isInfoEnabled()) {
-			LOG.info(method, "");
+			LOG.info(method, cashUnitError);
 		}
-		for (PresentListener each : listeners) {
-			each.onInputP6();
-		}
-	}
-
-	private void fireInfoAvailable(ItemInfoSummary330 itemInfoSummary) {
-		String method = "fireInfoAvailable(ItemInfoSummary330)";
-		if (LOG.isInfoEnabled()) {
-			LOG.info(method, itemInfoSummary);
-		}
-		for (PresentListener each : listeners) {
-			each.onInfoAvailable(itemInfoSummary);
+		for (DenominateListener each : listeners) {
+			each.onCashUnitError(cashUnitError);
 		}
 	}
 
 	@Override
-	protected SuccessEvent createCompleteEvent(Pointer results) {
-		return SuccessEvent.build();
+	protected DenominationEvent createCompleteEvent(Pointer results) {
+		return DenominationEvent.build(ReflectiveFactory.create(service.getXfsVersion(), results, Denomination3.class));
 	}
 }

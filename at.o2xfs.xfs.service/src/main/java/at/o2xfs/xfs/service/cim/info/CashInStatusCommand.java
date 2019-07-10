@@ -53,7 +53,7 @@ public final class CashInStatusCommand implements Callable<CashInStatus3> {
 	@Override
 	public CashInStatus3 call() throws XfsException {
 		CashInStatus3 result;
-		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.BANKNOTE_TYPES);
+		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService, CimInfoCommand.CASH_IN_STATUS);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();

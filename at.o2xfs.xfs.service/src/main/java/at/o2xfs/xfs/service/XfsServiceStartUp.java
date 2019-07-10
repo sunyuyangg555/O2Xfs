@@ -82,7 +82,7 @@ public class XfsServiceStartUp {
 					+ " ...");
 		}
 		xfsService.getSrvcVersionsRequired().setLowVersion(XfsVersion.V2_00);
-		xfsService.getSrvcVersionsRequired().setHighVersion(XfsVersion.V3_20);
+		xfsService.getSrvcVersionsRequired().setHighVersion(XfsVersion.V3_00);
 		open();
 		register();
 	}
