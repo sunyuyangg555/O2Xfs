@@ -34,12 +34,58 @@ import at.o2xfs.win32.USHORT;
 import at.o2xfs.xfs.util.Bitmask;
 import at.o2xfs.xfs.util.XfsConstants;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class WfsPINGetData
-		extends Struct {
+public class WfsPINGetData extends Struct {
+
+	public static class Builder {
+		private int maxLen;
+		private boolean autoEnd;
+		private long activeFDKs;
+		private long activeKeys;
+		private Set<PINFDK> terminateFDKs = new HashSet<>();
+		private Set<PINFK> terminateKeys = new HashSet<>();
+
+		public Builder() {
+		}
+
+		public Builder maxLen(int maxLen) {
+			this.maxLen = maxLen;
+			return this;
+		}
+
+		public Builder autoEnd(boolean autoEnd) {
+			this.autoEnd = autoEnd;
+			return this;
+		}
+
+		public Builder activeFDKs(long activeFDKs) {
+			this.activeFDKs = activeFDKs;
+			return this;
+		}
+
+		public Builder activeKeys(long activeKeys) {
+			this.activeKeys = activeKeys;
+			return this;
+		}
+
+		public Builder terminateFDKs(Set<PINFDK> terminateFDKs) {
+			this.terminateFDKs = terminateFDKs;
+			return this;
+		}
+
+		public Builder terminateKeys( Set<PINFK> terminateKeys) {
+			this.terminateKeys = terminateKeys;
+			return this;
+		}
+
+		public WfsPINGetData build() {
+			return new WfsPINGetData(this);
+		}
+	}
 
 	/**
 	 * Specifies the maximum number of digits which can be returned to the
@@ -80,6 +126,21 @@ public class WfsPINGetData
 	private ULONG terminateKeys = new ULONG();
 
 	public WfsPINGetData() {
+		add(maxLen);
+		add(autoEnd);
+		add(activeFDKs);
+		add(activeKeys);
+		add(terminateFDKs);
+		add(terminateKeys);
+	}
+
+	public WfsPINGetData(Builder builder) {
+		this.maxLen.set(builder.maxLen);
+		this.autoEnd.set(builder.autoEnd);
+		this.activeFDKs.set(builder.activeFDKs);
+		this.activeKeys.set(builder.activeKeys);
+		this.setTerminateFDKs(builder.terminateFDKs);
+		this.setTerminateKeys(builder.terminateKeys);
 		add(maxLen);
 		add(autoEnd);
 		add(activeFDKs);

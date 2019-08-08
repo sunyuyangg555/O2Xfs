@@ -56,6 +56,8 @@ public class XfsServiceFactory {
 			return serviceClass.cast(new TTUService(logicalName));
 		} else if(CimService.class.equals(serviceClass)){
 			return serviceClass.cast(new CimService(logicalName));
+		} else if(CdmService.class.equals(serviceClass)){
+			return serviceClass.cast(new CdmService(logicalName));
 		}
 		throw new IllegalArgumentException("Unknown service class: " + serviceClass);
 	}
