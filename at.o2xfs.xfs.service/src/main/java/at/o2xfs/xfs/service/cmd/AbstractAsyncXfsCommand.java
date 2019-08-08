@@ -123,9 +123,14 @@ public abstract class AbstractAsyncXfsCommand<T extends CommandListener<C>, C ex
             if (LOG.isWarnEnabled()) {
                 LOG.warn(method, "wfsResult=" + wfsResult);
             }
+            interIntermediateEvent(wfsResult);
         } finally {
             XfsServiceManager.getInstance().free(wfsResult);
         }
+    }
+
+    protected void interIntermediateEvent(WFSResult wfsResult){
+
     }
 
     @Override

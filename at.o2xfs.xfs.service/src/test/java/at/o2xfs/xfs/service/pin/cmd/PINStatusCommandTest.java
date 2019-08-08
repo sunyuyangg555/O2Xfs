@@ -31,6 +31,7 @@ import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.service.XfsCommandTest;
 import at.o2xfs.xfs.service.pin.PINService;
 
+import at.o2xfs.xfs.service.pin.info.PINStatusCommand;
 import org.junit.Test;
 
 public class PINStatusCommandTest

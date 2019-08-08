@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.pin.cmd;
+package at.o2xfs.xfs.service.pin.info;
 
 import java.util.concurrent.Callable;
 
