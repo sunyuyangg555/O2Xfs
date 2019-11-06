@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -127,7 +128,7 @@ public class XfsServiceManager implements IXfsCallback {
         hWnd = messageHandler.getHWnd();
         startUpXfs();
         hApp = xfsAPI.wfsCreateAppHandle();
-        new OpenServiceHandler().openServices();
+        // new OpenServiceHandler().openServices();
         return version;
     }
 
@@ -363,23 +364,34 @@ public class XfsServiceManager implements IXfsCallback {
         }
     }
 
-    private void closeServices() {
-        final String method = "closeServices()";
+    public void closeServices(String... logicalNames) {
         synchronized (xfsServices) {
-            while (xfsServices.size() >= 1) {
-                XfsService xfsService = xfsServices.get(0);
-                try {
-                    WFSResult wfsResult = new XfsCloseCommand(xfsService).call();
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug(method, "wfsResult=" + wfsResult);
-                    }
-                    free(wfsResult);
-                } catch (final Exception e) {
-                    if (LOG.isErrorEnabled()) {
-                        LOG.error(method, "Error closing XfsService: " + xfsService, e);
-                    }
-                }
-                xfsServices.remove(0);
+            xfsServices.stream()
+                    .filter(xfsService -> needToClose(Arrays.asList(logicalNames), xfsService))
+                    .forEach(xfsService -> doCloseService(xfsService));
+            xfsServices.removeIf(xfsService -> needToClose(Arrays.asList(logicalNames), xfsService));
+        }
+    }
+
+    private boolean needToClose(List<String> logicalNameList, XfsService xfsService) {
+        return logicalNameList.size() == 0 ||
+                (logicalNameList.size() > 0 &&
+                        logicalNameList.stream()
+                                .anyMatch(logicalName -> logicalName.equalsIgnoreCase(xfsService.getLogicalName()))
+                );
+    }
+
+    private void doCloseService(XfsService xfsService) {
+        final String method = "doCloseService(XfsService)";
+        try {
+            WFSResult wfsResult = new XfsCloseCommand(xfsService).call();
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(method, "wfsResult=" + wfsResult);
+            }
+            free(wfsResult);
+        } catch (final Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error(method, "Error closing XfsService: " + xfsService, e);
             }
         }
     }

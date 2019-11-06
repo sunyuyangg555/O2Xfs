@@ -44,8 +44,8 @@ public class WfsPINGetData extends Struct {
 	public static class Builder {
 		private int maxLen;
 		private boolean autoEnd;
-		private long activeFDKs;
-		private long activeKeys;
+		private Set<PINFDK> activeFDKs = new HashSet<>();
+		private Set<PINFK> activeKeys = new HashSet<>();
 		private Set<PINFDK> terminateFDKs = new HashSet<>();
 		private Set<PINFK> terminateKeys = new HashSet<>();
 
@@ -62,12 +62,12 @@ public class WfsPINGetData extends Struct {
 			return this;
 		}
 
-		public Builder activeFDKs(long activeFDKs) {
+		public Builder activeFDKs(Set<PINFDK> activeFDKs) {
 			this.activeFDKs = activeFDKs;
 			return this;
 		}
 
-		public Builder activeKeys(long activeKeys) {
+		public Builder activeKeys(Set<PINFK> activeKeys) {
 			this.activeKeys = activeKeys;
 			return this;
 		}
@@ -135,18 +135,14 @@ public class WfsPINGetData extends Struct {
 	}
 
 	public WfsPINGetData(Builder builder) {
-		this.maxLen.set(builder.maxLen);
-		this.autoEnd.set(builder.autoEnd);
-		this.activeFDKs.set(builder.activeFDKs);
-		this.activeKeys.set(builder.activeKeys);
-		this.setTerminateFDKs(builder.terminateFDKs);
-		this.setTerminateKeys(builder.terminateKeys);
-		add(maxLen);
-		add(autoEnd);
-		add(activeFDKs);
-		add(activeKeys);
-		add(terminateFDKs);
-		add(terminateKeys);
+		this();
+		allocate();
+		setMaxLen(builder.maxLen);
+		setAutoEnd(builder.autoEnd);
+		setActiveFDKs(builder.activeFDKs);
+		setActiveKeys(builder.activeKeys);
+		setTerminateFDKs(builder.terminateFDKs);
+		setTerminateKeys(builder.terminateKeys);
 	}
 
 	public int getMaxLen() {

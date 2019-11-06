@@ -2,10 +2,7 @@ package at.o2xfs.xfs.service.pin.execute;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
-import at.o2xfs.xfs.pin.PINExecuteCommand;
-import at.o2xfs.xfs.pin.PINMessage;
-import at.o2xfs.xfs.pin.WfsPINData;
-import at.o2xfs.xfs.pin.WfsPINKey;
+import at.o2xfs.xfs.pin.*;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
@@ -16,17 +13,19 @@ import at.o2xfs.xfs.service.util.ExceptionUtil;
 public class PinGetDataCommand  extends AbstractAsyncXfsCommand<PinGetDataListener, PinGetDataCompleteEvent> {
 
     private final PINService pinService;
+    private final WfsPINGetData pinGetData;
 
-    public PinGetDataCommand(PINService pinService) {
+    public PinGetDataCommand(PINService pinService, WfsPINGetData pinGetData) {
         if (pinService == null) {
             ExceptionUtil.nullArgument("pinService");
         }
         this.pinService = pinService;
+        this.pinGetData = pinGetData;
     }
 
     @Override
     protected XfsCommand createCommand() {
-        return new XfsExecuteCommand<>(pinService, PINExecuteCommand.GET_DATA);
+        return new XfsExecuteCommand<>(pinService, PINExecuteCommand.GET_DATA, pinGetData);
     }
 
     @Override
