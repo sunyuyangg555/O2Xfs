@@ -35,6 +35,7 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+@Deprecated
 public class WfsPinCrypt
 		extends XfsStruct {
 
@@ -83,6 +84,10 @@ public class WfsPinCrypt
 		return result;
 	}
 
+	public void setKeyEncKey(byte[] keyEncKey) {
+		this.keyEncKey.pointTo(new WfsXData(keyEncKey));
+	}
+
 	public XfsWord<PINAlgorithm> getAlgorithm() {
 		return algorithm;
 	}
@@ -93,6 +98,10 @@ public class WfsPinCrypt
 
 	public String getStartValueKey() {
 		return startValueKey.toString();
+	}
+
+	public void setStartValueKey(String startValueKey) {
+		this.startValueKey.set(startValueKey);
 	}
 
 	public byte[] getStartValue() {

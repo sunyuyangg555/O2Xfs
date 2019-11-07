@@ -31,6 +31,10 @@ import at.o2xfs.xfs.XfsConstant;
 
 public enum PINUse implements XfsConstant {
 
+	CRYPT(0x0001L),
+	FUNCTION(0x0002L),
+	EMACING(0x0004L),
+	KEYENCKEY(0x0020L),
 	CONSTRUCT(0x0100L),
 	SECURECONSTRUCT(0x0200L),
 	ANSTR31MASTER(0x0400L),

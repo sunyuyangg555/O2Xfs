@@ -41,6 +41,7 @@ import at.o2xfs.xfs.service.pin.PINService;
 
 import java.util.concurrent.Callable;
 
+@Deprecated
 public class PinCryptCommand
 		implements Callable<WfsXData> {
 
