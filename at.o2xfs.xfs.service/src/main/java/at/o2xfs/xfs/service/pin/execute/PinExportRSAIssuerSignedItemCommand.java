@@ -1,5 +1,7 @@
 package at.o2xfs.xfs.service.pin.execute;
 
+import at.o2xfs.log.Logger;
+import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.pin.PINExecuteCommand;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
@@ -11,6 +13,9 @@ import at.o2xfs.xfs.v3_00.pin.ExportRSAIssuerSignedItem3;
 import at.o2xfs.xfs.v3_00.pin.ExportRSAIssuerSignedItemOutput3;
 
 public class PinExportRSAIssuerSignedItemCommand extends AbstractAsyncXfsCommand<CommandListener<PinExportRSAIssuerSignedItemCompleteEvent>, PinExportRSAIssuerSignedItemCompleteEvent> {
+
+    private final static Logger LOG = LoggerFactory
+            .getLogger(PinExportRSAIssuerSignedItemCommand.class);
 
     private final PINService pinService;
     private final ExportRSAIssuerSignedItem3 exportRSAIssuerSignedItem3;
@@ -27,6 +32,7 @@ public class PinExportRSAIssuerSignedItemCommand extends AbstractAsyncXfsCommand
 
     @Override
     protected PinExportRSAIssuerSignedItemCompleteEvent createCompleteEvent(Pointer results) {
-        return new PinExportRSAIssuerSignedItemCompleteEvent(new ExportRSAIssuerSignedItemOutput3(results));
+        ExportRSAIssuerSignedItemOutput3 exportRSAIssuerSignedItemOutput3 = new ExportRSAIssuerSignedItemOutput3(results);
+        return new PinExportRSAIssuerSignedItemCompleteEvent(exportRSAIssuerSignedItemOutput3);
     }
 }

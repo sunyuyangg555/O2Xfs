@@ -4,14 +4,14 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.pin.PINRSASignatureAlgorithm;
 import at.o2xfs.xfs.pin.WfsXData;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsDWord;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ExportRSAIssuerSignedItemOutput3 extends XfsStruct {
 
-    private Pointer value;
-    private XfsWord<PINRSASignatureAlgorithm> signatureAlgorithm;
-    private Pointer signature;
+    private Pointer value = new Pointer();
+    private XfsDWord<PINRSASignatureAlgorithm> signatureAlgorithm = new XfsDWord<>(PINRSASignatureAlgorithm.class);
+    private Pointer signature = new Pointer();
 
     private ExportRSAIssuerSignedItemOutput3() {
         add(value)

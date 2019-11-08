@@ -146,6 +146,7 @@ public abstract class AbstractAsyncXfsCommand<T extends CommandListener<C>, C ex
             } catch (XfsCancelledException e) {
                 fireCancelEvent(new CancelEvent());
             } catch (Exception e) {
+                e.printStackTrace();
                 fireErrorEvent(new ErrorEvent(e));
             }
         } finally {
