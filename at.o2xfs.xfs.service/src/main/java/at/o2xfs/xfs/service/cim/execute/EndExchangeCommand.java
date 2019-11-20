@@ -14,24 +14,25 @@ import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 import at.o2xfs.xfs.v3_00.cim.CashInfo3;
 import at.o2xfs.xfs.v3_00.cim.CashUnitError3;
+import at.o2xfs.xfs.v3_10.cim.CashInfo310;
 
 import java.util.List;
 import java.util.Optional;
 
-public class EndExchangeCommand extends AbstractAsyncXfsCommand<EndExchangeListener, SuccessEvent> {
+public class EndExchangeCommand<P extends CashInfo3> extends AbstractAsyncXfsCommand<EndExchangeListener, SuccessEvent> {
 
     private final CimService cimService;
-    private final Optional<CashInfo3> optionalCashInfo3;
+    private final Optional<P> optionalCashInfo;
 
-    public EndExchangeCommand(CimService cimService, Optional<CashInfo3> optionalCashInfo3) {
+    public EndExchangeCommand(CimService cimService, Optional<P> optionalCashInfo) {
         this.cimService = cimService;
-        this.optionalCashInfo3 = optionalCashInfo3;
+        this.optionalCashInfo = optionalCashInfo;
     }
 
     @Override
     protected XfsCommand createCommand() {
-        if (optionalCashInfo3.isPresent()) {
-            return new XfsExecuteCommand<>(cimService, CimExecuteCommand.END_EXCHANGE, optionalCashInfo3.get());
+        if (optionalCashInfo.isPresent()) {
+            return new XfsExecuteCommand<>(cimService, CimExecuteCommand.END_EXCHANGE, optionalCashInfo.get());
         } else {
             return new XfsExecuteCommand<>(cimService, CimExecuteCommand.END_EXCHANGE);
         }

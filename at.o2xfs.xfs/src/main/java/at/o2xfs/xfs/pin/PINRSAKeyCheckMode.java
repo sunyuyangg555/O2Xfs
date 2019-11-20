@@ -31,12 +31,15 @@ import at.o2xfs.xfs.XfsConstant;
 
 public enum PINRSAKeyCheckMode implements XfsConstant {
 
+	WFS_PIN_RSA_KCV_NONE(0x00000000L),
+
 	/**
 	 * SHA-1 is supported as defined in Ref. 3.
 	 *
 	 * @since 3.10
 	 */
-	WFS_PIN_RSA_KCV_SHA1(0x00000001L);
+	WFS_PIN_RSA_KCV_SHA1(0x00000001L),
+	WFS_PIN_RSA_KCV_SHA256(0x00000002L);
 
 	private final long value;
 

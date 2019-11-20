@@ -2,6 +2,7 @@ package at.o2xfs.xfs.service.pin.execute;
 
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.pin.PINExecuteCommand;
+import at.o2xfs.xfs.pin.WfsXData;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;

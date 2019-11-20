@@ -105,6 +105,9 @@ public class WfsXData
 
 	@Override
 	public String toString() {
-		return new ToStringBuilder(this).append("length", getLength()).append("data", getData()).toString();
+		return new ToStringBuilder(this)
+				.append("length", getLength())
+				.append("data", javax.xml.bind.DatatypeConverter.printHexBinary(getData()))
+				.toString();
 	}
 }

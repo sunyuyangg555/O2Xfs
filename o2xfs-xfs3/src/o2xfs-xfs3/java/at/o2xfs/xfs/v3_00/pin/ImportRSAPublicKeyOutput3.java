@@ -4,7 +4,7 @@ import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.pin.PINRSAKeyCheckMode;
 import at.o2xfs.xfs.pin.WfsXData;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsDWord;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ImportRSAPublicKeyOutput3 extends XfsStruct {
@@ -30,7 +30,7 @@ public class ImportRSAPublicKeyOutput3 extends XfsStruct {
         }
     }
 
-    private XfsWord<PINRSAKeyCheckMode> rsaKeyCheckMode = new XfsWord<>(PINRSAKeyCheckMode.class);
+    private XfsDWord<PINRSAKeyCheckMode> rsaKeyCheckMode = new XfsDWord<>(PINRSAKeyCheckMode.class);
     private Pointer keyCheckValue = new Pointer();
 
     public ImportRSAPublicKeyOutput3(){
@@ -45,8 +45,8 @@ public class ImportRSAPublicKeyOutput3 extends XfsStruct {
     public ImportRSAPublicKeyOutput3(Builder builder) {
         this();
         allocate();
-        this.rsaKeyCheckMode.set(builder.rsaKeyCheckMode);
-        this.keyCheckValue.pointTo(new WfsXData(builder.keyCheckValue));
+        setRsaKeyCheckMode(builder.rsaKeyCheckMode);
+        setKeyCheckValue(builder.keyCheckValue);
     }
 
     public PINRSAKeyCheckMode getRsaKeyCheckMode() {

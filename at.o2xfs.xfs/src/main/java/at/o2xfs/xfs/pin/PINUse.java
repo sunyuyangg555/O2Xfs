@@ -53,7 +53,7 @@ public enum PINUse implements XfsConstant {
 
 	private final long value;
 
-	private PINUse(final long value) {
+	PINUse(final long value) {
 		this.value = value;
 	}
 

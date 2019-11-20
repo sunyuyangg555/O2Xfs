@@ -65,7 +65,7 @@ public class CdmStatus3 extends Struct {
 		assignBuffer(p);
 	}
 
-	protected CdmStatus3(CdmStatus3 copy) {
+	public CdmStatus3(CdmStatus3 copy) {
 		this();
 		allocate();
 		set(copy);

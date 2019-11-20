@@ -6,11 +6,11 @@ import at.o2xfs.xfs.XfsStruct;
 import at.o2xfs.xfs.pin.PINRSASignatureAlgorithm;
 import at.o2xfs.xfs.pin.PINUse;
 import at.o2xfs.xfs.pin.WfsXData;
-import at.o2xfs.xfs.win32.XfsWord;
+import at.o2xfs.xfs.win32.XfsDWord;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.pmw.tinylog.Logger;
 
 public class ImportRSAPublicKey3 extends XfsStruct {
-
 
 
     public static class Builder {
@@ -21,7 +21,8 @@ public class ImportRSAPublicKey3 extends XfsStruct {
         private PINRSASignatureAlgorithm rsaSignatureAlgorithm;
         private byte[] signature;
 
-        public Builder() {}
+        public Builder() {
+        }
 
         public Builder key(String key) {
             this.key = key;
@@ -61,9 +62,9 @@ public class ImportRSAPublicKey3 extends XfsStruct {
 
     private LPSTR key = new LPSTR();
     private Pointer value = new Pointer();
-    private XfsWord<PINUse> use = new XfsWord<>(PINUse.class);
+    private XfsDWord<PINUse> use = new XfsDWord<>(PINUse.class);
     private LPSTR sigKey = new LPSTR();
-    private XfsWord<PINRSASignatureAlgorithm> rsaSignatureAlgorithm = new XfsWord<>(PINRSASignatureAlgorithm.class);
+    private XfsDWord<PINRSASignatureAlgorithm> rsaSignatureAlgorithm = new XfsDWord<>(PINRSASignatureAlgorithm.class);
     private Pointer signature = new Pointer();
 
     public ImportRSAPublicKey3() {
@@ -78,11 +79,12 @@ public class ImportRSAPublicKey3 extends XfsStruct {
     public ImportRSAPublicKey3(Builder builder) {
         this();
         allocate();
-        this.key.set(builder.key);
-        this.value.pointTo(new WfsXData(builder.value));
-        this.sigKey.set(builder.sigKey);
-        this.rsaSignatureAlgorithm.set(builder.rsaSignatureAlgorithm);
-        this.signature.pointTo(new WfsXData(builder.signature));
+        setKey(builder.key);
+        setValue(builder.value);
+        setUse(builder.use);
+        setSigKey(builder.sigKey);
+        setRsaSignatureAlgorithm(builder.rsaSignatureAlgorithm);
+        setSignature(builder.signature);
     }
 
     public PINUse getUse() {
