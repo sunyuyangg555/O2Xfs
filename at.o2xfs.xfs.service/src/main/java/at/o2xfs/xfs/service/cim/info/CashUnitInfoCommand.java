@@ -40,25 +40,27 @@ import at.o2xfs.xfs.service.cim.CimFactory;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 
-public final class CashUnitInfoCommand implements Callable<CashInfo3> {
+public final class CashUnitInfoCommand<T extends CashInfo3> implements Callable<T> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CashUnitInfoCommand.class);
 
 	private final CimService cimService;
+	private final Class<T> cashInfoClass;
 
-	public CashUnitInfoCommand(CimService cimService) {
+	public CashUnitInfoCommand(Class<T> cashInfoClass, CimService cimService) {
 		this.cimService = cimService;
+		this.cashInfoClass = cashInfoClass;
 	}
 
 	@Override
-	public CashInfo3 call() throws XfsException {
-		CashInfo3 result;
+	public T call() throws XfsException {
+		T result;
 		XfsInfoCommand<CimInfoCommand> command = new XfsInfoCommand<CimInfoCommand>(cimService,
 				CimInfoCommand.CASH_UNIT_INFO);
 		WFSResult wfsResult = null;
 		try {
 			wfsResult = command.call();
-			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), CashInfo3.class);
+			result = CimFactory.create(cimService.getXfsVersion(), wfsResult.getResults(), cashInfoClass);
 			if (LOG.isInfoEnabled()) {
 				LOG.info("call()", result);
 			}

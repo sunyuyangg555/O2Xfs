@@ -48,17 +48,7 @@ import at.o2xfs.xfs.v3_00.cim.P6Info3;
 import at.o2xfs.xfs.v3_00.cim.P6Signature3;
 import at.o2xfs.xfs.v3_00.cim.Status3;
 import at.o2xfs.xfs.v3_00.cim.TellerDetails3;
-import at.o2xfs.xfs.v3_10.cim.Capabilities310;
-import at.o2xfs.xfs.v3_10.cim.CashIn310;
-import at.o2xfs.xfs.v3_10.cim.ConfigureNoteReaderOut310;
-import at.o2xfs.xfs.v3_10.cim.DevicePosition310;
-import at.o2xfs.xfs.v3_10.cim.ItemInfo310;
-import at.o2xfs.xfs.v3_10.cim.ItemInfoSummary310;
-import at.o2xfs.xfs.v3_10.cim.P6CompareResult310;
-import at.o2xfs.xfs.v3_10.cim.PositionCapabilities310;
-import at.o2xfs.xfs.v3_10.cim.PositionInfo310;
-import at.o2xfs.xfs.v3_10.cim.PowerSaveChange310;
-import at.o2xfs.xfs.v3_10.cim.Status310;
+import at.o2xfs.xfs.v3_10.cim.*;
 import at.o2xfs.xfs.v3_20.cim.Capabilities320;
 import at.o2xfs.xfs.v3_20.cim.CashUnitCapabilities320;
 import at.o2xfs.xfs.v3_20.cim.DeviceLockStatus320;
@@ -91,6 +81,8 @@ public enum CimFactory {
 			result = createCashIn(xfsVersion, p);
 		} else if (CashInfo3.class.equals(type)) {
 			result = createCashInfo(p);
+		} else if (CashInfo310.class.equals(type)) {
+			result = createCashInfo310(p);
 		} else if (CashInStatus3.class.equals(type)) {
 			result = createCashInStatus(p);
 		} else if (CashUnitCapabilities320.class.equals(type)) {
@@ -187,6 +179,10 @@ public enum CimFactory {
 
 	private CashInfo3 createCashInfo(Pointer p) {
 		return new CashInfo3(new CashInfo3(p));
+	}
+
+	private CashInfo310 createCashInfo310(Pointer p) {
+		return new CashInfo310(new CashInfo310(p));
 	}
 
 	private CashInStatus3 createCashInStatus(Pointer p) {

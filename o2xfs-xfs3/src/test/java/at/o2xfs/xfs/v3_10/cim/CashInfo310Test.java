@@ -29,6 +29,7 @@ package at.o2xfs.xfs.v3_10.cim;
 
 import java.util.EnumSet;
 
+import at.o2xfs.xfs.cdm.CashUnitType;
 import org.junit.Test;
 
 import at.o2xfs.xfs.cdm.CdmType;
@@ -51,7 +52,7 @@ public class CashInfo310Test {
 						.build();
 		CashIn310 cashIn = new CashIn310.Builder(9, CashInType.CDMSPECIFIC, EnumSet.of(CashInItemType.INDIVIDUAL),
 				new char[] { '1', '2', '3', '4', '5' }, new char[] { 'E', 'U', 'R' }, CashUnitStatus.OK,
-				physicalCashUnits, CdmType.SELFSERVICEBILL).build();
+				physicalCashUnits, CashUnitType.RECYCLING).build();
 		System.out.println(cashIn);
 	}
 }

@@ -34,6 +34,7 @@ import java.util.Set;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
+import at.o2xfs.xfs.cdm.CashUnitType;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -57,7 +58,7 @@ public class CashIn310 extends CashIn3 {
 	public static class Builder extends CashIn3.Builder {
 
 		private int[] noteIds;
-		private final CdmType cdmType;
+		private final CashUnitType cdmType;
 		private Optional<String> cashUnitName;
 		private long initialCount;
 		private long dispensedCount;
@@ -67,7 +68,7 @@ public class CashIn310 extends CashIn3 {
 		private long minimum;
 
 		public Builder(int number, CashInType type, Set<CashInItemType> itemType, char[] unitID, char[] currencyID,
-				CashUnitStatus status, PhysicalCashUnit310[] physicalCashUnits, CdmType cdmType) {
+				CashUnitStatus status, PhysicalCashUnit310[] physicalCashUnits, CashUnitType cdmType) {
 			super(number, type, itemType, unitID, currencyID, status, physicalCashUnits);
 			noteIds = new int[0];
 			this.cdmType = cdmType;
@@ -163,7 +164,7 @@ public class CashIn310 extends CashIn3 {
 	}
 
 	protected final Pointer noteIds = new Pointer();
-	protected final XfsWord<CdmType> cdmType = new XfsWord<>(CdmType.class);
+	protected final XfsWord<CashUnitType> cdmType = new XfsWord<>(CashUnitType.class);
 	protected final LPSTR cashUnitName = new LPSTR();
 	protected final ULONG initialCount = new ULONG();
 	protected final ULONG dispensedCount = new ULONG();
@@ -201,7 +202,7 @@ public class CashIn310 extends CashIn3 {
 
 	public CashIn310(Pointer p) {
 		this();
-		LOG.info("CashIn310(Pointer)", Arrays.toString(p.buffer(getSize()).get()));
+		// LOG.info("CashIn310(Pointer)", Arrays.toString(p.buffer(getSize()).get()));
 		assignBuffer(p);
 	}
 
@@ -233,7 +234,7 @@ public class CashIn310 extends CashIn3 {
 		return new NoteIDs(noteIds).get();
 	}
 
-	public CdmType getCdmType() {
+	public CashUnitType getCdmType() {
 		return cdmType.get();
 	}
 

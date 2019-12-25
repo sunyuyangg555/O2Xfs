@@ -96,7 +96,7 @@ public class NoteIDs extends Type implements ValueType<int[]> {
 		for (int i = 0; i < noteIDs.length; i++) {
 			result[i] = noteIDs[i].intValue();
 		}
-		LOG.info(method, Arrays.toString(result));
+		// LOG.info(method, Arrays.toString(result));
 		return result;
 	}
 }
