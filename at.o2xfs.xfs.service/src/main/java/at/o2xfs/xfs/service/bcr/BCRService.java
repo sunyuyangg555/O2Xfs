@@ -10,11 +10,11 @@ import at.o2xfs.xfs.v3_10.bcr.DevicePosition310;
 import at.o2xfs.xfs.v3_10.bcr.PowerSaveChange310;
 
 
-public class BcrService extends XfsService<BcrServiceListener, BcrUserListener> {
+public class BCRService extends XfsService<BCRServiceListener, BCRUserListener> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BcrService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BCRService.class);
 
-    public BcrService(String logicalName) {
+    public BCRService(String logicalName) {
         super(logicalName, XfsServiceClass.BCR);
     }
 
@@ -34,13 +34,13 @@ public class BcrService extends XfsService<BcrServiceListener, BcrUserListener> 
     }
 
     private void fireDevicePositionEvent(DevicePosition310 devicePosition310) {
-        for(BcrServiceListener listener: serviceListeners) {
+        for(BCRServiceListener listener: serviceListeners) {
             listener.onDevicePosition(devicePosition310);
         }
     }
 
     private void firePowerSaveChangeEvent(PowerSaveChange310 powerSaveChange310) {
-        for(BcrServiceListener listener: serviceListeners) {
+        for(BCRServiceListener listener: serviceListeners) {
             listener.onPowerSaveChange(powerSaveChange310);
         }
     }
