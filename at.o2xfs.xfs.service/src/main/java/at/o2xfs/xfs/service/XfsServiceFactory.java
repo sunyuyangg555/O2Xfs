@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.service;
 
+import at.o2xfs.xfs.service.bcr.BcrService;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.idc.IDCService;
@@ -58,6 +59,8 @@ public class XfsServiceFactory {
 			return serviceClass.cast(new CimService(logicalName));
 		} else if(CdmService.class.equals(serviceClass)){
 			return serviceClass.cast(new CdmService(logicalName));
+		} else if(BcrService.class.equals(serviceClass)) {
+			return serviceClass.cast(new BcrService(logicalName));
 		}
 		throw new IllegalArgumentException("Unknown service class: " + serviceClass);
 	}
