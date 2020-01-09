@@ -8,6 +8,8 @@ import at.o2xfs.xfs.win32.XfsWord;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.nio.charset.StandardCharsets;
+
 public class ReadOutput310 extends Struct {
 
     protected final XfsWord<Symbology> symbology = new XfsWord<>(Symbology.class);
@@ -20,12 +22,12 @@ public class ReadOutput310 extends Struct {
         add(symbologyName);
     }
 
-    protected ReadOutput310(Pointer p) {
+    public ReadOutput310(Pointer p) {
         this();
         assignBuffer(p);
     }
 
-    protected ReadOutput310(ReadOutput310 copy) {
+    public ReadOutput310(ReadOutput310 copy) {
         this();
         allocate();
         set(copy);
@@ -62,7 +64,7 @@ public class ReadOutput310 extends Struct {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("symbology", getSymbology())
-                .append("barcodeData", getBarcodeData())
+                .append("barcodeData", new String(getBarcodeData(), StandardCharsets.US_ASCII))
                 .append("symbologyName", getSymbologyName())
                 .toString();
     }

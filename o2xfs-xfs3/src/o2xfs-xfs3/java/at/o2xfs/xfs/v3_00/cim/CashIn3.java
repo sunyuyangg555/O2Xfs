@@ -31,7 +31,6 @@ import java.util.*;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.xfs.v3_10.cim.CashIn310;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -49,7 +48,6 @@ import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsDWord;
 import at.o2xfs.xfs.win32.XfsDWordBitmask;
 import at.o2xfs.xfs.win32.XfsWord;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class CashIn3 extends Struct {
 

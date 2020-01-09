@@ -1,9 +1,6 @@
 package at.o2xfs.xfs.v3_10.bcr;
 
-import at.o2xfs.win32.ByteArray;
-import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.USHORT;
+import at.o2xfs.win32.*;
 
 public class BcrXData extends Struct {
 
@@ -36,6 +33,6 @@ public class BcrXData extends Struct {
     }
 
     public byte[] getData() {
-        return data.buffer(getLength()).get();
+        return data.buffer(length.intValue()).get();
     }
 }
