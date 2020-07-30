@@ -28,7 +28,6 @@
 apply from: "./libraries.gradle"
 
 allprojects {
-
     apply plugin: 'java'
     apply plugin: 'maven-publish'
 
@@ -44,8 +43,8 @@ allprojects {
     }
 
     repositories {
-        maven { url "https://repo.fagschlunger.co.at/libs-snapshot-local" }
         mavenLocal()
+        maven { url "https://repo.fagschlunger.co.at/libs-snapshot-local" }
         mavenCentral()
     }
 }

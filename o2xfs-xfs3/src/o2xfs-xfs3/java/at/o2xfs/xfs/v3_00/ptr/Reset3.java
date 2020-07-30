@@ -28,6 +28,7 @@
 package at.o2xfs.xfs.v3_00.ptr;
 
 import at.o2xfs.xfs.ptr.MediaControl;
+import at.o2xfs.xfs.win32.XfsDWord;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -63,7 +64,7 @@ public class Reset3 extends Struct {
         }
     }
 
-    protected final DWORD mediaControl = new DWORD();
+    protected final XfsDWord<MediaControl> mediaControl = new XfsDWord<>(MediaControl.class);
     protected final USHORT retractBinNumber = new USHORT();
 
     protected Reset3() {
@@ -85,7 +86,7 @@ public class Reset3 extends Struct {
     private Reset3(Builder builder) {
         this();
         allocate();
-        mediaControl.set(builder.mediaControl.getValue());
+        mediaControl.set(builder.mediaControl);
         retractBinNumber.set(builder.retractBinNumber);
     }
 
@@ -94,7 +95,7 @@ public class Reset3 extends Struct {
         retractBinNumber.set(copy.getRetractBinNumber());
     }
 
-    public long getMediaControl() {
+    public MediaControl getMediaControl() {
         return mediaControl.get();
     }
 

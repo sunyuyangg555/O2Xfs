@@ -30,7 +30,7 @@ package at.o2xfs.xfs.v3_00.cdm;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.win32.XfsPointerArray;
 
-class CashUnits3 extends XfsPointerArray<CashUnit3> {
+public class CashUnits3 extends XfsPointerArray<CashUnit3> {
 
 	public CashUnits3(CashUnit3[] array) {
 		super(array);
@@ -39,6 +39,7 @@ class CashUnits3 extends XfsPointerArray<CashUnit3> {
 	public CashUnits3(Pointer p, int length) {
 		super(p, length);
 	}
+
 
 	@Override
 	public CashUnit3 copy(CashUnit3 copy) {

@@ -85,6 +85,11 @@ public enum XfsServiceClass implements XfsConstant {
 	CIM(13L, "CIM"),
 
 	/**
+	 * Card Dispenser Module
+	 */
+	CRD(14L, "CRM"),
+
+	/**
 	 * Barcode Reader
 	 */
 	BCR(15L, "BCR");

@@ -30,12 +30,13 @@ package at.o2xfs.operator.task.xfs.cdm;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.operator.task.xfs.XfsServiceTask;
+import at.o2xfs.xfs.service.cdm.execute.ResetCommand;
+import at.o2xfs.xfs.service.cdm.execute.ResetListener;
 import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
 import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
 import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.cdm.CdmService;
-import at.o2xfs.xfs.service.cdm.xfs3.ResetCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.ResetListener;
+
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;

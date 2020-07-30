@@ -36,7 +36,8 @@ import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.pin.WFSPINSTATUS;
 import at.o2xfs.xfs.service.pin.PINService;
-import at.o2xfs.xfs.service.pin.cmd.PINStatusCommand;
+import at.o2xfs.xfs.service.pin.info.PINStatusCommand;
+
 
 public class PINStatusTask extends PINServiceTask {
 

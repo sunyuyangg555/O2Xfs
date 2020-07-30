@@ -42,153 +42,252 @@ import at.o2xfs.xfs.cdm.CashUnitType;
 import at.o2xfs.xfs.win32.XfsCharArray;
 import at.o2xfs.xfs.win32.XfsWord;
 
+
 public class CashUnit3 extends Struct {
 
-	protected final USHORT number = new USHORT();
-	protected final XfsWord<CashUnitType> type = new XfsWord<>(CashUnitType.class);
-	protected final LPSTR cashUnitName = new LPSTR();
-	protected final XfsCharArray unitID = new XfsCharArray(5);
-	protected final XfsCharArray currencyID = new XfsCharArray(3);
-	protected final ULONG value = new ULONG();
-	protected final ULONG initialCount = new ULONG();
-	protected final ULONG count = new ULONG();
-	protected final ULONG rejectCount = new ULONG();
-	protected final ULONG minimum = new ULONG();
-	protected final ULONG maximum = new ULONG();
-	protected final BOOL appLock = new BOOL();
-	protected final XfsWord<CashUnitStatus> status = new XfsWord<>(CashUnitStatus.class);
-	protected final USHORT numPhysicalCUs = new USHORT();
-	protected final Pointer physical = new Pointer();
+    public static class Builder {
+        private int number = 0;
+        private CashUnitType type;
+        private String cashUnitName;
+        private char[] unitID;
+        private char[] currencyID;
+        private long value = 0;
+        private long initialCount = 0;
+        private long count = 0;
+        private long rejectCount = 0;
+        private long minimum = 0;
+        private long maximum = 0;
+        private boolean appLock = false;
+        private CashUnitStatus status = CashUnitStatus.EMPTY;
+        private PhysicalCashUnit3[] physicalCashUnits;
 
-	protected CashUnit3() {
-		add(number);
-		add(type);
-		add(cashUnitName);
-		add(unitID);
-		add(currencyID);
-		add(value);
-		add(initialCount);
-		add(count);
-		add(rejectCount);
-		add(minimum);
-		add(maximum);
-		add(appLock);
-		add(status);
-		add(numPhysicalCUs);
-		add(physical);
-	}
+        public Builder(int number, CashUnitType type, String cashUnitName, char[] unitID, char[] currencyID) {
+            this.number = number;
+            this.type = type;
+            this.cashUnitName = cashUnitName;
+            this.unitID = unitID;
+            this.currencyID = currencyID;
+        }
 
-	public CashUnit3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+        public Builder value(long value) {
+            this.value = value;
+            return this;
+        }
 
-	public CashUnit3(CashUnit3 copy) {
-		this();
-		allocate();
-		number.set(copy.getNumber());
-		type.set(copy.getType());
-		cashUnitName.set(copy.getCashUnitName());
-		unitID.set(copy.getUnitID());
-		currencyID.set(copy.getCurrencyID());
-		value.set(copy.getValue());
-		initialCount.set(copy.getInitialCount());
-		count.set(copy.getCount());
-		rejectCount.set(copy.getRejectCount());
-		minimum.set(copy.getMinimum());
-		maximum.set(copy.getMaximum());
-		appLock.set(copy.isAppLock());
-		status.set(copy.getStatus());
-		numPhysicalCUs.set(copy.getNumPhysicalCUs());
-		physical.pointTo(new PhysicalCashUnits3(copy.getPhysical()));
-	}
+        public Builder initialCount(long initialCount) {
+            this.initialCount = initialCount;
+            return this;
+        }
 
-	public int getNumber() {
-		return number.get();
-	}
+        public Builder count(long count) {
+            this.count = count;
+            return this;
+        }
 
-	public CashUnitType getType() {
-		return type.get();
-	}
+        public Builder rejectCount(long rejectCount) {
+            this.rejectCount = rejectCount;
+            return this;
+        }
 
-	public String getCashUnitName() {
-		return cashUnitName.get();
-	}
+        public Builder minimum(long minimum) {
+            this.minimum = minimum;
+            return this;
+        }
 
-	public char[] getUnitID() {
-		return unitID.get();
-	}
+        public Builder maximum(long maximum) {
+            this.maximum = maximum;
+            return this;
+        }
 
-	public char[] getCurrencyID() {
-		return currencyID.get();
-	}
+        public Builder status(CashUnitStatus status) {
+            this.status = status;
+            return this;
+        }
 
-	public long getValue() {
-		return value.get();
-	}
+        public Builder appLock(boolean appLock) {
+            this.appLock = appLock;
+            return this;
+        }
 
-	public long getInitialCount() {
-		return initialCount.get();
-	}
+        public Builder physicalCashUnits(PhysicalCashUnit3[] physicalCashUnits) {
+            this.physicalCashUnits = physicalCashUnits;
+            return this;
+        }
 
-	public long getCount() {
-		return count.get();
-	}
 
-	public long getRejectCount() {
-		return rejectCount.get();
-	}
+        public CashUnit3 build() {
+            return new CashUnit3(this);
+        }
+    }
 
-	public long getMinimum() {
-		return minimum.get();
-	}
+    protected final USHORT number = new USHORT();
+    protected final XfsWord<CashUnitType> type = new XfsWord<>(CashUnitType.class);
+    protected final LPSTR cashUnitName = new LPSTR();
+    protected final XfsCharArray unitID = new XfsCharArray(5);
+    protected final XfsCharArray currencyID = new XfsCharArray(3);
+    protected final ULONG value = new ULONG();
+    protected final ULONG initialCount = new ULONG();
+    protected final ULONG count = new ULONG();
+    protected final ULONG rejectCount = new ULONG();
+    protected final ULONG minimum = new ULONG();
+    protected final ULONG maximum = new ULONG();
+    protected final BOOL appLock = new BOOL();
+    protected final XfsWord<CashUnitStatus> status = new XfsWord<>(CashUnitStatus.class);
+    protected final USHORT numPhysicalCUs = new USHORT();
+    protected final Pointer physical = new Pointer();
 
-	public long getMaximum() {
-		return maximum.get();
-	}
+    protected CashUnit3() {
+        add(number);
+        add(type);
+        add(cashUnitName);
+        add(unitID);
+        add(currencyID);
+        add(value);
+        add(initialCount);
+        add(count);
+        add(rejectCount);
+        add(minimum);
+        add(maximum);
+        add(appLock);
+        add(status);
+        add(numPhysicalCUs);
+        add(physical);
+    }
 
-	public boolean isAppLock() {
-		return appLock.get();
-	}
+    public CashUnit3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	public CashUnitStatus getStatus() {
-		return status.get();
-	}
+    public CashUnit3(Builder builder) {
+        this();
+        allocate();
+        set(builder);
+    }
 
-	public int getNumPhysicalCUs() {
-		return numPhysicalCUs.get();
-	}
+    private void set(Builder builder) {
+        number.set(builder.number);
+        type.set(builder.type);
+        unitID.set(builder.unitID);
+        currencyID.set(builder.currencyID);
+        value.set(builder.value);
+        initialCount.set(builder.initialCount);
+        count.set(builder.count);
+        rejectCount.set(builder.rejectCount);
+        minimum.set(builder.minimum);
+        maximum.set(builder.maximum);
+        status.set(builder.status);
+        appLock.set(builder.appLock);
+        numPhysicalCUs.set(builder.physicalCashUnits.length);
+        physical.pointTo(new PhysicalCashUnits3(builder.physicalCashUnits));
+    }
 
-	public PhysicalCashUnit3[] getPhysical() {
-		return new PhysicalCashUnits3(physical, getNumPhysicalCUs()).get();
-	}
+    public CashUnit3(CashUnit3 copy) {
+        this();
+        allocate();
+        number.set(copy.getNumber());
+        type.set(copy.getType());
+        cashUnitName.set(copy.getCashUnitName());
+        unitID.set(copy.getUnitID());
+        currencyID.set(copy.getCurrencyID());
+        value.set(copy.getValue());
+        initialCount.set(copy.getInitialCount());
+        count.set(copy.getCount());
+        rejectCount.set(copy.getRejectCount());
+        minimum.set(copy.getMinimum());
+        maximum.set(copy.getMaximum());
+        appLock.set(copy.isAppLock());
+        status.set(copy.getStatus());
+        numPhysicalCUs.set(copy.getNumPhysicalCUs());
+        physical.pointTo(new PhysicalCashUnits3(copy.getPhysical()));
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getNumber()).append(getType()).append(getCashUnitName()).append(getUnitID()).append(getCurrencyID()).append(getValue())
-				.append(getInitialCount()).append(getCount()).append(getRejectCount()).append(getMinimum()).append(getMaximum()).append(isAppLock()).append(getStatus())
-				.append(getNumPhysicalCUs()).append(getPhysical()).toHashCode();
-	}
+    public int getNumber() {
+        return number.get();
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof CashUnit3) {
-			CashUnit3 cashUnit3 = (CashUnit3) obj;
-			return new EqualsBuilder().append(getNumber(), cashUnit3.getNumber()).append(getType(), cashUnit3.getType()).append(getCashUnitName(), cashUnit3.getCashUnitName())
-					.append(getUnitID(), cashUnit3.getUnitID()).append(getCurrencyID(), cashUnit3.getCurrencyID()).append(getValue(), cashUnit3.getValue())
-					.append(getInitialCount(), cashUnit3.getInitialCount()).append(getCount(), cashUnit3.getCount()).append(getRejectCount(), cashUnit3.getRejectCount())
-					.append(getMinimum(), cashUnit3.getMinimum()).append(getMaximum(), cashUnit3.getMaximum()).append(isAppLock(), cashUnit3.isAppLock())
-					.append(getStatus(), cashUnit3.getStatus()).append(getNumPhysicalCUs(), cashUnit3.getNumPhysicalCUs()).append(getPhysical(), cashUnit3.getPhysical())
-					.isEquals();
-		}
-		return false;
-	}
+    public CashUnitType getType() {
+        return type.get();
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("number", getNumber()).append("type", getType()).append("cashUnitName", getCashUnitName()).append("unitID[5]", getUnitID())
-				.append("currencyID[3]", getCurrencyID()).append("value", getValue()).append("initialCount", getInitialCount()).append("count", getCount())
-				.append("rejectCount", getRejectCount()).append("minimum", getMinimum()).append("maximum", getMaximum()).append("appLock", isAppLock())
-				.append("status", getStatus()).append("numPhysicalCUs", getNumPhysicalCUs()).append("physical", getPhysical()).toString();
-	}
+    public String getCashUnitName() {
+        return cashUnitName.get();
+    }
+
+    public char[] getUnitID() {
+        return unitID.get();
+    }
+
+    public char[] getCurrencyID() {
+        return currencyID.get();
+    }
+
+    public long getValue() {
+        return value.get();
+    }
+
+    public long getInitialCount() {
+        return initialCount.get();
+    }
+
+    public long getCount() {
+        return count.get();
+    }
+
+    public long getRejectCount() {
+        return rejectCount.get();
+    }
+
+    public long getMinimum() {
+        return minimum.get();
+    }
+
+    public long getMaximum() {
+        return maximum.get();
+    }
+
+    public boolean isAppLock() {
+        return appLock.get();
+    }
+
+    public CashUnitStatus getStatus() {
+        return status.get();
+    }
+
+    public int getNumPhysicalCUs() {
+        return numPhysicalCUs.get();
+    }
+
+    public PhysicalCashUnit3[] getPhysical() {
+        return new PhysicalCashUnits3(physical, getNumPhysicalCUs()).get();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getNumber()).append(getType()).append(getCashUnitName()).append(getUnitID()).append(getCurrencyID()).append(getValue())
+                .append(getInitialCount()).append(getCount()).append(getRejectCount()).append(getMinimum()).append(getMaximum()).append(isAppLock()).append(getStatus())
+                .append(getNumPhysicalCUs()).append(getPhysical()).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CashUnit3) {
+            CashUnit3 cashUnit3 = (CashUnit3) obj;
+            return new EqualsBuilder().append(getNumber(), cashUnit3.getNumber()).append(getType(), cashUnit3.getType()).append(getCashUnitName(), cashUnit3.getCashUnitName())
+                    .append(getUnitID(), cashUnit3.getUnitID()).append(getCurrencyID(), cashUnit3.getCurrencyID()).append(getValue(), cashUnit3.getValue())
+                    .append(getInitialCount(), cashUnit3.getInitialCount()).append(getCount(), cashUnit3.getCount()).append(getRejectCount(), cashUnit3.getRejectCount())
+                    .append(getMinimum(), cashUnit3.getMinimum()).append(getMaximum(), cashUnit3.getMaximum()).append(isAppLock(), cashUnit3.isAppLock())
+                    .append(getStatus(), cashUnit3.getStatus()).append(getNumPhysicalCUs(), cashUnit3.getNumPhysicalCUs()).append(getPhysical(), cashUnit3.getPhysical())
+                    .isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("number", getNumber()).append("type", getType()).append("cashUnitName", getCashUnitName()).append("unitID[5]", getUnitID())
+                .append("currencyID[3]", getCurrencyID()).append("value", getValue()).append("initialCount", getInitialCount()).append("count", getCount())
+                .append("rejectCount", getRejectCount()).append("minimum", getMinimum()).append("maximum", getMaximum()).append("appLock", isAppLock())
+                .append("status", getStatus()).append("numPhysicalCUs", getNumPhysicalCUs()).append("physical", getPhysical()).toString();
+    }
 }

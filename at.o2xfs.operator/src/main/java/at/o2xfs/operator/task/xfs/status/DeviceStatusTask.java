@@ -42,7 +42,7 @@ import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.info.IDCStatusCommand;
 import at.o2xfs.xfs.service.pin.PINService;
-import at.o2xfs.xfs.service.pin.cmd.PINStatusCommand;
+import at.o2xfs.xfs.service.pin.info.PINStatusCommand;
 import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.ptr.PTRStatusCallable;
 import at.o2xfs.xfs.service.siu.SIUService;

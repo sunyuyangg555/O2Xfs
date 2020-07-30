@@ -1,20 +1,16 @@
 package at.o2xfs.operator.task.xfs;
 
-import at.o2xfs.operator.task.xfs.adapter.CimServiceAdapter;
-import at.o2xfs.operator.task.xfs.adapter.CimUserAdapter;
-import at.o2xfs.operator.task.xfs.adapter.CommandAdapter;
+
 import at.o2xfs.operator.task.xfs.cim.*;
-import at.o2xfs.win32.Pointer;
+
 import at.o2xfs.xfs.*;
 import at.o2xfs.xfs.cim.*;
 
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cdm.CdmServiceListener;
-import at.o2xfs.xfs.service.cdm.xfs3.ResetCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.ResetListener;
+
 import at.o2xfs.xfs.service.cim.CimService;
-import at.o2xfs.xfs.service.cim.CimServiceListener;
-import at.o2xfs.xfs.service.cim.CimUserListener;
+
 import at.o2xfs.xfs.service.cim.execute.*;
 import at.o2xfs.xfs.service.cim.info.*;
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
@@ -22,15 +18,15 @@ import at.o2xfs.xfs.service.cmd.event.CommandListener;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
+
 import at.o2xfs.xfs.v3_00.cim.*;
-import at.o2xfs.xfs.v3_10.cim.*;
+import at.o2xfs.xfs.v3_10.cim.GetItemInfo310;
+import at.o2xfs.xfs.v3_10.cim.ItemInfo310;
+import at.o2xfs.xfs.v3_10.cim.PositionCapabilities310;
 import at.o2xfs.xfs.v3_30.cdm.IncompleteRetract330;
 import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
-import at.o2xfs.xfs.v3_30.cim.ShutterStatusChanged330;
 import at.o2xfs.xfs.win32.XfsWord;
-import org.apache.commons.beanutils.BeanMap;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -84,7 +80,7 @@ public class XFS {
             return
                     Mono.create(monoSink -> {
                         try {
-                            CashInfo3 cashInfo3 = new CashUnitInfoCommand(service).call();
+                            CashInfo3 cashInfo3 = new CashUnitInfoCommand(null,service).call();
                             monoSink.success(cashInfo3);
                         } catch (XfsException e) {
                             monoSink.error(e);
@@ -198,16 +194,16 @@ public class XFS {
             XfsWord<Position> position = new XfsWord<>(Position.class);
             position.allocate();
             position.set(Position.NULL);
-            OpenShutterCommand openShutterCommand = new OpenShutterCommand(service, new Pointer(position));
+            OpenShutterCommand openShutterCommand = new OpenShutterCommand(service, null);
             service.removeAll();
 
             return
                     Flux.create(fluxSink -> {
 
-                        service.add(new CimUserAdapter(fluxSink));
+                        /*service.add(new CimUserAdapter(fluxSink));
                         openShutterCommand.addCommandListener(new CommandAdapter(fluxSink));
                         service.add(new CimServiceAdapter(fluxSink));
-                        openShutterCommand.execute();
+                        openShutterCommand.execute();*/
                     })
                             .doFinally(signalType -> openShutterCommand.removeCommandListener());
         }
@@ -217,7 +213,7 @@ public class XFS {
             XfsWord<Position> position = new XfsWord<>(Position.class);
             position.allocate();
             position.set(Position.NULL);
-            CloseShutterCommand closeShutterCommand = new CloseShutterCommand(service, new Pointer(position));
+            CloseShutterCommand closeShutterCommand = new CloseShutterCommand(service, null);
 
             return
                     Flux.create(fluxSink -> {
@@ -261,12 +257,12 @@ public class XFS {
                         CashInEndListener cashInEndListener = new CashInEndAdapter(sink);
                         cashInEndCommand.addCommandListener(cashInEndListener);
 
-                        service.add(new CimServiceAdapter(sink));
+                        /*service.add(new CimServiceAdapter(sink));
 
                         service.add(cashUnit -> {
                             Map map = new BeanMap(cashUnit);
                             sink.next(map);
-                        });
+                        });*/
                         cashInEndCommand.execute();
                     })
                             .doFinally(signalType -> {
@@ -280,9 +276,9 @@ public class XFS {
             return
                     Flux.create(fluxSink -> {
 
-                        cashInCommand.addCommandListener(new CashInAdapter(fluxSink));
+                        /*cashInCommand.addCommandListener(new CashInAdapter(fluxSink));
                         service.add(new CimServiceAdapter(fluxSink));
-                        cashInCommand.execute();
+                        cashInCommand.execute();*/
                     })
                             .doFinally(signalType -> cashInCommand.removeCommandListener());
         }
@@ -293,20 +289,20 @@ public class XFS {
             return Flux.create(sink -> {
 
                 cashInRollbackCommand.addCommandListener(new CashInRollbackAdapter(sink));
-                service.add(new CimServiceAdapter(sink));
+                /*service.add(new CimServiceAdapter(sink));*/
                 cashInRollbackCommand.execute();
             })
                     .doFinally(signalType -> cashInRollbackCommand.removeCommandListener());
         }
 
         public static Flux retract(CimService cimService) {
-            RetractCommand retractCommand = new RetractCommand(cimService, new Retract3.Builder(Position.NULL, RetractArea.RETRACT, 1).build());
+            RetractCommand retractCommand = new RetractCommand(cimService, new Retract3.Builder(Position.NULL, RetractArea.RA_RETRACT, 1).build());
             cimService.removeAll();
             return
                     Flux.create(fluxSink -> {
                         retractCommand.addCommandListener(new RetractAdapter(fluxSink));
-                        cimService.add(new CimServiceAdapter(fluxSink));
-                        cimService.add(new CimUserAdapter(fluxSink));
+                        /*cimService.add(new CimServiceAdapter(fluxSink));
+                        cimService.add(new CimUserAdapter(fluxSink));*/
                         retractCommand.execute();
                     })
                             .doFinally(signalType -> retractCommand.removeCommandListener());
@@ -361,8 +357,8 @@ public class XFS {
             return
                     Flux.create(fluxSink -> {
                         setCashUnitInfoCommand.addCommandListener(new SetCashUnitInfoAdapter(fluxSink));
-                        cimService.add(new CimServiceAdapter(fluxSink));
-                        cimService.add(new CimUserAdapter(fluxSink));
+                        /*cimService.add(new CimServiceAdapter(fluxSink));
+                        cimService.add(new CimUserAdapter(fluxSink));*/
                         setCashUnitInfoCommand.execute();
                     })
                             .doFinally(signalType -> setCashUnitInfoCommand.removeCommandListener());
@@ -374,8 +370,8 @@ public class XFS {
             return
                     Flux.create(fluxSink -> {
                         startExchangeCommand.addCommandListener(new StartExchangeAdapter(fluxSink));
-                        service.add(new CimServiceAdapter(fluxSink));
-                        service.add(new CimUserAdapter(fluxSink));
+                        /*service.add(new CimServiceAdapter(fluxSink));
+                        service.add(new CimUserAdapter(fluxSink));*/
                         startExchangeCommand.execute();
                     })
                             .doFinally(signalType -> startExchangeCommand.removeCommandListener());
@@ -383,13 +379,13 @@ public class XFS {
         }
 
         public static Flux endExchange(CimService service, CashInfo3 cashInfo3) {
-            EndExchangeCommand endExchangeCommand = new EndExchangeCommand(service, cashInfo3);
+            EndExchangeCommand endExchangeCommand = new EndExchangeCommand(service, null);
             service.removeAll();
             return
                     Flux.create(fluxSink -> {
                         endExchangeCommand.addCommandListener(new EndExchangeAdapter(fluxSink));
-                        service.add(new CimServiceAdapter(fluxSink));
-                        service.add(new CimUserAdapter(fluxSink));
+                        /*service.add(new CimServiceAdapter(fluxSink));
+                        service.add(new CimUserAdapter(fluxSink));*/
                         endExchangeCommand.execute();
                     })
                             .doFinally(signalType -> endExchangeCommand.removeCommandListener());
@@ -399,7 +395,7 @@ public class XFS {
 
     public static class CDM {
 
-        public static Flux reset(CdmService service) {
+        /*public static Flux reset(CdmService service) {
 
             ResetCommand resetCommand = new ResetCommand(service);
             service.removeServiceListeners();
@@ -505,7 +501,7 @@ public class XFS {
                         resetCommand.execute();
                     })
                             .doFinally(signalType -> resetCommand.removeCommandListener());
-        }
+        }*/
     }
 
 }

@@ -40,70 +40,99 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class StartEx3 extends Struct {
 
-	protected final XfsWord<ExchangeType> exchangeType = new XfsWord<>(ExchangeType.class);
-	protected final USHORT tellerID = new USHORT();
-	protected final USHORT count = new USHORT();
-	protected final Pointer cUNumList = new Pointer();
+    public static class Builder {
+        private final ExchangeType exchangeType;
+        private final int tellerID;
+        private final int count;
+        private final int[] numList;
 
-	protected StartEx3() {
-		add(exchangeType);
-		add(tellerID);
-		add(count);
-		add(cUNumList);
-	}
 
-	public StartEx3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+        public Builder(ExchangeType exchangeType, int tellerID, int[] numList) {
+            this.exchangeType = exchangeType;
+            this.tellerID = tellerID;
+            this.count = numList.length;
+            this.numList = numList;
+        }
 
-	public StartEx3(StartEx3 copy) {
-		this();
-		allocate();
-		set(copy);
-	}
+        public StartEx3 build() {
+            return new StartEx3(this);
+        }
+    }
 
-	protected void set(StartEx3 copy) {
-		exchangeType.set(copy.getExchangeType());
-		tellerID.set(copy.getTellerID());
-		count.set(copy.getCount());
-		cUNumList.pointTo(new UShortArray(copy.getCUNumList()));
-	}
+    protected final XfsWord<ExchangeType> exchangeType = new XfsWord<>(ExchangeType.class);
+    protected final USHORT tellerID = new USHORT();
+    protected final USHORT count = new USHORT();
+    protected final Pointer cUNumList = new Pointer();
 
-	public ExchangeType getExchangeType() {
-		return exchangeType.get();
-	}
+    protected StartEx3() {
+        add(exchangeType);
+        add(tellerID);
+        add(count);
+        add(cUNumList);
+    }
 
-	public int getTellerID() {
-		return tellerID.get();
-	}
+    public StartEx3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	public int getCount() {
-		return count.get();
-	}
+    public StartEx3(StartEx3 copy) {
+        this();
+        allocate();
+        set(copy);
+    }
 
-	public int[] getCUNumList() {
-		return new UShortArray(cUNumList, getCount()).get();
-	}
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getExchangeType()).append(getTellerID()).append(getCount()).append(getCUNumList()).toHashCode();
-	}
+    public StartEx3(Builder builder) {
+        this();
+        allocate();
+        exchangeType.set(builder.exchangeType);
+        tellerID.set(builder.tellerID);
+        count.set(builder.count);
+        cUNumList.pointTo(new UShortArray(builder.numList));
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof StartEx3) {
-			StartEx3 startEx3 = (StartEx3) obj;
-			return new EqualsBuilder().append(getExchangeType(), startEx3.getExchangeType()).append(getTellerID(), startEx3.getTellerID()).append(getCount(), startEx3.getCount())
-					.append(getCUNumList(), startEx3.getCUNumList()).isEquals();
-		}
-		return false;
-	}
+    protected void set(StartEx3 copy) {
+        exchangeType.set(copy.getExchangeType());
+        tellerID.set(copy.getTellerID());
+        count.set(copy.getCount());
+        cUNumList.pointTo(new UShortArray(copy.getCUNumList()));
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("exchangeType", getExchangeType()).append("tellerID", getTellerID()).append("count", getCount()).append("cUNumList", getCUNumList())
-				.toString();
-	}
+    public ExchangeType getExchangeType() {
+        return exchangeType.get();
+    }
+
+    public int getTellerID() {
+        return tellerID.get();
+    }
+
+    public int getCount() {
+        return count.get();
+    }
+
+    public int[] getCUNumList() {
+        return new UShortArray(cUNumList, getCount()).get();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getExchangeType()).append(getTellerID()).append(getCount()).append(getCUNumList()).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof StartEx3) {
+            StartEx3 startEx3 = (StartEx3) obj;
+            return new EqualsBuilder().append(getExchangeType(), startEx3.getExchangeType()).append(getTellerID(), startEx3.getTellerID()).append(getCount(), startEx3.getCount())
+                    .append(getCUNumList(), startEx3.getCUNumList()).isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("exchangeType", getExchangeType()).append("tellerID", getTellerID()).append("count", getCount()).append("cUNumList", getCUNumList())
+                .toString();
+    }
 }

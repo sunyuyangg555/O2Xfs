@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.v3_00.cdm;
 
+import at.o2xfs.xfs.cdm.Position;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -34,13 +35,34 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
 import at.o2xfs.win32.USHORT;
-import at.o2xfs.win32.WORD;
 import at.o2xfs.xfs.cdm.RetractArea;
 import at.o2xfs.xfs.win32.XfsWord;
 
 public class Retract3 extends Struct {
 
-	protected final WORD outputPosition = new WORD();
+	public static class Builder {
+
+		private final Position outputPosition;
+		private final RetractArea retractArea  ;
+		private  int index ;
+
+		public Builder(Position outputPosition, RetractArea retractArea, int index) {
+			this.outputPosition = outputPosition;
+			this.retractArea = retractArea;
+			this.index = index;
+		}
+
+		public Builder index(int index) {
+			this.index = index;
+			return this;
+		}
+
+		public Retract3 build() {
+			return new Retract3(this);
+		}
+	}
+
+	protected final XfsWord<Position> outputPosition = new XfsWord<>(Position.class);
 	protected final XfsWord<RetractArea> retractArea = new XfsWord<>(RetractArea.class);
 	protected final USHORT index = new USHORT();
 
@@ -61,13 +83,21 @@ public class Retract3 extends Struct {
 		set(copy);
 	}
 
+	public Retract3(Builder builder) {
+		this();
+		allocate();
+		outputPosition.set(builder.outputPosition);
+		retractArea.set(builder.retractArea);
+		index.set(builder.index);
+	}
+
 	protected void set(Retract3 copy) {
 		outputPosition.set(copy.getOutputPosition());
 		retractArea.set(copy.getRetractArea());
 		index.set(copy.getIndex());
 	}
 
-	public int getOutputPosition() {
+	public Position getOutputPosition() {
 		return outputPosition.get();
 	}
 

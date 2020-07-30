@@ -11,6 +11,7 @@ import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
 import at.o2xfs.xfs.v3_00.cdm.CashUnit3;
 import at.o2xfs.xfs.v3_00.cdm.CashUnitError3;
+import at.o2xfs.xfs.v3_00.cdm.CashUnitInfo3;
 import at.o2xfs.xfs.v3_00.cdm.StartEx3;
 
 
@@ -56,6 +57,6 @@ public final class StartExchangeCommand extends AbstractAsyncXfsCommand<StartExc
 
     @Override
     protected StartExchangeCompleteEvent createCompleteEvent(Pointer results) {
-        return StartExchangeCompleteEvent.build(new CashUnit3(new CashUnit3(results)));
+        return StartExchangeCompleteEvent.build(new CashUnitInfo3(new CashUnitInfo3(results)));
     }
 }

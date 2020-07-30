@@ -29,6 +29,8 @@ package at.o2xfs.xfs.service.lookup;
 
 import at.o2xfs.xfs.XfsServiceClass;
 import at.o2xfs.xfs.service.XfsService;
+import at.o2xfs.xfs.service.bcr.BCRService;
+import at.o2xfs.xfs.service.cam.CamService;
 import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.idc.IDCService;
@@ -39,46 +41,49 @@ import at.o2xfs.xfs.service.siu.SIUService;
 
 public abstract class XfsServiceLookup implements Iterable<ServiceEntry> {
 
-	public static class ServiceEntry {
+    public static class ServiceEntry {
 
-		private final String logicalName;
+        private final String logicalName;
 
-		private final Class<? extends XfsService> servicClass;
+        private final Class<? extends XfsService> servicClass;
 
-		public ServiceEntry(String logicalName,
-				Class<? extends XfsService> servicClass) {
-			this.logicalName = logicalName;
-			this.servicClass = servicClass;
-		}
+        public ServiceEntry(String logicalName,
+                            Class<? extends XfsService> servicClass) {
+            this.logicalName = logicalName;
+            this.servicClass = servicClass;
+        }
 
-		public String getLogicalName() {
-			return logicalName;
-		}
+        public String getLogicalName() {
+            return logicalName;
+        }
 
-		public Class<? extends XfsService> getServicClass() {
-			return servicClass;
-		}
-	}
+        public Class<? extends XfsService> getServicClass() {
+            return servicClass;
+        }
+    }
 
-	protected Class<? extends XfsService> getServicClass(
-			XfsServiceClass serviceClass) {
-		switch (serviceClass) {
-			case PTR:
-				return PTRService.class;
-			case IDC:
-				return IDCService.class;
-			case PIN:
-				return PINService.class;
-			case CDM:
-				return CdmService.class;
-			case CIM:
-				return CimService.class;
-			case SIU:
-				return SIUService.class;
-			default:
-				throw new IllegalArgumentException(
-						"Unsupported XfsServiceClass: " + serviceClass);
+    protected Class<? extends XfsService> getServicClass(XfsServiceClass serviceClass) {
+        switch (serviceClass) {
+            case PTR:
+                return PTRService.class;
+            case IDC:
+                return IDCService.class;
+            case PIN:
+                return PINService.class;
+            case CDM:
+                return CdmService.class;
+            case CIM:
+                return CimService.class;
+            case SIU:
+                return SIUService.class;
+            case BCR:
+                return BCRService.class;
+            case CAM:
+                return CamService.class;
+            default:
+                throw new IllegalArgumentException(
+                        "Unsupported XfsServiceClass: " + serviceClass);
 
-		}
-	}
+        }
+    }
 }

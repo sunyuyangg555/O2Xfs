@@ -27,6 +27,7 @@
 
 package at.o2xfs.operator.task.xfs.cdm;
 
+import java.util.Optional;
 import java.util.Set;
 
 import at.o2xfs.log.Logger;
@@ -38,18 +39,20 @@ import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.operator.ui.content.text.Label;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.cdm.Position;
-import at.o2xfs.xfs.v3_00.cdm.CdmCaps3;
-import at.o2xfs.xfs.v3_00.cdm.CdmStatus3;
+import at.o2xfs.xfs.service.cdm.execute.PresentCommand;
+import at.o2xfs.xfs.service.cdm.execute.PresentListener;
+import at.o2xfs.xfs.service.cdm.info.CdmStatusCommand;
+import at.o2xfs.xfs.v3_00.cdm.*;
+import at.o2xfs.xfs.v3_10.cdm.DevicePosition310;
+import at.o2xfs.xfs.v3_10.cdm.PowerSaveChange310;
 import at.o2xfs.xfs.v3_30.cdm.ItemInfoSummary330;
 import at.o2xfs.xfs.service.cdm.CdmService;
-import at.o2xfs.xfs.service.cdm.CdmServiceAdapter;
 import at.o2xfs.xfs.service.cdm.CdmServiceListener;
-import at.o2xfs.xfs.service.cdm.xfs3.CdmStatusCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.PresentCommand;
-import at.o2xfs.xfs.service.cdm.xfs3.PresentListener;
+
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
+import at.o2xfs.xfs.v3_30.cdm.ShutterStatusChanged330;
 
 public class PresentTask extends XfsServiceTask<CdmService> implements PresentListener {
 
@@ -74,11 +77,67 @@ public class PresentTask extends XfsServiceTask<CdmService> implements PresentLi
 		}
 	}
 
-	private class ItemsTakenListener extends CdmServiceAdapter {
+	private class ItemsTakenListener implements CdmServiceListener {
+
+
+		@Override
+		public void onSafeDoorOpen() {
+
+		}
+
+		@Override
+		public void onSafeDoorClosed() {
+
+		}
+
+		@Override
+		public void onCashUnitThreshold(CashUnit3 cashUnit) {
+
+		}
+
+		@Override
+		public void onCashUnitInfoChanged(CashUnit3 cashUnit) {
+
+		}
+
+		@Override
+		public void onTellerInfoChanged(int tellerId) {
+
+		}
 
 		@Override
 		public void onItemsTaken(Position position) {
-			itemsTaken();
+
+		}
+
+		@Override
+		public void onCountsChanged(CountsChanged3 countsChanged) {
+
+		}
+
+		@Override
+		public void onItemsPresented() {
+
+		}
+
+		@Override
+		public void onMediaDetected(Optional<ItemPosition3> itemPosition) {
+
+		}
+
+		@Override
+		public void onDevicePosition(DevicePosition310 devicePosition) {
+
+		}
+
+		@Override
+		public void onPowerSaveChange(PowerSaveChange310 powerSaveChange) {
+
+		}
+
+		@Override
+		public void onShutterStatusChanged(ShutterStatusChanged330 shutterStatusChanged) {
+
 		}
 	}
 

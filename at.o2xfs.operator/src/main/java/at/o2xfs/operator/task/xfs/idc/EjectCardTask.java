@@ -29,11 +29,14 @@ package at.o2xfs.operator.task.xfs.idc;
 
 import at.o2xfs.operator.task.CloseTaskCommand;
 import at.o2xfs.operator.task.Task;
+import at.o2xfs.xfs.service.cmd.event.CancelEvent;
+import at.o2xfs.xfs.service.cmd.event.CommandListener;
+import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
+import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
 import at.o2xfs.xfs.service.idc.IDCService;
 import at.o2xfs.xfs.service.idc.execute.EjectCardCommand;
-import at.o2xfs.xfs.service.idc.event.EjectCardListener;
 
-public class EjectCardTask extends Task implements EjectCardListener {
+public class EjectCardTask extends Task implements CommandListener<SuccessEvent> {
 
 	private IDCService idcService = null;
 
@@ -50,46 +53,11 @@ public class EjectCardTask extends Task implements EjectCardListener {
 
 	@Override
 	protected void doExecute() {
-		ejectCardCommand = new EjectCardCommand(idcService);
+		ejectCardCommand = new EjectCardCommand(idcService, null);
 		ejectCardCommand.addCommandListener(this);
 		ejectCardCommand.execute();
 	}
 
-	@Override
-	public void cardPresented() {
-		showMessage("TakeCard");
-	}
-
-	@Override
-	public void cardTaken() {
-		showMessage("CardTaken");
-	}
-
-	@Override
-	public void cardRetainWarning() {
-		showWarning("CardRetainWarning");
-	}
-
-	@Override
-	public void cardRetained() {
-		showMessage("CardRetained");
-	}
-
-	@Override
-	public void commandSuccessful() {
-		finishTask();
-	}
-
-	@Override
-	public void commandCancelled() {
-		finishTask();
-	}
-
-	@Override
-	public void commandFailed(final Exception e) {
-		showException(e);
-		finishTask();
-	}
 
 	private void finishTask() {
 		resetEjectCardCommand();
@@ -100,5 +68,20 @@ public class EjectCardTask extends Task implements EjectCardListener {
 	private void resetEjectCardCommand() {
 		ejectCardCommand.removeCommandListener(this);
 		ejectCardCommand = null;
+	}
+
+	@Override
+	public void onCancel(CancelEvent event) {
+
+	}
+
+	@Override
+	public void onError(ErrorEvent event) {
+
+	}
+
+	@Override
+	public void onComplete(SuccessEvent event) {
+
 	}
 }

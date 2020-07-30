@@ -41,6 +41,23 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class ItemPosition3 extends Struct {
 
+	public static class Builder{
+		private int number;
+		private Retract3 retract3;
+		private Position position;
+
+
+		public Builder(int number, Retract3 retract3, Position position) {
+			this.number = number;
+			this.retract3 = retract3;
+			this.position = position;
+		}
+
+		public ItemPosition3 build() {
+			return new ItemPosition3(this);
+		}
+	}
+
 	protected final USHORT number = new USHORT();
 	protected final Pointer retractArea = new Pointer();
 	protected final XfsWord<Position> outputPosition = new XfsWord<>(Position.class);
@@ -64,23 +81,26 @@ public class ItemPosition3 extends Struct {
 
 	protected void set(ItemPosition3 copy) {
 		number.set(copy.getNumber());
-		Optional<Retract3> retractArea = copy.getRetractArea();
-		if (retractArea.isPresent()) {
-			this.retractArea.pointTo(retractArea.get());
-		}
+		retractArea.pointTo(new Retract3(copy.getRetractArea()));
 		outputPosition.set(copy.getOutputPosition());
 	}
+
+	public ItemPosition3(Builder builder) {
+		this();
+		allocate();
+		number.set(builder.number);
+		retractArea.pointTo(new Retract3(builder.retract3));
+		outputPosition.set(builder.position);
+	}
+
 
 	public int getNumber() {
 		return number.get();
 	}
 
-	public Optional<Retract3> getRetractArea() {
-		Optional<Retract3> result = Optional.empty();
-		if (!Pointer.NULL.equals(retractArea)) {
-			result = Optional.of(new Retract3(new Retract3(retractArea)));
-		}
-		return result;
+
+	public Retract3 getRetractArea() {
+		return new Retract3(retractArea);
 	}
 
 	public Position getOutputPosition() {

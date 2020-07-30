@@ -37,13 +37,14 @@ import at.o2xfs.operator.ui.content.table.Table;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.idc.DataSource;
 import at.o2xfs.xfs.idc.SecType;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardCommand;
+import at.o2xfs.xfs.service.idc.cmd.ReadCardListener;
 import at.o2xfs.xfs.v3_00.idc.Capabilities3;
 import at.o2xfs.xfs.v3_00.idc.CardData3;
 import at.o2xfs.xfs.v3_00.idc.Status3;
 import at.o2xfs.xfs.service.idc.info.IDCCapabilitiesCommand;
 import at.o2xfs.xfs.service.idc.info.IDCStatusCommand;
-import at.o2xfs.xfs.service.idc.execute.ReadCardCommand;
-import at.o2xfs.xfs.service.idc.event.ReadCardListener;
+
 
 public class IDCReadTask extends IDCTask implements ReadCardListener {
 

@@ -37,58 +37,82 @@ import at.o2xfs.win32.USHORT;
 
 public class CashUnitInfo3 extends Struct {
 
-	protected final USHORT tellerID = new USHORT();
-	protected final USHORT count = new USHORT();
-	protected final Pointer list = new Pointer();
+    public static class Builder {
 
-	protected CashUnitInfo3() {
-		add(tellerID);
-		add(count);
-		add(list);
-	}
+        private final CashUnit3[] cashUnit3s;
+        private final int tellerID;
 
-	public CashUnitInfo3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+        public Builder(CashUnit3[] cashUnit3s, int tellerID) {
+            this.cashUnit3s = cashUnit3s;
+            this.tellerID = tellerID;
+        }
 
-	public CashUnitInfo3(CashUnitInfo3 copy) {
-		this();
-		allocate();
-		tellerID.set(copy.getTellerID());
-		count.set(copy.getCount());
-		list.pointTo(new CashUnits3(copy.getList()));
-	}
 
-	public int getTellerID() {
-		return tellerID.get();
-	}
+        public CashUnitInfo3 build() {
+            return new CashUnitInfo3(this);
+        }
+    }
 
-	public int getCount() {
-		return count.get();
-	}
+    protected final USHORT tellerID = new USHORT();
+    protected final USHORT count = new USHORT();
+    protected final Pointer list = new Pointer();
 
-	public CashUnit3[] getList() {
-		return new CashUnits3(list, getCount()).get();
-	}
+    protected CashUnitInfo3() {
+        add(tellerID);
+        add(count);
+        add(list);
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(getTellerID()).append(getCount()).append(getList()).toHashCode();
-	}
+    public CashUnitInfo3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof CashUnitInfo3) {
-			CashUnitInfo3 cashUnitInfo3 = (CashUnitInfo3) obj;
-			return new EqualsBuilder().append(getTellerID(), cashUnitInfo3.getTellerID()).append(getCount(), cashUnitInfo3.getCount()).append(getList(), cashUnitInfo3.getList())
-					.isEquals();
-		}
-		return false;
-	}
+    protected CashUnitInfo3(Builder builder) {
+        this();
+        allocate();
+        tellerID.set(builder.tellerID);
+        count.set(builder.cashUnit3s.length);
+        list.pointTo(new CashUnits3(builder.cashUnit3s));
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this).append("tellerID", getTellerID()).append("count", getCount()).append("list", getList()).toString();
-	}
+    public CashUnitInfo3(CashUnitInfo3 copy) {
+        this();
+        allocate();
+        tellerID.set(copy.getTellerID());
+        count.set(copy.getCount());
+        list.pointTo(new CashUnits3(copy.getList()));
+    }
+
+    public int getTellerID() {
+        return tellerID.get();
+    }
+
+    public int getCount() {
+        return count.get();
+    }
+
+    public CashUnit3[] getList() {
+        return new CashUnits3(list, getCount()).get();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder().append(getTellerID()).append(getCount()).append(getList()).toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CashUnitInfo3) {
+            CashUnitInfo3 cashUnitInfo3 = (CashUnitInfo3) obj;
+            return new EqualsBuilder().append(getTellerID(), cashUnitInfo3.getTellerID()).append(getCount(), cashUnitInfo3.getCount()).append(getList(), cashUnitInfo3.getList())
+                    .isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("tellerID", getTellerID()).append("count", getCount()).append("list", getList()).toString();
+    }
 }
