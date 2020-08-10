@@ -25,11 +25,31 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.ptr.cmd;
+package at.o2xfs.xfs.service.ptr.execute;
 
-import at.o2xfs.xfs.service.cmd.event.CommandListener;
+import java.util.concurrent.Callable;
 
-public interface ReadImageCommandListener extends
-		CommandListener<ReadImageCompleteEvent> {
+import at.o2xfs.xfs.WFSResult;
+import at.o2xfs.xfs.XfsException;
+import at.o2xfs.xfs.ptr.PtrExecuteCommand;
+import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.v3_00.ptr.RawData3;
 
+public class PTRRawDataCallable implements Callable<WFSResult> {
+
+	private final PTRService ptrService;
+
+	private final RawData3 rawData;
+
+	public PTRRawDataCallable(final PTRService ptrService, final RawData3 rawData) {
+		this.ptrService = ptrService;
+		this.rawData = rawData;
+	}
+
+	@Override
+	public WFSResult call() throws XfsException {
+		final XfsExecuteCommand<PtrExecuteCommand> rawDataCommand = new XfsExecuteCommand<>(ptrService, PtrExecuteCommand.RAW_DATA, rawData);
+		return rawDataCommand.call();
+	}
 }

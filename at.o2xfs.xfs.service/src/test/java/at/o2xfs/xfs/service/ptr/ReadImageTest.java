@@ -27,6 +27,7 @@
 
 package at.o2xfs.xfs.service.ptr;
 
+import at.o2xfs.xfs.service.ptr.info.PTRCapabilitiesCallable;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -34,9 +35,9 @@ import at.o2xfs.xfs.ptr.ReadForm;
 import at.o2xfs.xfs.service.XfsCommandTest;
 import at.o2xfs.xfs.service.cmd.event.CancelEvent;
 import at.o2xfs.xfs.service.cmd.event.ErrorEvent;
-import at.o2xfs.xfs.service.ptr.cmd.ReadImageCommand;
-import at.o2xfs.xfs.service.ptr.cmd.ReadImageCommandListener;
-import at.o2xfs.xfs.service.ptr.cmd.ReadImageCompleteEvent;
+import at.o2xfs.xfs.service.ptr.execute.ReadImageCommand;
+import at.o2xfs.xfs.service.ptr.execute.ReadImageCommandListener;
+import at.o2xfs.xfs.service.ptr.execute.ReadImageCompleteEvent;
 import at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3;
 
 public class ReadImageTest extends XfsCommandTest implements ReadImageCommandListener {

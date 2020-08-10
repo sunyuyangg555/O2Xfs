@@ -1,8 +1,8 @@
-package at.o2xfs.xfs.service.ptr.cmd;
+package at.o2xfs.xfs.service.ptr.execute;
 
 import at.o2xfs.xfs.service.cmd.event.CommandListener;
 import at.o2xfs.xfs.service.cmd.event.SuccessEvent;
-import at.o2xfs.xfs.service.ptr.cmd.listener.*;
+import at.o2xfs.xfs.service.ptr.event.*;
 
 public interface PrintFormListener extends CommandListener<SuccessEvent>,
         NoMediaListener,

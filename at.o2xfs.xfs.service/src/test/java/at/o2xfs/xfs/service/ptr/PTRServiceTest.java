@@ -29,6 +29,8 @@ package at.o2xfs.xfs.service.ptr;
 
 import at.o2xfs.xfs.service.XfsCommandTest;
 
+import at.o2xfs.xfs.service.ptr.info.PTRCapabilitiesCallable;
+import at.o2xfs.xfs.service.ptr.info.PTRStatusCallable;
 import org.junit.Test;
 
 public class PTRServiceTest

@@ -1,14 +1,12 @@
-package at.o2xfs.xfs.service.ptr.cmd;
+package at.o2xfs.xfs.service.ptr.execute;
 
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.xfs.WFSResult;
-import at.o2xfs.xfs.ptr.Ink;
 import at.o2xfs.xfs.ptr.PtrExecuteCommand;
 import at.o2xfs.xfs.ptr.PtrMessage;
-import at.o2xfs.xfs.ptr.Toner;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsCommand;

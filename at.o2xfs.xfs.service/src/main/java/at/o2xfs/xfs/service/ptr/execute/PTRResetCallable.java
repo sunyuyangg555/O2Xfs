@@ -1,9 +1,10 @@
-package at.o2xfs.xfs.service.ptr;
+package at.o2xfs.xfs.service.ptr.execute;
 
 
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.ptr.PtrExecuteCommand;
 import at.o2xfs.xfs.service.cmd.XfsExecuteCommand;
+import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.v3_00.ptr.Reset3;
 
 import java.util.concurrent.Callable;

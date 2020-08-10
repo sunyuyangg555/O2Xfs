@@ -6,16 +6,16 @@ import at.o2xfs.xfs.crd.CrdInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.crd.CrdFactory;
-import at.o2xfs.xfs.service.crd.CrdService;
+import at.o2xfs.xfs.service.crd.CRDService;
 import at.o2xfs.xfs.v3_00.crd.*;
 
 import java.util.concurrent.Callable;
 
 public final class CapabilitiesCommand implements Callable<CrdCapabilities3> {
 
-	private final CrdService crdService;
+	private final CRDService crdService;
 
-	public CapabilitiesCommand(CrdService crdService) {
+	public CapabilitiesCommand(CRDService crdService) {
 		this.crdService = crdService;
 	}
 

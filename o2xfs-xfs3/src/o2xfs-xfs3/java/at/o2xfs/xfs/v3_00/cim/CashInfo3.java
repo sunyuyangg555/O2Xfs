@@ -41,8 +41,6 @@ import at.o2xfs.win32.USHORT;
 
 public class CashInfo3 extends Struct {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CashInfo3.class);
-
 	public static class Builder {
 
 		private final CashIn3[] cashIn;

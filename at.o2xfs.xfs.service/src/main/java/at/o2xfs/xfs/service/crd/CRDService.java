@@ -9,9 +9,9 @@ import at.o2xfs.xfs.v3_00.crd.DevicePosition3;
 import at.o2xfs.xfs.v3_00.crd.MediaDetected3;
 import at.o2xfs.xfs.v3_00.crd.PowerSaveChange3;
 
-public class CrdService extends XfsService<CrdServiceListener, CrdUserListener> {
+public class CRDService extends XfsService<CRDServiceListener, CRDUserListener> {
 
-    protected CrdService(String logicalName) {
+    public CRDService(String logicalName) {
         super(logicalName, XfsServiceClass.CRD);
     }
 
@@ -59,7 +59,7 @@ public class CrdService extends XfsService<CrdServiceListener, CrdUserListener> 
     }
 
     private void fireMediaRemoved() {
-        serviceListeners.forEach(CrdServiceListener::onMediaRemoved);
+        serviceListeners.forEach(CRDServiceListener::onMediaRemoved);
     }
 
     @Override

@@ -23,6 +23,49 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class CardUnit3 extends Struct {
 
+    public CardUnit3(Builder builder) {
+        this();
+        allocate();
+        number.set(builder.number);
+        cardName.set(builder.cardName);
+        type.set(builder.type);
+        initialCount.set(builder.initialCount);
+        count.set(builder.count);
+        retainCount.set(builder.retainCount);
+        threshold.set(builder.threshold);
+        status.set(builder.status);
+        hardwareSensor.set(builder.hardwareSensor);
+    }
+
+    public static class Builder {
+        private final int number;
+        private final String cardName;
+        private final int type;
+        private final long initialCount;
+        private final long count;
+        private final long retainCount;
+        private final long threshold;
+        private final int status;
+        private final boolean hardwareSensor;
+
+
+        public Builder(int number, String cardName, int type, long initialCount, long count, long retainCount, long threshold, int status, boolean hardwareSensor) {
+            this.number = number;
+            this.cardName = cardName;
+            this.type = type;
+            this.initialCount = initialCount;
+            this.count = count;
+            this.retainCount = retainCount;
+            this.threshold = threshold;
+            this.status = status;
+            this.hardwareSensor = hardwareSensor;
+        }
+
+        public CardUnit3 build() {
+            return new CardUnit3(this);
+        }
+    }
+
     protected final USHORT number = new USHORT();
     protected final LPSTR cardName = new LPSTR();
     protected final USHORT type = new USHORT();

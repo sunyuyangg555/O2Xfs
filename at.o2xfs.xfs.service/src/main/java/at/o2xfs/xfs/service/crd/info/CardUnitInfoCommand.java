@@ -5,16 +5,16 @@ import at.o2xfs.xfs.crd.CrdInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
 import at.o2xfs.xfs.service.crd.CrdFactory;
-import at.o2xfs.xfs.service.crd.CrdService;
+import at.o2xfs.xfs.service.crd.CRDService;
 import at.o2xfs.xfs.v3_00.crd.CardUnitInfo3;
 
 import java.util.concurrent.Callable;
 
 public class CardUnitInfoCommand implements Callable<CardUnitInfo3> {
 
-    private final CrdService crdService;
+    private final CRDService crdService;
 
-    public CardUnitInfoCommand(CrdService crdService) {
+    public CardUnitInfoCommand(CRDService crdService) {
         this.crdService = crdService;
     }
 

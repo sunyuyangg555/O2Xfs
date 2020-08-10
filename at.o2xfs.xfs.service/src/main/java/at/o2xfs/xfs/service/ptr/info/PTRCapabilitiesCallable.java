@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.ptr;
+package at.o2xfs.xfs.service.ptr.info;
 
 import java.util.concurrent.Callable;
 
@@ -35,32 +35,35 @@ import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.XfsException;
 import at.o2xfs.xfs.ptr.PtrInfoCommand;
 import at.o2xfs.xfs.service.XfsServiceManager;
-import at.o2xfs.xfs.service.cmd.XfsCommand;
 import at.o2xfs.xfs.service.cmd.XfsInfoCommand;
-import at.o2xfs.xfs.v3_00.ptr.PtrStatus3;
+import at.o2xfs.xfs.service.ptr.PTRService;
+import at.o2xfs.xfs.service.ptr.PtrFactory;
+import at.o2xfs.xfs.service.util.ExceptionUtil;
+import at.o2xfs.xfs.v3_00.ptr.PtrCapabilities3;
 
-public class PTRStatusCallable implements Callable<PtrStatus3> {
+public class PTRCapabilitiesCallable implements Callable<PtrCapabilities3> {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PTRStatusCallable.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PTRCapabilitiesCallable.class);
 
 	private final PTRService ptrService;
 
-	public PTRStatusCallable(final PTRService ptrService) {
+	public PTRCapabilitiesCallable(final PTRService ptrService) {
 		if (ptrService == null) {
-			throw new IllegalArgumentException("ptrService must not be null");
+			ExceptionUtil.nullArgument("ptrService");
 		}
 		this.ptrService = ptrService;
 	}
 
 	@Override
-	public PtrStatus3 call() throws XfsException {
-		final XfsCommand infoCommand = new XfsInfoCommand<>(ptrService, PtrInfoCommand.STATUS);
+	public PtrCapabilities3 call() throws XfsException {
+		final String method = "call()";
+		final XfsInfoCommand<PtrInfoCommand> infoCommand = new XfsInfoCommand<>(ptrService,
+				PtrInfoCommand.CAPABILITIES);
 		final WFSResult wfsResult = infoCommand.call();
 		try {
-			final PtrStatus3 result = PtrFactory.create(ptrService.getXfsVersion(), wfsResult.getResults(),
-					PtrStatus3.class);
+			final PtrCapabilities3 result = PtrFactory.create(ptrService.getXfsVersion(), wfsResult.getResults(),
+					PtrCapabilities3.class);
 			if (LOG.isInfoEnabled()) {
-				final String method = "call()";
 				LOG.info(method, "result=" + result);
 			}
 			return result;

@@ -5,7 +5,7 @@ import at.o2xfs.xfs.v3_00.crd.DevicePosition3;
 import at.o2xfs.xfs.v3_00.crd.MediaDetected3;
 import at.o2xfs.xfs.v3_00.crd.PowerSaveChange3;
 
-public interface CrdServiceListener {
+public interface CRDServiceListener {
     void onMediaRemoved();
     void onMediaDetected(MediaDetected3 mediaDetected3);
     void onCardUnitInfoChanged(CardUnit3 cardUnit3);

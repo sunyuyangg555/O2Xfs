@@ -17,6 +17,29 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  *
  */
 public class CardUnitInfo3 extends Struct {
+
+
+    public CardUnitInfo3(Builder builder) {
+        this();
+        allocate();
+        count.set(builder.list.length);
+        list.pointTo(new CardUnit3Array(builder.list));
+    }
+
+    public static class Builder {
+
+        private final CardUnit3[] list;
+
+        public Builder(CardUnit3[] list) {
+            this.list = list;
+        }
+
+        public CardUnitInfo3 build() {
+            return new CardUnitInfo3(this);
+        }
+    }
+
+
     protected final USHORT count = new USHORT();
     protected final Pointer list = new Pointer();
 

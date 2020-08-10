@@ -20,9 +20,9 @@ public enum CrdFactory {
         Object result;
         if(CrdStatus3.class.equals(type)) {
             result = createStatus(xfsVersion, p);
-        } if(CrdCapabilities3.class.equals(type)) {
+        }else if(CrdCapabilities3.class.equals(type)) {
             result = createCrdCapabilities(xfsVersion, p);
-        } if(CardUnitInfo3.class.equals(type)) {
+        }else if(CardUnitInfo3.class.equals(type)) {
             result = createCardUnitInfo(p);
         } else {
             throw new IllegalArgumentException(type.toString());

@@ -1,4 +1,4 @@
-package at.o2xfs.xfs.service.ptr.cmd.listener;
+package at.o2xfs.xfs.service.ptr.event;
 
 import at.o2xfs.xfs.v3_10.ptr.MediaRejected310;
 

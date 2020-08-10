@@ -17,28 +17,28 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * } WFSCRDCUERROR, *LPWFSCRDCUERROR;
  *
  */
-public class CardUnitError extends Struct {
+public class CardUnitError3 extends Struct {
 
     protected final XfsWord<Failure> failure = new XfsWord<>(Failure.class);
     protected final Pointer cardUnit = new Pointer();
 
-    protected CardUnitError() {
+    protected CardUnitError3() {
         add(failure);
         add(cardUnit);
     }
 
-    public CardUnitError(Pointer p) {
+    public CardUnitError3(Pointer p) {
         this();
         assignBuffer(p);
     }
 
-    public CardUnitError(CardUnitError copy) {
+    public CardUnitError3(CardUnitError3 copy) {
         this();
         allocate();
         set(copy);
     }
 
-    private void set(CardUnitError copy) {
+    private void set(CardUnitError3 copy) {
         failure.set(copy.getFailure());
         cardUnit.pointTo(new CardUnit3(copy.getCardUnit()));
     }
@@ -55,9 +55,9 @@ public class CardUnitError extends Struct {
     public boolean equals(Object o) {
         if (this == o) return true;
 
-        if (!(o instanceof CardUnitError)) return false;
+        if (!(o instanceof CardUnitError3)) return false;
 
-        CardUnitError that = (CardUnitError) o;
+        CardUnitError3 that = (CardUnitError3) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))

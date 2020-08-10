@@ -25,7 +25,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.ptr.cmd;
+package at.o2xfs.xfs.service.ptr.execute;
 
 import java.util.ArrayList;
 import java.util.List;

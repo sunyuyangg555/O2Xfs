@@ -25,23 +25,11 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.service.ptr.cmd;
+package at.o2xfs.xfs.service.ptr.execute;
 
-import java.util.List;
+import at.o2xfs.xfs.service.cmd.event.CommandListener;
 
-import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
-import at.o2xfs.xfs.v3_00.ptr.Image3;
+public interface ReadImageCommandListener extends
+		CommandListener<ReadImageCompleteEvent> {
 
-public class ReadImageCompleteEvent implements CompleteEvent<List<Image3>> {
-
-	private final List<Image3> images;
-
-	public ReadImageCompleteEvent(List<Image3> images) {
-		this.images = images;
-	}
-
-	@Override
-	public List<Image3> get() {
-		return images;
-	}
 }
