@@ -31,6 +31,7 @@ import at.o2xfs.xfs.XfsConstant;
 
 public enum ImageSource implements XfsConstant {
 
+	TEST(0x0000),
 	/*
 	 * @since v3.00
 	 */

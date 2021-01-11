@@ -43,6 +43,33 @@ import at.o2xfs.xfs.win32.XfsDWordBitmask;
 
 public class ReadForm3 extends Struct {
 
+	public ReadForm3(Builder builder) {
+		this();
+		allocate();
+		formName.set(builder.formName);
+		fieldNames.set(builder.fieldNames);
+		mediaName.set(builder.mediaName);
+		mediaControl.set(builder.mediaControlSet);
+	}
+
+	public static class Builder {
+		public final String formName;
+		public final String[] fieldNames;
+		public final String mediaName;
+		public final Set<MediaControl> mediaControlSet;
+
+		public Builder(String formName, String[] fieldNames, String mediaName, Set<MediaControl> mediaControlSet) {
+			this.formName = formName;
+			this.fieldNames = fieldNames;
+			this.mediaName = mediaName;
+			this.mediaControlSet = mediaControlSet;
+		}
+
+		public ReadForm3 build() {
+			return new ReadForm3(this);
+		}
+	}
+
 	protected final LPSTR formName = new LPSTR();
 	protected final LPZZSTR fieldNames = new LPZZSTR();
 	protected final LPSTR mediaName = new LPSTR();

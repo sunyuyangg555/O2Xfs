@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Andreas Fagschlunger. All rights reserved.
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,31 +25,26 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.ptr;
+package at.o2xfs.xfs.mcr;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum CodelineFormat implements XfsConstant {
-
-	TEST(0x0000),
-	/*
-	 * @since v3.00
-	 */
-	CMC7(0x0001),
+public enum McrMessage implements XfsConstant {
 
 	/*
 	 * @since v3.00
 	 */
-	E13B(0x0002),
+	MCR_MEDIAREMOVED(251L),
 
 	/*
 	 * @since v3.00
 	 */
-	OCR(0x0004);
+	MCR_RETAINBINTHRESHOLD(252L);
+
 
 	private final long value;
 
-	private CodelineFormat(final long value) {
+	private McrMessage(final long value) {
 		this.value = value;
 	}
 

@@ -27,8 +27,11 @@
 
 package at.o2xfs.xfs.v3_00.ptr;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
+import at.o2xfs.common.Hex;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -43,90 +46,96 @@ import at.o2xfs.xfs.win32.XfsWord;
 
 public class Image3 extends Struct {
 
-	protected final XfsWord<ImageSource> imageSource = new XfsWord<>(ImageSource.class);
-	protected final XfsWord<DataStatus> status = new XfsWord<>(DataStatus.class);
-	protected final ULONG dataLength = new ULONG();
-	protected final Pointer data = new Pointer();
+    protected final XfsWord<ImageSource> imageSource = new XfsWord<>(ImageSource.class);
+    protected final XfsWord<DataStatus> status = new XfsWord<>(DataStatus.class);
+    protected final ULONG dataLength = new ULONG();
+    protected final Pointer data = new Pointer();
 
-	protected Image3() {
-		add(imageSource);
-		add(status);
-		add(dataLength);
-		add(data);
-	}
+    protected Image3() {
+        add(imageSource);
+        add(status);
+        add(dataLength);
+        add(data);
+    }
 
-	public Image3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+    public Image3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	public Image3(Image3 copy) {
-		this();
-		allocate();
-		set(copy);
-	}
+    public Image3(Image3 copy) {
+        this();
+        allocate();
+        set(copy);
+    }
 
-	protected void set(Image3 copy) {
-		imageSource.set(copy.getImageSource());
-		status.set(copy.getStatus());
-		dataLength.set(copy.dataLength);
-		Optional<byte[]> data = copy.getData();
-		if (data.isPresent()) {
-			this.data.pointTo(new ByteArray(data.get()));
-		}
-	}
+    protected void set(Image3 copy) {
+        imageSource.set(copy.getImageSource());
+        status.set(copy.getStatus());
+        dataLength.set(copy.dataLength);
+        if (copy.getData().length > 0) {
+            this.data.pointTo(new ByteArray(copy.getData()));
+        }
+    }
 
-	public ImageSource getImageSource() {
-		return imageSource.get();
-	}
+    public ImageSource getImageSource() {
+        return imageSource.get();
+    }
 
-	public DataStatus getStatus() {
-		return status.get();
-	}
+    public DataStatus getStatus() {
+        return status.get();
+    }
 
-	public long getDataLength() {
-		return dataLength.get();
-	}
+    public long getDataLength() {
+        return dataLength.get();
+    }
 
-	public Optional<byte[]> getData() {
-		Optional<byte[]> result = Optional.empty();
-		if (!Pointer.NULL.equals(data)) {
-			result = Optional.of(data.buffer(dataLength.intValue()).get());
-		}
-		return result;
-	}
+    /*public Optional<byte[]> getData() {
+        Optional<byte[]> result = Optional.empty();
+        if (!Pointer.NULL.equals(data)) {
+            result = Optional.of(data.buffer(dataLength.intValue()).get());
+        }
+        return result;
+    }*/
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder()
-				.append(getImageSource())
-				.append(getStatus())
-				.append(getDataLength())
-				.append(getData().orElse(null))
-				.toHashCode();
-	}
+    public byte[] getData() {
+        if (!Pointer.NULL.equals(data)) {
+            return data.buffer(dataLength.intValue()).get();
+        }
+        return new byte[]{};
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof Image3) {
-			Image3 image3 = (Image3) obj;
-			return new EqualsBuilder()
-					.append(getImageSource(), image3.getImageSource())
-					.append(getStatus(), image3.getStatus())
-					.append(getDataLength(), image3.getDataLength())
-					.append(getData().orElse(null), image3.getData().orElse(null))
-					.isEquals();
-		}
-		return false;
-	}
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getImageSource())
+                .append(getStatus())
+                .append(getDataLength())
+                .append(getData())
+                .toHashCode();
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this)
-				.append("imageSource", getImageSource())
-				.append("status", getStatus())
-				.append("dataLength", getDataLength())
-				.append("data", getData())
-				.toString();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Image3) {
+            Image3 image3 = (Image3) obj;
+            return new EqualsBuilder()
+                    .append(getImageSource(), image3.getImageSource())
+                    .append(getStatus(), image3.getStatus())
+                    .append(getDataLength(), image3.getDataLength())
+                    .append(getData(), image3.getData())
+                    .isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("imageSource", getImageSource())
+                .append("status", getStatus())
+                .append("dataLength", getDataLength())
+                .append("data", /*Hex.encode(getData())*/new String(getData(), StandardCharsets.US_ASCII))
+                .toString();
+    }
 }

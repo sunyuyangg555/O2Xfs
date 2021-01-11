@@ -43,7 +43,10 @@ public enum SIUGuidLight implements XfsConstant, SIUPortIndex {
 	ENVDISPENSER(9L),
 	DOCUMENTPRINTER(10L),
 	COINACCEPTOR(11L),
-	SCANNER(12L);
+	SCANNER(12L),
+	CHECKSCANNER(13L),
+	FINGERPRINT(14L),
+	USBCONTROL(15L);
 
 	private final long value;
 

@@ -1,7 +1,6 @@
 package at.o2xfs.xfs.service.ptr.execute;
 
 import at.o2xfs.win32.Pointer;
-import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.ptr.MediaControl;
 import at.o2xfs.xfs.ptr.PtrExecuteCommand;
 import at.o2xfs.xfs.service.cmd.AbstractAsyncXfsCommand;
@@ -15,11 +14,12 @@ import at.o2xfs.xfs.win32.XfsDWord;
 public class ControlMediaCommand extends AbstractAsyncXfsCommand<CommandListener<SuccessEvent>, SuccessEvent> {
 
     private final PTRService ptrService;
-    private final XfsDWord<MediaControl> mediaControl;
+    private final XfsDWord<MediaControl> mediaControl = new XfsDWord<>(MediaControl.class);
 
-    public ControlMediaCommand(PTRService ptrService, XfsDWord<MediaControl> mediaControl) {
+    public ControlMediaCommand(PTRService ptrService, MediaControl mediaControl) {
         this.ptrService = ptrService;
-        this.mediaControl = mediaControl;
+        this.mediaControl.allocate();
+        this.mediaControl.set(mediaControl);
     }
 
 

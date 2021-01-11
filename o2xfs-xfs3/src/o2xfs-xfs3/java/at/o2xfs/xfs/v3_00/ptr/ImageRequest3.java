@@ -30,6 +30,7 @@ package at.o2xfs.xfs.v3_00.ptr;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -46,172 +47,215 @@ import at.o2xfs.xfs.win32.XfsWordBitmask;
 
 public class ImageRequest3 extends Struct {
 
-	protected final XfsWord<ImageFormat> frontImageType = new XfsWord<>(ImageFormat.class);
-	protected final XfsWord<ImageFormat> backImageType = new XfsWord<>(ImageFormat.class);
-	protected final XfsWord<ImageColorFormat> frontImageColorFormat = new XfsWord<>(ImageColorFormat.class);
-	protected final XfsWord<ImageColorFormat> backImageColorFormat = new XfsWord<>(ImageColorFormat.class);
-	protected final XfsWord<CodelineFormat> codelineFormat = new XfsWord<>(CodelineFormat.class);
-	protected final XfsWordBitmask<ImageSource> imageSource = new XfsWordBitmask<>(ImageSource.class);
-	protected final LPSTR frontImageFile = new LPSTR();
-	protected final LPSTR backImageFile = new LPSTR();
+    public ImageRequest3(Builder builder) {
+        this();
+        allocate();
+        frontImageType.set(builder.frontImageType);
+        backImageType.set(builder.backImageType);
+        frontImageColorFormat.set(builder.frontImageColorFormat);
+        backImageColorFormat.set(builder.backImageColorFormat);
+        codelineFormat.set(builder.codelineFormat);
+        imageSource.set(builder.imageSourceSet);
+        if (StringUtils.isNotEmpty(builder.frontImageFile)) {
+            frontImageFile.set(builder.frontImageFile);
+        }
+        if (StringUtils.isNotEmpty(builder.backImageFile)) {
+            backImageFile.set(builder.backImageFile);
+        }
+    }
 
-	protected ImageRequest3() {
-		add(frontImageType);
-		add(backImageType);
-		add(frontImageColorFormat);
-		add(backImageColorFormat);
-		add(codelineFormat);
-		add(imageSource);
-		add(frontImageFile);
-		add(backImageFile);
-	}
+    public static class Builder {
+        public ImageFormat frontImageType;
+        public ImageFormat backImageType;
+        public ImageColorFormat frontImageColorFormat;
+        public ImageColorFormat backImageColorFormat;
+        public CodelineFormat codelineFormat;
+        public Set<ImageSource> imageSourceSet;
+        public String frontImageFile;
+        public String backImageFile;
 
-	public ImageRequest3(Pointer p) {
-		this();
-		assignBuffer(p);
-	}
+        public Builder(ImageFormat frontImageType, ImageFormat backImageType, ImageColorFormat frontImageColorFormat, ImageColorFormat backImageColorFormat, CodelineFormat codelineFormat, Set<ImageSource> imageSourceSet, String frontImageFile, String backImageFile) {
+            this.frontImageType = frontImageType;
+            this.backImageType = backImageType;
+            this.frontImageColorFormat = frontImageColorFormat;
+            this.backImageColorFormat = backImageColorFormat;
+            this.codelineFormat = codelineFormat;
+            this.imageSourceSet = imageSourceSet;
+            this.frontImageFile = frontImageFile;
+            this.backImageFile = backImageFile;
+        }
 
-	public ImageRequest3(ImageRequest3 copy) {
-		this();
-		allocate();
-		set(copy);
-	}
+        public ImageRequest3 build() {
+            return new ImageRequest3(this);
+        }
+    }
 
-	protected void set(ImageRequest3 copy) {
-		Optional<ImageFormat> frontImageType = copy.getFrontImageType();
-		if (frontImageType.isPresent()) {
-			this.frontImageType.set(frontImageType.get());
-		}
-		Optional<ImageFormat> backImageType = copy.getBackImageType();
-		if (backImageType.isPresent()) {
-			this.backImageType.set(backImageType.get());
-		}
-		Optional<ImageColorFormat> frontImageColorFormat = copy.getFrontImageColorFormat();
-		if (frontImageColorFormat.isPresent()) {
-			this.frontImageColorFormat.set(frontImageColorFormat.get());
-		}
-		Optional<ImageColorFormat> backImageColorFormat = copy.getBackImageColorFormat();
-		if (backImageColorFormat.isPresent()) {
-			this.backImageColorFormat.set(backImageColorFormat.get());
-		}
-		Optional<CodelineFormat> codelineFormat = copy.getCodelineFormat();
-		if (codelineFormat.isPresent()) {
-			this.codelineFormat.set(codelineFormat.get());
-		}
-		imageSource.set(copy.getImageSource());
-		Optional<String> frontImageFile = copy.getFrontImageFile();
-		if (frontImageFile.isPresent()) {
-			this.frontImageFile.set(frontImageFile.get());
-		}
-		Optional<String> backImageFile = copy.getBackImageFile();
-		if (backImageFile.isPresent()) {
-			this.backImageFile.set(backImageFile.get());
-		}
-	}
+    protected final XfsWord<ImageFormat> frontImageType = new XfsWord<>(ImageFormat.class);
+    protected final XfsWord<ImageFormat> backImageType = new XfsWord<>(ImageFormat.class);
+    protected final XfsWord<ImageColorFormat> frontImageColorFormat = new XfsWord<>(ImageColorFormat.class);
+    protected final XfsWord<ImageColorFormat> backImageColorFormat = new XfsWord<>(ImageColorFormat.class);
+    protected final XfsWord<CodelineFormat> codelineFormat = new XfsWord<>(CodelineFormat.class);
+    protected final XfsWordBitmask<ImageSource> imageSource = new XfsWordBitmask<>(ImageSource.class);
+    protected final LPSTR frontImageFile = new LPSTR();
+    protected final LPSTR backImageFile = new LPSTR();
 
-	public Optional<ImageFormat> getFrontImageType() {
-		Optional<ImageFormat> result = Optional.empty();
-		if (frontImageType.intValue() != 0) {
-			result = Optional.of(frontImageType.get());
-		}
-		return result;
-	}
+    protected ImageRequest3() {
+        add(frontImageType);
+        add(backImageType);
+        add(frontImageColorFormat);
+        add(backImageColorFormat);
+        add(codelineFormat);
+        add(imageSource);
+        add(frontImageFile);
+        add(backImageFile);
+    }
 
-	public Optional<ImageFormat> getBackImageType() {
-		Optional<ImageFormat> result = Optional.empty();
-		if (backImageType.intValue() != 0) {
-			result = Optional.of(backImageType.get());
-		}
-		return result;
-	}
+    public ImageRequest3(Pointer p) {
+        this();
+        assignBuffer(p);
+    }
 
-	public Optional<ImageColorFormat> getFrontImageColorFormat() {
-		Optional<ImageColorFormat> result = Optional.empty();
-		if (frontImageColorFormat.intValue() != 0) {
-			result = Optional.of(frontImageColorFormat.get());
-		}
-		return result;
-	}
+    public ImageRequest3(ImageRequest3 copy) {
+        this();
+        allocate();
+        set(copy);
+    }
 
-	public Optional<ImageColorFormat> getBackImageColorFormat() {
-		Optional<ImageColorFormat> result = Optional.empty();
-		if (backImageColorFormat.intValue() != 0) {
-			result = Optional.of(backImageColorFormat.get());
-		}
-		return result;
-	}
+    protected void set(ImageRequest3 copy) {
+        Optional<ImageFormat> frontImageType = copy.getFrontImageType();
+        if (frontImageType.isPresent()) {
+            this.frontImageType.set(frontImageType.get());
+        }
+        Optional<ImageFormat> backImageType = copy.getBackImageType();
+        if (backImageType.isPresent()) {
+            this.backImageType.set(backImageType.get());
+        }
+        Optional<ImageColorFormat> frontImageColorFormat = copy.getFrontImageColorFormat();
+        if (frontImageColorFormat.isPresent()) {
+            this.frontImageColorFormat.set(frontImageColorFormat.get());
+        }
+        Optional<ImageColorFormat> backImageColorFormat = copy.getBackImageColorFormat();
+        if (backImageColorFormat.isPresent()) {
+            this.backImageColorFormat.set(backImageColorFormat.get());
+        }
+        Optional<CodelineFormat> codelineFormat = copy.getCodelineFormat();
+        if (codelineFormat.isPresent()) {
+            this.codelineFormat.set(codelineFormat.get());
+        }
+        imageSource.set(copy.getImageSource());
+        Optional<String> frontImageFile = copy.getFrontImageFile();
+        if (frontImageFile.isPresent()) {
+            this.frontImageFile.set(frontImageFile.get());
+        }
+        Optional<String> backImageFile = copy.getBackImageFile();
+        if (backImageFile.isPresent()) {
+            this.backImageFile.set(backImageFile.get());
+        }
+    }
 
-	public Optional<CodelineFormat> getCodelineFormat() {
-		Optional<CodelineFormat> result = Optional.empty();
-		if (codelineFormat.intValue() != 0) {
-			result = Optional.of(codelineFormat.get());
-		}
-		return result;
-	}
+    public Optional<ImageFormat> getFrontImageType() {
+        Optional<ImageFormat> result = Optional.empty();
+        if (frontImageType.intValue() != 0) {
+            result = Optional.of(frontImageType.get());
+        }
+        return result;
+    }
 
-	public Set<ImageSource> getImageSource() {
-		return imageSource.get();
-	}
+    public Optional<ImageFormat> getBackImageType() {
+        Optional<ImageFormat> result = Optional.empty();
+        if (backImageType.intValue() != 0) {
+            result = Optional.of(backImageType.get());
+        }
+        return result;
+    }
 
-	public Optional<String> getFrontImageFile() {
-		Optional<String> result = Optional.empty();
-		if (!Pointer.NULL.equals(frontImageFile)) {
-			result = Optional.of(frontImageFile.get());
-		}
-		return result;
-	}
+    public Optional<ImageColorFormat> getFrontImageColorFormat() {
+        Optional<ImageColorFormat> result = Optional.empty();
+        if (frontImageColorFormat.intValue() != 0) {
+            result = Optional.of(frontImageColorFormat.get());
+        }
+        return result;
+    }
 
-	public Optional<String> getBackImageFile() {
-		Optional<String> result = Optional.empty();
-		if (!Pointer.NULL.equals(backImageFile)) {
-			result = Optional.of(backImageFile.get());
-		}
-		return result;
-	}
+    public Optional<ImageColorFormat> getBackImageColorFormat() {
+        Optional<ImageColorFormat> result = Optional.empty();
+        if (backImageColorFormat.intValue() != 0) {
+            result = Optional.of(backImageColorFormat.get());
+        }
+        return result;
+    }
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder()
-				.append(getFrontImageType())
-				.append(getBackImageType())
-				.append(getFrontImageColorFormat())
-				.append(getBackImageColorFormat())
-				.append(getCodelineFormat())
-				.append(getImageSource())
-				.append(getFrontImageFile())
-				.append(getBackImageFile())
-				.toHashCode();
-	}
+    public Optional<CodelineFormat> getCodelineFormat() {
+        Optional<CodelineFormat> result = Optional.empty();
+        if (codelineFormat.intValue() != 0) {
+            result = Optional.of(codelineFormat.get());
+        }
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof ImageRequest3) {
-			ImageRequest3 imageRequest3 = (ImageRequest3) obj;
-			return new EqualsBuilder()
-					.append(getFrontImageType(), imageRequest3.getFrontImageType())
-					.append(getBackImageType(), imageRequest3.getBackImageType())
-					.append(getFrontImageColorFormat(), imageRequest3.getFrontImageColorFormat())
-					.append(getBackImageColorFormat(), imageRequest3.getBackImageColorFormat())
-					.append(getCodelineFormat(), imageRequest3.getCodelineFormat())
-					.append(getImageSource(), imageRequest3.getImageSource())
-					.append(getFrontImageFile(), imageRequest3.getFrontImageFile())
-					.append(getBackImageFile(), imageRequest3.getBackImageFile())
-					.isEquals();
-		}
-		return false;
-	}
+    public Set<ImageSource> getImageSource() {
+        return imageSource.get();
+    }
 
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this)
-				.append("frontImageType", getFrontImageType())
-				.append("backImageType", getBackImageType())
-				.append("frontImageColorFormat", getFrontImageColorFormat())
-				.append("backImageColorFormat", getBackImageColorFormat())
-				.append("codelineFormat", getCodelineFormat())
-				.append("imageSource", getImageSource())
-				.append("frontImageFile", getFrontImageFile())
-				.append("backImageFile", getBackImageFile())
-				.toString();
-	}
+    public Optional<String> getFrontImageFile() {
+        Optional<String> result = Optional.empty();
+        if (!Pointer.NULL.equals(frontImageFile)) {
+            result = Optional.of(frontImageFile.get());
+        }
+        return result;
+    }
+
+    public Optional<String> getBackImageFile() {
+        Optional<String> result = Optional.empty();
+        if (!Pointer.NULL.equals(backImageFile)) {
+            result = Optional.of(backImageFile.get());
+        }
+        return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(getFrontImageType())
+                .append(getBackImageType())
+                .append(getFrontImageColorFormat())
+                .append(getBackImageColorFormat())
+                .append(getCodelineFormat())
+                .append(getImageSource())
+                .append(getFrontImageFile())
+                .append(getBackImageFile())
+                .toHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ImageRequest3) {
+            ImageRequest3 imageRequest3 = (ImageRequest3) obj;
+            return new EqualsBuilder()
+                    .append(getFrontImageType(), imageRequest3.getFrontImageType())
+                    .append(getBackImageType(), imageRequest3.getBackImageType())
+                    .append(getFrontImageColorFormat(), imageRequest3.getFrontImageColorFormat())
+                    .append(getBackImageColorFormat(), imageRequest3.getBackImageColorFormat())
+                    .append(getCodelineFormat(), imageRequest3.getCodelineFormat())
+                    .append(getImageSource(), imageRequest3.getImageSource())
+                    .append(getFrontImageFile(), imageRequest3.getFrontImageFile())
+                    .append(getBackImageFile(), imageRequest3.getBackImageFile())
+                    .isEquals();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("frontImageType", getFrontImageType())
+                .append("backImageType", getBackImageType())
+                .append("frontImageColorFormat", getFrontImageColorFormat())
+                .append("backImageColorFormat", getBackImageColorFormat())
+                .append("codelineFormat", getCodelineFormat())
+                .append("imageSource", getImageSource())
+                .append("frontImageFile", getFrontImageFile())
+                .append("backImageFile", getBackImageFile())
+                .toString();
+    }
 }

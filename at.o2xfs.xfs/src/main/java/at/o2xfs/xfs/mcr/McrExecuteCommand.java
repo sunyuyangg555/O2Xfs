@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Andreas Fagschlunger. All rights reserved.
+ * Copyright (c) 2017, Andreas Fagschlunger. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,36 +25,37 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package at.o2xfs.xfs.ptr;
+package at.o2xfs.xfs.mcr;
 
 import at.o2xfs.xfs.XfsConstant;
 
-public enum CodelineFormat implements XfsConstant {
+public enum McrExecuteCommand implements XfsConstant {
 
-	TEST(0x0000),
-	/*
-	 * @since v3.00
-	 */
-	CMC7(0x0001),
+    /*
+     * @since v3.10
+     */
+    RETAIN_SLOT_START(251L),
+    RETAIN_SLOT_END(252L),
+    EJECT_SLOT_START(253L),
+    EJECT_SLOT_END(254L),
+    ADD_RETAIN_COUNT(255L),
+    RESET_RETAIN_COUNT(256L),
+    RESET_SLOTINFO(257L),
+    RESET(258L),
 
-	/*
-	 * @since v3.00
-	 */
-	E13B(0x0002),
+    RETAIN_SLOT_START_EX(296L),
+    RETAIN_CARD(297L),
+    OPEN_SHUTTER(298L),
+    CLOSE_SHUTTER(299L);
 
-	/*
-	 * @since v3.00
-	 */
-	OCR(0x0004);
+    private final long value;
 
-	private final long value;
+    McrExecuteCommand(final long value) {
+        this.value = value;
+    }
 
-	private CodelineFormat(final long value) {
-		this.value = value;
-	}
-
-	@Override
-	public long getValue() {
-		return value;
-	}
+    @Override
+    public long getValue() {
+        return value;
+    }
 }
