@@ -137,12 +137,12 @@ public class Status310 extends Struct {
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(deviceState, status310.deviceState)
-                .append(slots, status310.slots)
-                .append(retainBin, status310.retainBin)
-                .append(useSlots, status310.useSlots)
-                .append(shutter, status310.shutter)
-                .append(extra, status310.extra)
+                .append(getDeviceState(), status310.getDeviceState())
+                .append(getSlots(), status310.getSlots())
+                .append(getRetainBin(), status310.getRetainBin())
+                .append(getUseSlots(), status310.getUseSlots())
+                .append(getShutter(), status310.getShutter())
+                .append(getExtra(), status310.getExtra())
                 .isEquals();
     }
 
@@ -150,24 +150,24 @@ public class Status310 extends Struct {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(deviceState)
-                .append(slots)
-                .append(retainBin)
-                .append(useSlots)
-                .append(shutter)
-                .append(extra)
+                .append(getDeviceState())
+                .append(getSlots())
+                .append(getRetainBin())
+                .append(getUseSlots())
+                .append(getShutter())
+                .append(getExtra())
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("deviceState", deviceState)
-                .append("slots", slots)
-                .append("retainBin", retainBin)
-                .append("useSlots", useSlots)
-                .append("shutter", shutter)
-                .append("extra", extra)
+                .append("deviceState", getDeviceState())
+                .append("slots", getSlots())
+                .append("retainBin", getRetainBin())
+                .append("useSlots", getUseSlots())
+                .append("shutter", getShutter())
+                .append("extra", getExtra())
                 .toString();
     }
 }

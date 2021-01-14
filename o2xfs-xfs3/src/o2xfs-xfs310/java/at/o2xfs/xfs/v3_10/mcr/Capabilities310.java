@@ -52,12 +52,12 @@ public class Capabilities310 extends Struct {
     }
 
     protected void set(Capabilities310 copy) {
-
+        type.set(copy.getType());
+        bigSlots.set(copy.getBigSlots());
+        normalSlots.set(copy.getNormalSlots());
+        extra.set(copy.getExtra());
     }
 
-    public WORD getServiceClass() {
-        return serviceClass;
-    }
 
     public Type getType() {
         return type.get();
@@ -86,10 +86,10 @@ public class Capabilities310 extends Struct {
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
                 .append(serviceClass, that.serviceClass)
-                .append(type, that.type)
-                .append(bigSlots, that.bigSlots)
-                .append(normalSlots, that.normalSlots)
-                .append(extra, that.extra)
+                .append(getType(), that.getType())
+                .append(getBigSlots(), that.getBigSlots())
+                .append(getNormalSlots(), that.getNormalSlots())
+                .append(getExtra(), that.getExtra())
                 .isEquals();
     }
 
@@ -98,10 +98,10 @@ public class Capabilities310 extends Struct {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
                 .append(serviceClass)
-                .append(type)
-                .append(bigSlots)
-                .append(normalSlots)
-                .append(extra)
+                .append(getType())
+                .append(getBigSlots())
+                .append(getNormalSlots())
+                .append(getExtra())
                 .toHashCode();
     }
 
@@ -109,10 +109,10 @@ public class Capabilities310 extends Struct {
     public String toString() {
         return new ToStringBuilder(this)
                 .append("serviceClass", serviceClass)
-                .append("type", type)
-                .append("bigSlots", bigSlots)
-                .append("normalSlots", normalSlots)
-                .append("extra", extra)
+                .append("type", getType())
+                .append("bigSlots", getBigSlots())
+                .append("normalSlots", getNormalSlots())
+                .append("extra", getExtra())
                 .toString();
     }
 }

@@ -34,17 +34,17 @@ public enum McrMessage implements XfsConstant {
 	/*
 	 * @since v3.00
 	 */
-	MCR_MEDIAREMOVED(251L),
+	SRVE_MEDIAREMOVED(251L),
 
 	/*
 	 * @since v3.00
 	 */
-	MCR_RETAINBINTHRESHOLD(252L);
+	USER_RETAINBINTHRESHOLD(252L);
 
 
 	private final long value;
 
-	private McrMessage(final long value) {
+	McrMessage(final long value) {
 		this.value = value;
 	}
 

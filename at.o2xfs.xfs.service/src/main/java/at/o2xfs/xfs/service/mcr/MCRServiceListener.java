@@ -25,30 +25,23 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-apply from: "./libraries.gradle"
+package at.o2xfs.xfs.service.mcr;
 
-allprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven-publish'
+import at.o2xfs.xfs.idc.DevicePosition;
+import at.o2xfs.xfs.idc.ResetOut;
+import at.o2xfs.xfs.v3_00.idc.CardAction3;
+import at.o2xfs.xfs.v3_10.idc.PowerSaveChange310;
 
-    tasks.withType(JavaCompile) {
-        options.encoding = 'UTF-8'
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
-    }
+public interface MCRServiceListener {
 
-    configurations {
-        debugDll
-        releaseDll
-    }
+	void onMediaRemove();
 
-    repositories {
-        mavenLocal()
-        maven { url "https://repo.fagschlunger.co.at/artifactory/libs-snapshot-local" }
-        mavenCentral()
-    }
-}
+	void onCardAction(CardAction3 cardAction3);
 
-subprojects {
-    tasks.withType(Javadoc).all { enabled = false }
+	void onMediaDetected(ResetOut resetOut);
+
+	void onRetainBinRemoved();
+	void onDevicePosition(DevicePosition devicePosition);
+
+	void onPowerSaveChange(PowerSaveChange310 powerSaveChange310);
 }
