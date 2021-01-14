@@ -40,7 +40,7 @@ public enum McrExecuteCommand implements XfsConstant {
     EJECT_SLOT_END(254L),
     ADD_RETAIN_COUNT(255L),
     RESET_RETAIN_COUNT(256L),
-    RESET_SLOTINFO(257L),
+    RESET_SLOT_INFO(257L),
     RESET(258L),
 
     RETAIN_SLOT_START_EX(296L),
