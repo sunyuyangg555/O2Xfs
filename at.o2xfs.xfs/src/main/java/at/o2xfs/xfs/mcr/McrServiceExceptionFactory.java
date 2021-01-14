@@ -27,29 +27,33 @@
 
 package at.o2xfs.xfs.mcr;
 
-import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.xfs.AbstractXfsExceptionFactory;
+import at.o2xfs.xfs.XfsException;
+import at.o2xfs.xfs.XfsServiceClass;
+import at.o2xfs.xfs.idc.IDCServiceExceptionFactory;
+import at.o2xfs.xfs.util.XfsConstants;
 
-public enum McrMessage implements XfsConstant {
+/**
+ * 处理IDC error, MCR SP可能会throw IDC error
+ */
+public class McrServiceExceptionFactory extends IDCServiceExceptionFactory {
 
-	/*
-	 * @since v3.10
-	 */
-	SRVE_MEDIAREMOVED(251L),
+    public McrServiceExceptionFactory() {
+    }
 
-	/*
-	 * @since v3.10
-	 */
-	USER_RETAINBINTHRESHOLD(252L);
+    @Override
+    public void throwException(final long errorCode) throws XfsException {
+        // 如果不是MCR error, error会返回null,不执行switch
+        super.throwException(errorCode);
+        final McrError error = XfsConstants.valueOf(errorCode, McrError.class);
+        switch (error) {
+            case MEDIAJAM:
+                throw new MediaJamException();
+            case NOMEDIA:
+                throw new NoMediaException();
+            default:
+                throw new McrServiceException(error);
+        }
+    }
 
-
-	private final long value;
-
-	McrMessage(final long value) {
-		this.value = value;
-	}
-
-	@Override
-	public long getValue() {
-		return value;
-	}
 }

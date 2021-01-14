@@ -27,29 +27,17 @@
 
 package at.o2xfs.xfs.mcr;
 
-import at.o2xfs.xfs.XfsConstant;
+import at.o2xfs.xfs.XfsException;
 
-public enum McrMessage implements XfsConstant {
+public class McrServiceException extends XfsException {
 
-	/*
-	 * @since v3.10
-	 */
-	SRVE_MEDIAREMOVED(251L),
-
-	/*
-	 * @since v3.10
-	 */
-	USER_RETAINBINTHRESHOLD(252L);
-
-
-	private final long value;
-
-	McrMessage(final long value) {
-		this.value = value;
+	protected McrServiceException(final McrError error) {
+		super(error);
 	}
 
 	@Override
-	public long getValue() {
-		return value;
+	public McrError getError() {
+		return getError(McrError.class);
 	}
+
 }

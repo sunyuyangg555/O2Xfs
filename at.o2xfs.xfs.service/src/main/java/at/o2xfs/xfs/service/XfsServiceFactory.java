@@ -32,6 +32,7 @@ import at.o2xfs.xfs.service.cdm.CdmService;
 import at.o2xfs.xfs.service.cim.CimService;
 import at.o2xfs.xfs.service.crd.CRDService;
 import at.o2xfs.xfs.service.idc.IDCService;
+import at.o2xfs.xfs.service.mcr.MCRService;
 import at.o2xfs.xfs.service.pin.PINService;
 import at.o2xfs.xfs.service.ptr.PTRService;
 import at.o2xfs.xfs.service.siu.SIUService;
@@ -64,6 +65,8 @@ public class XfsServiceFactory {
 			return serviceClass.cast(new BCRService(logicalName));
 		} else if(CRDService.class.equals(serviceClass)) {
 			return serviceClass.cast(new CRDService(logicalName));
+		} else if(MCRService.class.equals(serviceClass)) {
+			return serviceClass.cast(new MCRService(logicalName));
 		}
 		throw new IllegalArgumentException("Unknown service class: " + serviceClass);
 	}

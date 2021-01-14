@@ -27,29 +27,10 @@
 
 package at.o2xfs.xfs.mcr;
 
-import at.o2xfs.xfs.XfsConstant;
+public class NoMediaException extends McrServiceException {
 
-public enum McrMessage implements XfsConstant {
+    public NoMediaException() {
+        super(McrError.NOMEDIA);
+    }
 
-	/*
-	 * @since v3.10
-	 */
-	SRVE_MEDIAREMOVED(251L),
-
-	/*
-	 * @since v3.10
-	 */
-	USER_RETAINBINTHRESHOLD(252L);
-
-
-	private final long value;
-
-	McrMessage(final long value) {
-		this.value = value;
-	}
-
-	@Override
-	public long getValue() {
-		return value;
-	}
 }
