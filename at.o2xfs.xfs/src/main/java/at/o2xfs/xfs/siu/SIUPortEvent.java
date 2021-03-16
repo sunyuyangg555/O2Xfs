@@ -76,7 +76,7 @@ public class SIUPortEvent
 		return XfsConstants.valueOf(portIndex, portIndexType);
 	}
 
-	private <E extends Enum<E> & XfsConstant> E getPortIndex() {
+	public  <E extends Enum<E> & XfsConstant> E getPortIndex() {
 		return XfsConstants.valueOf(portIndex, (Class<E>) getPortType().getPortIndexType());
 	}
 

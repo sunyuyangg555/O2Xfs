@@ -17,7 +17,7 @@ public class Capabilities310 extends Struct {
     /**
      * 设备类型为 WFS_SERIVCE_CLASS_IDC
      */
-    protected final WORD serviceClass = new WORD(2);
+    protected final WORD serviceClass = new WORD();
     protected final XfsWord<Type> type = new XfsWord<>(Type.class);
     /**
      * 可存储的大封包的槽位个数
@@ -52,12 +52,16 @@ public class Capabilities310 extends Struct {
     }
 
     protected void set(Capabilities310 copy) {
+        serviceClass.set(copy.getServiceClass());
         type.set(copy.getType());
         bigSlots.set(copy.getBigSlots());
         normalSlots.set(copy.getNormalSlots());
         extra.set(copy.getExtra());
     }
 
+    public int getServiceClass() {
+        return serviceClass.get();
+    }
 
     public Type getType() {
         return type.get();

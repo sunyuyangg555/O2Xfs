@@ -35,20 +35,22 @@ import at.o2xfs.xfs.util.XfsConstants;
  */
 public class XfsServiceExceptionFactory extends AbstractXfsExceptionFactory {
 
-	protected XfsServiceExceptionFactory() {
-		super(0L);
-	}
+    protected XfsServiceExceptionFactory() {
+        super(0L);
+    }
 
-	@Override
-	public void throwException(final long errorCode) throws XfsException {
-		final XfsError xfsError = XfsConstants.valueOf(errorCode, XfsError.class);
-		switch (xfsError) {
-		case CANCELED:
-			throw new XfsCancelledException();
-		case CFG_NO_MORE_ITEMS:
-			throw new CfgNoMoreItemsException();
-		default:
-			throw new XfsServiceException(xfsError);
-		}
-	}
+    @Override
+    public void throwException(final long errorCode) throws XfsException {
+        final XfsError xfsError = XfsConstants.valueOf(errorCode, XfsError.class);
+        switch (xfsError) {
+            case SUCCESS:
+                return;
+            case CANCELED:
+                throw new XfsCancelledException();
+            case CFG_NO_MORE_ITEMS:
+                throw new CfgNoMoreItemsException();
+            default:
+                throw new XfsServiceException(xfsError);
+        }
+    }
 }

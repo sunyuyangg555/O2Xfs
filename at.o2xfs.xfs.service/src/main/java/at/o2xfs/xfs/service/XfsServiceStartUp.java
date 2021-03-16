@@ -78,11 +78,10 @@ public class XfsServiceStartUp {
 	public void startUp() throws XfsException {
 		final String method = "startUp()";
 		if (LOG.isInfoEnabled()) {
-			LOG.info(method, "Starting up " + xfsService.getLogicalName()
-					+ " ...");
+			LOG.info(method, "Starting up " + xfsService.getLogicalName() + " ...");
 		}
 		xfsService.getSrvcVersionsRequired().setLowVersion(XfsVersion.V2_00);
-		xfsService.getSrvcVersionsRequired().setHighVersion(XfsVersion.V3_00);
+		xfsService.getSrvcVersionsRequired().setHighVersion(XfsVersion.V3_10);
 		open();
 		register();
 	}

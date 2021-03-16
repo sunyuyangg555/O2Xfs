@@ -1,43 +1,46 @@
 package at.o2xfs.xfs.v3_10.mcr;
 
+import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.Pointer;
 import at.o2xfs.win32.Struct;
-import at.o2xfs.win32.USHORT;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class SlotsInfo310 extends Struct {
-    protected final USHORT count = new USHORT();
-    protected final Pointer list = new Pointer();
+public class RetainSlotStartIn310 extends Struct {
 
-    protected SlotsInfo310() {
-        add(count);
-        add(list);
+    /**
+     * 需要取出的空的存包格大小，“0”：表示普通格子，“1”：表示加大格子
+     */
+    protected final LPSTR data = new LPSTR();
+
+    protected RetainSlotStartIn310() {
+        add(data);
     }
 
-    public SlotsInfo310(Pointer p) {
+    public RetainSlotStartIn310(Pointer p) {
         this();
         assignBuffer(p);
     }
 
-    public SlotsInfo310( SlotsInfo310 copy) {
+    public RetainSlotStartIn310(RetainSlotStartIn310 copy) {
         this();
         allocate();
         set(copy);
     }
 
-    private void set(SlotsInfo310 copy) {
-        count.set(copy.getCount());
-        list.pointTo(new SlotUnitInfo310Array(copy.getList()));
+    public RetainSlotStartIn310(String data) {
+        this();
+        allocate();
+        this.data.set(data);
     }
 
-    public int getCount() {
-        return count.get();
+    private void set(RetainSlotStartIn310 copy) {
+        data.set(copy.getData());
     }
 
-    public SlotUnitInfo310[] getList() {
-        return new SlotUnitInfo310Array(list, getCount()).get();
+    public String getData() {
+        return data.get();
     }
 
     @Override
@@ -46,12 +49,11 @@ public class SlotsInfo310 extends Struct {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        SlotsInfo310 that = (SlotsInfo310) o;
+        RetainSlotStartIn310 that = (RetainSlotStartIn310) o;
 
         return new EqualsBuilder()
                 .appendSuper(super.equals(o))
-                .append(getCount(), that.getCount())
-                .append(getList(), that.getList())
+                .append(getData(), that.getData())
                 .isEquals();
     }
 
@@ -59,16 +61,14 @@ public class SlotsInfo310 extends Struct {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
                 .appendSuper(super.hashCode())
-                .append(getCount())
-                .append(getList())
+                .append(getData())
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("count", getCount())
-                .append("list", getList())
+                .append("data", getData())
                 .toString();
     }
 }

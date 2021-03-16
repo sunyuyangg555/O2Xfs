@@ -30,12 +30,7 @@ package at.o2xfs.xfs;
 import at.o2xfs.common.Library;
 import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
-import at.o2xfs.win32.CHAR;
-import at.o2xfs.win32.CharArray;
-import at.o2xfs.win32.DWORD;
-import at.o2xfs.win32.HWND;
-import at.o2xfs.win32.Pointer;
-import at.o2xfs.win32.Type;
+import at.o2xfs.win32.*;
 import at.o2xfs.xfs.type.HAPP;
 import at.o2xfs.xfs.type.HSERVICE;
 import at.o2xfs.xfs.type.RequestId;
@@ -317,7 +312,7 @@ public final class XfsAPI {
 	private native int wfsAsyncGetInfo0(Type hService, Type dwCategory, Type lpQueryDetails, Type dwTimeOut, Type hWnd,
 			Type lpRequestID);
 
-	public RequestId wfsAsyncOpen(final CharArray logicalName, final HAPP hApp, final CHAR lpszAppID,
+	public RequestId wfsAsyncOpen(final CharArray logicalName, final HAPP hApp, final LPSTR lpszAppID,
 			final DWORD dwTraceLevel, final DWORD dwTimeOut, final HSERVICE lphService, final HWND hWnd,
 			final DWORD dwSrvcVersionsRequired, final WFSVersion lpSrvcVersion, final WFSVersion lpSPIVersion)
 			throws XfsException {

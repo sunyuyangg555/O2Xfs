@@ -19,10 +19,12 @@ public enum McrFactory {
             result = new Capabilities310(new Capabilities310(p));
         } else if (SlotsInfo310.class.equals(type)) {
             result = new SlotsInfo310(new SlotsInfo310(p));
-        } else if(RetainSlotStartOut.class.equals(type)){
-            result = new RetainSlotStartOut(new RetainSlotStartOut(p));
-        } else if(EjectSlot.class.equals(type)) {
-            result = new EjectSlot(new EjectSlot(p));
+        } else if(EjectSlotOut310.class.equals(type)) {
+            result = new EjectSlotOut310(new EjectSlotOut310(p));
+        } else if(RetainSlotStartOut310.class.equals(type)){
+            result = new RetainSlotStartOut310(new RetainSlotStartOut310(p));
+        } else if(EjectSlot310.class.equals(type)) {
+            result = new EjectSlot310(new EjectSlot310(p));
         }else {
             throw new IllegalArgumentException(type.toString());
         }

@@ -36,6 +36,7 @@ import at.o2xfs.log.Logger;
 import at.o2xfs.log.LoggerFactory;
 import at.o2xfs.win32.DWORD;
 import at.o2xfs.win32.HWND;
+import at.o2xfs.win32.LPSTR;
 import at.o2xfs.win32.ZSTR;
 import at.o2xfs.xfs.WFSResult;
 import at.o2xfs.xfs.WFSStartUpException;
@@ -284,9 +285,17 @@ public class XfsServiceManager implements IXfsCallback {
         final XfsService xfsService = openCommand.getXFSService();
         final DWORD dwTraceLevel = null;
         final DWORD timeOut = new DWORD(0L);
-        final RequestId requestId = xfsAPI.wfsAsyncOpen(new ZSTR(xfsService.getLogicalName()), hApp, null, dwTraceLevel,
-                timeOut, xfsService.getService(), hWnd, xfsService.getSrvcVersionsRequired(),
-                xfsService.getSrvcVersion(), xfsService.getSPIVersion());
+        final RequestId requestId = xfsAPI.wfsAsyncOpen(
+                new ZSTR(xfsService.getLogicalName()),
+                hApp,
+                null,
+                dwTraceLevel,
+                timeOut,
+                xfsService.getService(),
+                hWnd,
+                xfsService.getSrvcVersionsRequired(),
+                xfsService.getSrvcVersion(),
+                xfsService.getSPIVersion());
         requestQueue.addRequest(requestId, eventNotification, openCommand, Long.valueOf(timeOut.longValue()));
         return requestId;
     }
@@ -350,17 +359,19 @@ public class XfsServiceManager implements IXfsCallback {
     }
 
     public void free(final WFSResult wfsResult) {
-        String method = "free(WFSResult)";
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(method, "wfsResult=" + wfsResult);
-        }
-        try {
-            xfsAPI.wfsFreeResult(wfsResult);
-        } catch (XfsException e) {
-            LOG.error(method, "Error freeing WFSResult: " + wfsResult, e);
-        }
-        synchronized (wfsResults) {
-            wfsResults.remove(wfsResult);
+        if (wfsResult != null) {
+            String method = "free(WFSResult)";
+            if (LOG.isDebugEnabled()) {
+                LOG.debug(method, "wfsResult=" + wfsResult);
+            }
+            try {
+                xfsAPI.wfsFreeResult(wfsResult);
+            } catch (XfsException e) {
+                LOG.error(method, "Error freeing WFSResult: " + wfsResult, e);
+            }
+            synchronized (wfsResults) {
+                wfsResults.remove(wfsResult);
+            }
         }
     }
 

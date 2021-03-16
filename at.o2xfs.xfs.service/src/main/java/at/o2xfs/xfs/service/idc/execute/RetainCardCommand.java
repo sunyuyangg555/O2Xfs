@@ -12,6 +12,8 @@ import at.o2xfs.xfs.service.idc.IdcFactory;
 import at.o2xfs.xfs.service.util.ExceptionUtil;
 import at.o2xfs.xfs.v3_00.idc.RetainCard3;
 
+import java.util.Optional;
+
 public class RetainCardCommand extends AbstractAsyncXfsCommand<RetainCardListener, RetainCardCompleteEvent> {
 
     private final IDCService idcService;
@@ -31,7 +33,11 @@ public class RetainCardCommand extends AbstractAsyncXfsCommand<RetainCardListene
 
     @Override
     protected RetainCardCompleteEvent createCompleteEvent(Pointer results) {
-        return new RetainCardCompleteEvent(IdcFactory.INSTANCE.create(idcService.getXfsVersion(), results, RetainCard3.class));
+        Optional<RetainCard3> retainCard = Optional.empty();
+        if(!Pointer.NULL.equals(results)) {
+            retainCard = Optional.of(IdcFactory.INSTANCE.create(idcService.getXfsVersion(), results, RetainCard3.class));
+        }
+        return RetainCardCompleteEvent.build(retainCard);
     }
 
     @Override

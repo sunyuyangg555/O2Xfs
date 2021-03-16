@@ -65,11 +65,11 @@ public class MCRSlotsInfoCommand implements Callable<SlotsInfo310> {
             if (LOG.isInfoEnabled()) {
                 LOG.info("call()", result);
             }
+            return result;
         } finally {
             if (wfsResult != null) {
                 XfsServiceManager.getInstance().free(wfsResult);
             }
         }
-        return result;
     }
 }

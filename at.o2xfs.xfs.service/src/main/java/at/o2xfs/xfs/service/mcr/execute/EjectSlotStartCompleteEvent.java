@@ -1,20 +1,25 @@
 package at.o2xfs.xfs.service.mcr.execute;
 
 import at.o2xfs.xfs.service.cmd.event.CompleteEvent;
-import at.o2xfs.xfs.v3_10.mcr.EjectSlot;
-import at.o2xfs.xfs.v3_10.mcr.RetainSlotStartOut;
+import at.o2xfs.xfs.v3_10.mcr.EjectSlotOut310;
 
-public class EjectSlotStartCompleteEvent implements CompleteEvent<EjectSlot> {
+import java.util.Objects;
+import java.util.Optional;
 
-    private final EjectSlot ejectSlot;
+public class EjectSlotStartCompleteEvent implements CompleteEvent<Optional<EjectSlotOut310>> {
 
-    public EjectSlotStartCompleteEvent(EjectSlot ejectSlot) {
-        this.ejectSlot = ejectSlot;
+    private final Optional<EjectSlotOut310> ejectSlotOut;
+
+    private EjectSlotStartCompleteEvent(Optional<EjectSlotOut310> ejectSlotOut) {
+        Objects.requireNonNull(ejectSlotOut);
+        this.ejectSlotOut = ejectSlotOut;
     }
 
-
+    public static EjectSlotStartCompleteEvent build(Optional<EjectSlotOut310> ejectSlotOut) {
+        return new EjectSlotStartCompleteEvent(ejectSlotOut);
+    }
     @Override
-    public EjectSlot get() {
-        return ejectSlot;
+    public Optional<EjectSlotOut310> get() {
+        return ejectSlotOut;
     }
 }
